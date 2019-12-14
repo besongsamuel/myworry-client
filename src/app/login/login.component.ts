@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,23 +15,16 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   onSubmit()
   {
-    this.http.post('login', { email: this.loginForm.value }, this.httpOptions).subscribe((result) =>
-    {
-      console.log(result);
-    })
+    this.authService.login(this.loginForm.value);
   }
 
 }
