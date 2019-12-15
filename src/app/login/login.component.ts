@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +18,33 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
 
+  error: boolean = false;
+  errorMessage: string = '';
 
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
 
   onSubmit()
   {
-    this.authService.login(this.loginForm.value);
+    this.authService.login(this.loginForm.value).subscribe((response : any) => 
+    {
+      this.error = false;
+
+      this.userService.getUser().subscribe((user: User) => 
+      {
+        this.userService.user = user;
+        this.router.navigate(['']);
+      }, () => {});
+      
+    }, 
+    err => 
+    {
+      this.error = true;
+      this.errorMessage = err.error.message;
+      
+    });
   }
 
 }
