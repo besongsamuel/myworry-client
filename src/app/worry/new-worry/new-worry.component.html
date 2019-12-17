@@ -49,12 +49,18 @@
 
         <div class="row form-group">
             <div class="col">
-                <label for="startDate">Start Date</label>
-                <input type="date" class="form-control" id="startDate" placeholder="" formControlName="startDate">
+                <mat-form-field class="w-100">
+                    <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker></mat-datepicker>
+                  </mat-form-field>
             </div>
             <div class="col">
-                <label for="endDate">End Date</label>
-                <input type="date" class="form-control" id="endDate" placeholder="" formControlName="endDate">
+                <mat-form-field class="w-100" >
+                    <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
             </div>
         </div>
 
