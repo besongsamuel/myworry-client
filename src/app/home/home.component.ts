@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { WorryService } from '../services/worry.service';
+import { Worry } from '../models/worry';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +11,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  searchForm = new FormGroup(
+  {
+    q: new FormControl('')
+  });
+
+  worries: Worry[] = [];
+
+  constructor(private worryService: WorryService, public authService: AuthService) { }
 
   ngOnInit() {
+    this.worryService.getWorries().subscribe((worries: Worry[]) => 
+    {
+      this.worries = worries;
+    })
+  }
+
+  onSubmit()
+  {
+
   }
 
 }

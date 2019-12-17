@@ -1,0 +1,56 @@
+<div class="container mt-5">
+        <form [formGroup]="newWorryForm" (ngSubmit)="onSubmit()">
+    
+            <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
+                {{ errorMessage }}
+            </div>
+
+            <div class="alert alert-success" role="alert" *ngIf='success'>
+                Your worry was successfully created. 
+            </div>
+    
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" placeholder="Worry Title" formControlName="name">
+            </div>
+    
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="tex" class="form-control" id="description" placeholder="Enter a description" formControlName="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" formControlName="categoryId">
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                </select>
+            </div>
+
+            <div class="row form-group">
+                <div class="col">
+                    <label for="lfor">Label used for arguments in favor</label>
+                    <input type="text" class="form-control" id="lfor" placeholder="" formControlName="labelFor">
+                </div>
+                <div class="col">
+                    <label for="lagainst">Label used for arguments against</label>
+                    <input type="text" class="form-control" id="lagainst" placeholder="" formControlName="labelAgainst">
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" placeholder="" formControlName="startDate">
+                </div>
+                <div class="col">
+                    <label for="endDate">End Date</label>
+                    <input type="date" class="form-control" id="endDate" placeholder="" formControlName="endDate">
+                </div>
+            </div>
+    
+            <button type="submit" class="btn btn-primary float-right" [disabled]="!newWorryForm.valid">Submit</button>
+        </form>
+    </div>
+    
+    
+    
