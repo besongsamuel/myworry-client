@@ -15,7 +15,7 @@ export class WorryService {
       'Content-Type':  'application/json'
     })
   };
-  
+
   constructor(private http: HttpClient) { }
 
   getWorries() : Observable<Worry[]>
@@ -25,11 +25,26 @@ export class WorryService {
 
   createWorry(worry: Worry) : Observable<Worry>
   {
-    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
+    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, toFormData(worry), {
+      headers: new HttpHeaders({
+        'Content-Type':  'multipart/form-data'
+      })
+    });
   }
 
   getCategories() : Observable<Category[]>
   {
     return this.http.get<Category[]>(`${environment.ApiUrl}/categories`, this.httpOptions);
   }
+}
+
+export function toFormData<T>( formValue: T ) {
+  const formData = new FormData();
+
+  for ( const key of Object.keys(formValue) ) {
+    const value = formValue[key];
+    formData.append(key, value);
+  }
+
+  return formData;
 }

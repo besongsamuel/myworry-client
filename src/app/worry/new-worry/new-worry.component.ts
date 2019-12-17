@@ -4,6 +4,7 @@ import { Category } from 'src/app/models/category';
 import { WorryService } from 'src/app/services/worry.service';
 import { Worry } from 'src/app/models/worry';
 import { ThrowStmt } from '@angular/compiler';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-worry',
@@ -18,13 +19,14 @@ export class NewWorryComponent implements OnInit {
   success: boolean = false;
   errorMessage: string = null;
   categories: Category[] = [];
+  tags = [];
 
-  constructor(private fb: FormBuilder, private worryService: WorryService) 
+  constructor(private fb: FormBuilder, private worryService: WorryService)
   {
 
     this.initForm();
 
-    worryService.getCategories().subscribe((categories: Category[]) => 
+    worryService.getCategories().subscribe((categories: Category[]) =>
     {
       this.categories = categories;
     });
@@ -38,10 +40,10 @@ export class NewWorryComponent implements OnInit {
         categoryId: '',
         name: '',
         description: '',
-        tags: this.fb.array([]),
         locked: false,
         labelFor: 'Yes',
         labelAgainst: 'No',
+        image: File,
         startDate: new Date(),
         endDate: new Date()
       });
@@ -53,18 +55,19 @@ export class NewWorryComponent implements OnInit {
   onSubmit()
   {
     let worry: Worry = this.newWorryForm.value;
-    this.worryService.createWorry(worry).subscribe(() => 
+    worry.tags = this.tags.map(x => x.value);
+    this.worryService.createWorry(worry).subscribe(() =>
     {
       this.errorMessage = null;
       this.success = true;
       this.initForm();
     },
-    (err) => 
+    (err) =>
     {
       this.success = false;
       this.errorMessage = err.error.error.message;
     });
-    
+
   }
 
 }

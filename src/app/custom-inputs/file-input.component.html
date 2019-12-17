@@ -1,0 +1,10 @@
+<div>
+    <input type="file" class="form-control-file">
+    <div class="mt-2" *ngIf="file">
+      <img class='preview w-100'>
+      <div class="d-flex justify-content-end mt-2">
+          <button type="button" class="btn btn-danger" (click)='remove()'>Remove</button>
+      </div>
+    </div>
+</div>
+
