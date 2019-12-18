@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label for="image">Image File</label>
-            <app-file-input formControlName="image" id="image"></app-file-input>
+            <app-file-input [(ngModel)]='image' [ngModelOptions]="{standalone: true}" id="image"></app-file-input>
         </div>
 
         <div class="form-group">
