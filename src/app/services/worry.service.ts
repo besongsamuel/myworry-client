@@ -25,11 +25,7 @@ export class WorryService {
 
   createWorry(worry: Worry) : Observable<Worry>
   {
-    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, toFormData(worry), {
-      headers: new HttpHeaders({
-        'Content-Type':  'multipart/form-data'
-      })
-    });
+    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, toFormData(worry));
   }
 
   getCategories() : Observable<Category[]>
