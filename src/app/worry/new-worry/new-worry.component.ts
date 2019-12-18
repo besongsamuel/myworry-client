@@ -20,6 +20,7 @@ export class NewWorryComponent implements OnInit {
   errorMessage: string = null;
   categories: Category[] = [];
   tags = [];
+  image: File;
 
   constructor(private fb: FormBuilder, private worryService: WorryService)
   {
@@ -56,7 +57,9 @@ export class NewWorryComponent implements OnInit {
   {
     let worry: Worry = this.newWorryForm.value;
     worry.tags = this.tags.map(x => x.value);
-    this.worryService.createWorry(worry).subscribe(() =>
+    var requestBody = { data: JSON.stringify(worry), image: this.image };
+    
+    this.worryService.createWorry(requestBody).subscribe(() =>
     {
       this.errorMessage = null;
       this.success = true;
