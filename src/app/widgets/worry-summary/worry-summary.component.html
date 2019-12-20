@@ -1,0 +1,15 @@
+<div class="card mb-2">
+    <img class="card-img-top w-auto" [src]="worry.image" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">{{worry.name}}</h5>
+        <p class="card-subtitle mb-2 text-muted d-flex">
+            <span class="mr-auto">{{worry.user.displayName}}</span>
+            <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
+        </p>
+        <p class="card-subtitle mb-2 text-muted d-flex">
+            <span class="mr-auto">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{worry.startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{worry.endDate | date:'mediumDate'}}</b></span>
+        </p>
+        <p class="card-text">{{worry.description}}</p>
+        <a href="#" class="btn btn-primary">View</a>
+    </div>
+</div>

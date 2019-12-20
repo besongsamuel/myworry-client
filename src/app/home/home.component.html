@@ -7,27 +7,13 @@
     </form>
 
     <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
-        <button routerLink="/worry/new"  class="btn btn-info" >New Worry</button>
+        <button routerLink="/worry/new"  class="btn btn-primary" >New Worry</button>
     </div>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-4" *ngFor='let worry of worries'>
-                <div class="card">
-                    <img class="card-img-top w-100" src="assets/images/worry.png" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{worry.name}}</h5>
-                        <p class="card-subtitle mb-2 text-muted d-flex">
-                            <span class="mr-auto">{{worry.user.displayName}}</span>
-                            <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
-                        </p>
-                        <p class="card-subtitle mb-2 text-muted d-flex">
-                            Open from <b class="mx-1"> {{worry.startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{worry.endDate | date:'mediumDate'}}</b> 
-                        </p>
-                        <p class="card-text">{{worry.description}}</p>
-                        <a href="#" class="btn btn-primary">View</a>
-                    </div>
-                </div>
+                <app-worry-summary [worry]="worry"></app-worry-summary>
             </div>
             
         </div>

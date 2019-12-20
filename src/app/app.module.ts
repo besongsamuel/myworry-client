@@ -17,6 +17,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { WorrySummaryComponent } from './widgets/worry-summary/worry-summary.component';
 
 
 
@@ -27,7 +29,8 @@ import {MatInputModule} from '@angular/material/input';
     LoginComponent,
     HomeComponent,
     NewWorryComponent,
-    FileInputComponent
+    FileInputComponent,
+    WorrySummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   providers: [httpInterceptorProviders, AuthService],
   bootstrap: [AppComponent]

@@ -17,14 +17,16 @@ export class Worry {
       locked?: boolean;
     
       tags?: string[];
+
+      image: string;
       
       labelFor: string;
       
       labelAgainst: string;
       
-      startDate: Date;
+      startDate: any;
       
-      endDate: Date;
+      endDate: any;
       
       date_created: Date;
       

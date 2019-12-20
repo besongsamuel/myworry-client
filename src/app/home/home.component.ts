@@ -3,6 +3,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { WorryService } from '../services/worry.service';
 import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment'
+
+const DEFAULT_IMAGE = 'assets/images/worry.png';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +27,18 @@ export class HomeComponent implements OnInit {
     this.worryService.getWorries().subscribe((worries: Worry[]) => 
     {
       this.worries = worries;
+      worries.map(x => 
+      {
+        if(x.image)
+        {
+          x.image = `${environment.ApiUrl}${x.image}`;
+        }
+        else
+        {
+          x.image = DEFAULT_IMAGE;
+        }
+        return x;
+      });
     })
   }
 
