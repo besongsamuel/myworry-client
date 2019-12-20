@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup(
   {
-    email: new FormControl(''),
-    password: new FormControl('')
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required])
   });
 
   error: boolean = false;

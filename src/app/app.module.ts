@@ -20,6 +20,11 @@ import {MatInputModule} from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { WorrySummaryComponent } from './widgets/worry-summary/worry-summary.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+
 
 
 @NgModule({
@@ -44,7 +49,10 @@ import {MatSelectModule} from '@angular/material/select';
     MatNativeDateModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule
   ],
   providers: [httpInterceptorProviders, AuthService],
   bootstrap: [AppComponent]
