@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { WorryService } from 'src/app/services/worry.service';
 import { Worry } from 'src/app/models/worry';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
@@ -67,12 +67,12 @@ export class NewWorryComponent implements OnInit {
   {
     this.newWorryForm = this.fb.group(
       {
-        categoryId: '',
-        name: '',
+        categoryId: [Validators.required],
+        name: ['', [Validators.required, Validators.minLength(6)]],
         description: '',
         locked: false,
-        labelFor: 'Yes',
-        labelAgainst: 'No',
+        labelFor: ['Yes', [Validators.required, Validators.minLength(2)]],
+        labelAgainst: ['No', [Validators.required, Validators.minLength(2)]],
         startDate: moment(),
         endDate: moment().add(30, 'days')
       });
@@ -91,7 +91,7 @@ export class NewWorryComponent implements OnInit {
     worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
     var requestBody = { data: JSON.stringify(worry), image: this.image };
-    
+
     this.worryService.createWorry(requestBody).subscribe(() =>
     {
       this.errorMessage = null;
