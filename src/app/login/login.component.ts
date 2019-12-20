@@ -28,22 +28,31 @@ export class LoginComponent implements OnInit {
 
   onSubmit()
   {
-    this.authService.login(this.loginForm.value).subscribe((response : any) => 
+    this.authService.login(this.loginForm.value).subscribe((response : any) =>
     {
       this.error = false;
 
-      this.userService.getUser().subscribe((user: User) => 
+      this.userService.getUser().subscribe((user: User) =>
       {
         this.userService.user = user;
-        this.router.navigate(['']);
+
+        if(this.authService.redirectUrl)
+        {
+          this.router.navigate([this.authService.redirectUrl]);
+        }
+        else
+        {
+          this.router.navigate(['']);
+        }
+
       }, () => {});
-      
-    }, 
-    err => 
+
+    },
+    err =>
     {
       this.error = true;
       this.errorMessage = err.error.message;
-      
+
     });
   }
 

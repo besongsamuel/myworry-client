@@ -20,13 +20,15 @@ export class AuthService {
     })
   };
 
-  
+
 
   public token: string;
 
   public loggedIn: boolean;
 
-  constructor(private http: HttpClient) 
+  public redirectUrl: string = null;
+
+  constructor(private http: HttpClient)
   {
     if(!this.isTokenExpired())
     {
@@ -40,11 +42,11 @@ export class AuthService {
     return this.http.post(`${environment.ApiUrl}users/login`, credentials, this.httpOptions)
     .pipe(
       catchError(this.handleError),
-      tap((x: any) => 
+      tap((x: any) =>
       {
         sessionStorage.setItem('token', x.token);
-        this.token = x.token; 
-        this.loggedIn = true; 
+        this.token = x.token;
+        this.loggedIn = true;
       })
     );
   }
@@ -53,7 +55,7 @@ export class AuthService {
   {
     this.loggedIn = false;
     sessionStorage.removeItem('token');
-    
+
   }
 
   getToken(): string {
@@ -69,7 +71,7 @@ export class AuthService {
 
     if (decoded.exp === undefined) return null;
 
-    const date = new Date(0); 
+    const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
   }
