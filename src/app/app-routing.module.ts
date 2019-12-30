@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NewWorryComponent } from './worry/new-worry/new-worry.component';
 import { AuthGuard } from './guard/auth.guard';
+import { SignupComponent } from './account/signup/signup.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,10 @@ const routes: Routes = [
     path: 'login', component: LoginComponent
   },
   {
-    path: 'worry/new', component: NewWorryComponent, canActivate: [AuthGuard]
+    path: 'signup', component: SignupComponent
+  },
+  {
+    path: 'worry/new/:id', component: NewWorryComponent, canActivate: [AuthGuard]
   }
 ];
 

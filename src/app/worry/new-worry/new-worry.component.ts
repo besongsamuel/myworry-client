@@ -11,6 +11,12 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
 // the `default as` syntax.
 import * as _moment from 'moment';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { DEFAULT_IMAGE } from 'src/app/home/home.component';
+import { HelperService } from 'src/app/services/helper.service';
+import { of } from 'rxjs';
 
 const moment =  _moment;
 
@@ -50,38 +56,73 @@ export class NewWorryComponent implements OnInit {
   categories: Category[] = [];
   tags = [];
   image: File;
+  worry: Worry;
 
-  constructor(private fb: FormBuilder, private worryService: WorryService)
+  constructor(private fb: FormBuilder, private route: ActivatedRoute,
+    private helperService: HelperService,
+    private worryService: WorryService)
   {
-
-    this.initForm();
-
-    worryService.getCategories().subscribe((categories: Category[]) =>
-    {
-      this.categories = categories;
-    });
 
   }
 
-  initForm()
+  initForm(worry?: Worry)
   {
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+      params.get('id') ? this.worryService.getWorry(params.get('id')) : of(null))
+    ).subscribe((worry: Worry) => 
+    {
+
+      if(!this.worry || this.worry.id != worry.id)
+      {
+        if(worry.image)
+        {
+          worry.image = `${environment.ApiUrl}${worry.image}`;
+        }
+        else
+        {
+          worry.image = DEFAULT_IMAGE;
+        }
+  
+        this.helperService.createFile(worry.image).then((file: File) => 
+        {
+          this.image = file;
+        });
+  
+        this.initForm(worry);
+      }
+      
+    });
+
+    this.worry = worry;
+
     this.newWorryForm = this.fb.group(
       {
-        categoryId: [Validators.required],
-        name: ['', [Validators.required, Validators.minLength(6)]],
-        description: '',
-        locked: false,
-        labelFor: ['Yes', [Validators.required, Validators.minLength(2)]],
-        labelAgainst: ['No', [Validators.required, Validators.minLength(2)]],
-        startDate: moment(),
-        endDate: moment().add(30, 'days')
+        categoryId: [worry ? worry.categoryId : this.categories[0].id, Validators.required],
+        name: [worry ? worry.name : '', [Validators.required, Validators.minLength(6)]],
+        description: worry ? worry.description : '',
+        locked: worry ? worry.locked : false,
+        labelFor: [worry ? worry.labelFor : 'Yes', [Validators.required, Validators.minLength(2)]],
+        labelAgainst: [worry ? worry.labelAgainst : 'No', [Validators.required, Validators.minLength(2)]],
+        startDate: worry ? moment(worry.startDate) : moment(),
+        endDate: worry ? moment(worry.endDate) : moment().add(30, 'days')
       });
 
-      this.tags = [];
-      this.image = null;
+      this.tags = worry ? worry.tags: [];
+
   }
 
   ngOnInit() {
+
+    this.worryService.getCategories().subscribe((categories: Category[]) =>
+    {
+      this.categories = categories;
+      
+      this.initForm();
+      
+    });
+
+    
   }
 
   onSubmit()

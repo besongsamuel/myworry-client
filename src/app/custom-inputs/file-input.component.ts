@@ -23,8 +23,19 @@ export class FileInputComponent implements ControlValueAccessor
   private file: File | null = null;
 
   writeValue(obj: any): void {
-    this.host.nativeElement.value = '';
-    this.file = null;
+
+    if(obj)
+    {
+      this.host.nativeElement.value = obj.name;
+      this.file = obj;
+      this.readURL(this.file);
+    }
+    else
+    {
+      this.host.nativeElement.value = '';
+      this.file = null;
+    }
+    
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -48,7 +59,8 @@ export class FileInputComponent implements ControlValueAccessor
 
         reader.onload = function (e : any) {
             $('.preview')
-                .attr('src', e.target.result);
+                .attr('src', e.target.result)
+                .attr('value', file.name);
         };
 
         reader.readAsDataURL(file);

@@ -1,102 +1,116 @@
-<div class="m-5 card border-secondary ">
-
-  <div class="card-header">
-      Create new worry
-  </div>
-  <div class="card-body">
-      <form enctype="multipart/form-data" [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
-
-        <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
-            {{ errorMessage }}
-        </div>
-
-        <div class="alert alert-success" role="alert" *ngIf='success'>
-            Your worry was successfully created.
-        </div>
-
-        <mat-form-field class="w-100">
-            <input matInput placeholder="Worry Title" formControlName="name">
-            <mat-error *ngIf="newWorryForm.controls.name.hasError('minLength') && !newWorryForm.controls.name.hasError('required')">
-              A min length of 6 is required.
-            </mat-error>
-            <mat-error *ngIf="newWorryForm.controls.name.hasError('required')">
-              A worry title is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-            <textarea matInput placeholder="Description" formControlName="description"></textarea>
-        </mat-form-field>
-
-
-        <div class="form-group">
-            <label for="image">Image File</label>
-            <app-file-input [(ngModel)]='image' [ngModelOptions]="{standalone: true}" id="image"></app-file-input>
-        </div>
-
-        <mat-form-field class="w-100">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName="categoryId" required>
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let category of categories" [value]="category.id">
-                {{category.name}}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
-        </mat-form-field>
-
-        <div class="row form-group">
-            <div class="col">
-                <mat-form-field class="w-100">
-                    <input matInput placeholder="Label used for arguments for" formControlName="labelFor">
-                    <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('minLength') && !newWorryForm.controls.labelFor.hasError('required')">
-                      A min length of 2 is required.
-                    </mat-error>
-                    <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('required')">
-                      A "For" label is <strong>required</strong>
-                    </mat-error>
-                </mat-form-field>
+<div class="w-100 d-flex justify-content-center">
+    <div class="col-lg-6 col-sm-12 col-md-6"> 
+        <div class="m-5 card border-secondary" *ngIf="newWorryForm">
+            <div class="card-header" *ngIf="!worry">
+                Create new worry
             </div>
-            <div class="col">
-                <mat-form-field class="w-100">
-                    <input matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
-                    <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('minLength') && !newWorryForm.controls.labelAgainst.hasError('required')">
-                      A min length of 2 is required.
-                    </mat-error>
-                    <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('required')">
-                      An "Against" label is <strong>required</strong>
-                    </mat-error>
-                </mat-form-field>
+            <div class="card-header" *ngIf="worry">
+                Edit worry
             </div>
-        </div>
+            <div class="card-body">
+                <form enctype="multipart/form-data" [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
+          
+                  <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
+                      {{ errorMessage }}
+                  </div>
+          
+                  <div class="alert alert-success" role="alert" *ngIf='success'>
+                      Your worry was successfully created.
+                  </div>
 
-        <div class="row form-group">
-            <div class="col">
-                <mat-form-field class="w-100">
-                    <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" formControlName="startDate">
-                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #startDatePicker></mat-datepicker>
+                  <div *ngIf="worry">
+                      <h4>{{newWorryForm.controls.name.value}}</h4>
+                      <p>{{newWorryForm.controls.description.value}}</p>
+                  </div>
+                  
+                  <mat-form-field *ngIf="!worry" class="w-100">
+                      <input matInput placeholder="Worry Title" formControlName="name">
+                      <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
+                        A min length of 6 is required.
+                      </mat-error>
+                      <mat-error *ngIf="newWorryForm.controls.name.hasError('required')">
+                        A worry title is <strong>required</strong>
+                      </mat-error>
                   </mat-form-field>
-            </div>
-            <div class="col">
-                <mat-form-field class="w-100" >
-                    <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" formControlName="endDate">
-                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endDatePicker></mat-datepicker>
+          
+                  <mat-form-field class="w-100" *ngIf="!worry">
+                      <textarea matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
+          
+          
+                  <div class="form-group">
+                      <label for="image">Image File</label>
+                      <app-file-input [(ngModel)]='image' [ngModelOptions]="{standalone: true}" id="image"></app-file-input>
+                  </div>
+          
+                  <mat-form-field class="w-100">
+                      <mat-label>Category</mat-label>
+                      <mat-select formControlName="categoryId" required [disabled]="worry">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let category of categories" [value]="category.id">
+                          {{category.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
+                  </mat-form-field>
+          
+                  <div class="row form-group">
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input [disabled]="worry" matInput placeholder="Label used for arguments for" formControlName="labelFor">
+                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
+                                A min length of 2 is required.
+                              </mat-error>
+                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('required')">
+                                A "For" label is <strong>required</strong>
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input [disabled]="worry" matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
+                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
+                                A min length of 2 is required.
+                              </mat-error>
+                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('required')">
+                                An "Against" label is <strong>required</strong>
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                  </div>
+          
+                  <div class="row form-group">
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" formControlName="startDate">
+                              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                              <mat-datepicker #startDatePicker></mat-datepicker>
+                            </mat-form-field>
+                      </div>
+                      <div class="col">
+                          <mat-form-field class="w-100" >
+                              <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" formControlName="endDate">
+                              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                              <mat-datepicker #endDatePicker></mat-datepicker>
+                            </mat-form-field>
+                      </div>
+                  </div>
+          
+                  <div class="form-group">
+                      <label for="tags">Tags</label>
+                      <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                      </tag-input>
+                  </div>
+          
+                  <button type="submit" class="btn btn-primary float-right" [disabled]="!newWorryForm.valid">Submit</button>
+              </form>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="tags">Tags</label>
-            <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
-            </tag-input>
-        </div>
-
-        <button type="submit" class="btn btn-primary float-right" [disabled]="!newWorryForm.valid">Submit</button>
-    </form>
-  </div>
-
+          
+          </div>
+    </div>
 </div>
+
+
+
 
 

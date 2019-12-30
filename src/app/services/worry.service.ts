@@ -23,6 +23,11 @@ export class WorryService {
     return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter[include][][relation]=user`, this.httpOptions);
   }
 
+  getWorry(id: string) : Observable<Worry>
+  {
+    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter[include][][relation]=user`, this.httpOptions);
+  }
+
   createWorry(worry: object) : Observable<Worry>
   {
     return this.http.post<Worry>(`${environment.ApiUrl}/worries`, toFormData(worry));

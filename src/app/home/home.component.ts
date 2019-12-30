@@ -5,7 +5,7 @@ import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment'
 
-const DEFAULT_IMAGE = 'assets/images/worry.png';
+export const DEFAULT_IMAGE = 'assets/images/worry.png';
 
 @Component({
   selector: 'app-home',

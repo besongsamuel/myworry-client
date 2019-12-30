@@ -16,7 +16,7 @@ export class UserService {
     })
   };
 
-  user: User;
+  public user: User;
   
   constructor(private http: HttpClient, private authService: AuthService) 
   {
@@ -32,6 +32,15 @@ export class UserService {
   getUser() : Observable<User>
   {
     return this.http.get<User>(`${environment.ApiUrl}/users/me`, this.httpOptions);
+  }
+
+  createUser(user: any) : Observable<User>
+  {
+    return this.http.post<User>(`${environment.ApiUrl}users`, user, this.httpOptions);
+  }
+
+  emailTaken(email: string) : Observable<any> {
+    return this.http.get(`${environment.ApiUrl}/users/exists?filter[where][email]=${email}`, this.httpOptions);
   }
 
   logout()

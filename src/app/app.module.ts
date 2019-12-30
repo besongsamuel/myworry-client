@@ -23,6 +23,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { SignupComponent } from './account/signup/signup.component';
 
 
 
@@ -34,7 +35,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     HomeComponent,
     NewWorryComponent,
     FileInputComponent,
-    WorrySummaryComponent
+    WorrySummaryComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

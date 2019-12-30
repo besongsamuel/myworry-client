@@ -1,8 +1,9 @@
+
 <div class="card mb-2">
     <img class="card-img-top w-auto" [src]="worry.image" alt="Card image cap">
     <div class="card-body">
         <h5 class="card-title">{{worry.name}}</h5>
-        <p class="card-subtitle mb-2 text-muted d-flex">
+        <p *ngIf="worry.user" class="card-subtitle mb-2 text-muted d-flex">
             <span class="mr-auto">{{worry.user.displayName}}</span>
             <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
         </p>
@@ -10,6 +11,10 @@
             <span class="mr-auto">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{worry.startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{worry.endDate | date:'mediumDate'}}</b></span>
         </p>
         <p class="card-text">{{worry.description}}</p>
-        <a href="#" class="btn btn-primary">View</a>
+
+        <div class="d-flex">
+            <button class="mr-auto" mat-raised-button color="primary">View</button>
+            <button [routerLink]="['/worry/new', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="warn">Edit</button>
+        </div>
     </div>
 </div>
