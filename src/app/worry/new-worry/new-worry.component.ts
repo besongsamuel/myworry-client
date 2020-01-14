@@ -124,7 +124,7 @@ export class NewWorryComponent implements OnInit {
     // The image was changed.
     if(this.imageName)
     {
-      worry.image = `${environment.ApiUrl}${this.imageName}`;
+      worry.image = this.imageName;
     }
 
     Object.assign(this.worry, worry);
