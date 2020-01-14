@@ -27,7 +27,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { SignupComponent } from './account/signup/signup.component';
 import { NgxFileDropModule} from 'ngx-file-drop';
 import { WorryComponent } from './worry/worry/worry.component';
-import { OpinionComponent } from './worry/opinion/opinion.component'
+import { OpinionComponent } from './worry/opinion/opinion.component';
+import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opinion-dialog.component'
 
 
 
@@ -42,7 +43,8 @@ import { OpinionComponent } from './worry/opinion/opinion.component'
     WorrySummaryComponent,
     SignupComponent,
     WorryComponent,
-    OpinionComponent
+    OpinionComponent,
+    NewOpinionDialogComponent
   ],
   imports: [
     BrowserModule,
