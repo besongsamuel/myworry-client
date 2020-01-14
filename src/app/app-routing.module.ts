@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { NewWorryComponent } from './worry/new-worry/new-worry.component';
 import { AuthGuard } from './guard/auth.guard';
 import { SignupComponent } from './account/signup/signup.component';
+import { WorryComponent } from './worry/worry/worry.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,9 @@ const routes: Routes = [
   },
   {
     path: 'signup', component: SignupComponent
+  },
+  {
+    path: 'worry/:id', component: WorryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'worry/new', component: NewWorryComponent, canActivate: [AuthGuard]

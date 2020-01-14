@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { WorryService } from 'src/app/services/worry.service';
 import { Worry } from 'src/app/models/worry';
@@ -12,11 +12,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 // the `default as` syntax.
 import * as _moment from 'moment';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
-import { HelperService } from 'src/app/services/helper.service';
-import { of } from 'rxjs';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 
 const moment =  _moment;
@@ -55,14 +52,15 @@ export class NewWorryComponent implements OnInit {
   errorMessage: string = null;
   categories: Category[] = [];
   tags = [];
-  image: File;
-  worry: Worry;
+  worry: Worry = new Worry();
   imagePath: string;
   imageName: string;
   public fileDroped: NgxFileDropEntry;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private helperService: HelperService,
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private worryService: WorryService)
   {
 
@@ -70,68 +68,51 @@ export class NewWorryComponent implements OnInit {
 
   initForm(worry?: Worry)
   {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-      params.get('id') ? this.worryService.getWorry(params.get('id')) : of(null))
-    ).subscribe((worry: Worry) => 
+    this.newWorryForm = this.fb.group(
     {
-
-      if(!this.worry || this.worry.id != worry.id)
-      {
-
-        if(this.worry)
-        {
-          if(worry.image)
-          {
-            worry.image = `${environment.ApiUrl}${worry.image}`;
-          }
-          else
-          {
-            worry.image = DEFAULT_IMAGE;
-          }
-    
-          this.helperService.createFile(worry.image).then((file: File) => 
-          {
-            this.image = file;
-          });
-
-        }
-        
-  
-        this.initForm(worry);
-      }
-      
+      categoryId: [worry.categoryId ? worry.categoryId : this.categories[0].id, Validators.required],
+      name: [worry.name, [Validators.required, Validators.minLength(6)]],
+      description: worry.description,
+      locked: worry.locked,
+      labelFor: [worry.labelFor, [Validators.required, Validators.minLength(2)]],
+      labelAgainst: [worry.labelAgainst, [Validators.required, Validators.minLength(2)]],
+      startDate: moment(worry.startDate),
+      endDate: moment(worry.endDate)
     });
 
-    this.worry = worry;
-
-    this.newWorryForm = this.fb.group(
-      {
-        categoryId: [worry ? worry.categoryId : this.categories[0].id, Validators.required],
-        name: [worry ? worry.name : '', [Validators.required, Validators.minLength(6)]],
-        description: worry ? worry.description : '',
-        locked: worry ? worry.locked : false,
-        labelFor: [worry ? worry.labelFor : 'Yes', [Validators.required, Validators.minLength(2)]],
-        labelAgainst: [worry ? worry.labelAgainst : 'No', [Validators.required, Validators.minLength(2)]],
-        startDate: worry ? moment(worry.startDate) : moment(),
-        endDate: worry ? moment(worry.endDate) : moment().add(30, 'days')
-      });
-
-      this.tags = worry ? worry.tags: [];
+    this.tags = worry.tags;
 
   }
 
   ngOnInit() {
 
+    // Attempt to get the id for a worry if we are in edit mode.
+    let id = this.route.snapshot.paramMap.get('id');
+
+    if(id)
+    {
+      this.worryService.getWorry(id).subscribe((worry: Worry) =>
+      {
+        if(worry.image)
+        {
+          this.imagePath = `${environment.ApiUrl}${worry.image}`;
+        }
+        else
+        {
+          this.imagePath = DEFAULT_IMAGE;
+        }
+
+        this.worry = worry;
+
+      });
+    }
+
     this.worryService.getCategories().subscribe((categories: Category[]) =>
     {
       this.categories = categories;
-      
-      this.initForm();
-      
+      this.initForm(this.worry);
     });
 
-    
   }
 
   onSubmit()
@@ -140,15 +121,17 @@ export class NewWorryComponent implements OnInit {
     worry.tags = this.tags.map(x => x.value);
     worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-    worry.image = this.imageName;
-
-    this.worryService.createWorry(worry).subscribe(() =>
+    // The image was changed.
+    if(this.imageName)
     {
-      this.errorMessage = null;
-      this.success = true;
-      this.imageName = "";
-      this.imagePath = "";
-      this.initForm();
+      worry.image = this.imageName;
+    }
+
+    Object.assign(this.worry, worry);
+
+    this.worryService.createWorry(this.worry).subscribe((newWorry: Worry) =>
+    {
+      this.router.navigate([`/worry/${newWorry.id}`]);
     },
     (err) =>
     {
@@ -158,19 +141,9 @@ export class NewWorryComponent implements OnInit {
 
   }
 
-  fileOver(event)
-  {
-
-  }
-
-  fileLeave(event)
-  {
-
-  }
-
   removeImage()
   {
-    this.worryService.deleteImage(this.imageName).subscribe(() => 
+    this.worryService.deleteImage(this.imageName).subscribe(() =>
     {
       this.imageName = "";
       this.imagePath =  "";
@@ -185,9 +158,9 @@ export class NewWorryComponent implements OnInit {
     {
       const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
 
-      fileEntry.file((file: File) => 
+      fileEntry.file((file: File) =>
       {
-        this.worryService.uploadImage(file, 'worry').subscribe((response) => 
+        this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
           this.imageName = response.imagePath;
           this.imagePath =  `${environment.ApiUrl}uploads/tmp/images/${response.imagePath}`;

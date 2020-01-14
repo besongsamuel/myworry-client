@@ -25,7 +25,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SignupComponent } from './account/signup/signup.component';
-import { NgxFileDropModule} from 'ngx-file-drop'
+import { NgxFileDropModule} from 'ngx-file-drop';
+import { WorryComponent } from './worry/worry/worry.component'
 
 
 
@@ -38,7 +39,8 @@ import { NgxFileDropModule} from 'ngx-file-drop'
     NewWorryComponent,
     FileInputComponent,
     WorrySummaryComponent,
-    SignupComponent
+    SignupComponent,
+    WorryComponent
   ],
   imports: [
     BrowserModule,

@@ -38,9 +38,17 @@ export class WorryService {
     return this.http.delete<any>(`${environment.ApiUrl}deleteImage/${imageName}`);
   }
 
-  createWorry(worry: object) : Observable<Worry>
+  createWorry(worry: Worry) : Observable<Worry>
   {
-    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
+    if(worry.id)
+    {
+      return this.http.put<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
+    }
+    else
+    {
+      return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
+    }
+
   }
 
   getCategories() : Observable<Category[]>

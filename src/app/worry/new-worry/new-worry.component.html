@@ -1,5 +1,5 @@
 <div class="w-100 d-flex justify-content-center">
-    <div class="col-lg-6 col-sm-12 col-md-6"> 
+    <div class="col-lg-6 col-sm-12 col-md-6">
         <div class="m-5 card border-secondary" *ngIf="newWorryForm">
             <div class="card-header" *ngIf="!worry">
                 Create new worry
@@ -12,28 +12,26 @@
               <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
                   {{ errorMessage }}
               </div>
-      
+
               <div class="alert alert-success" role="alert" *ngIf='success'>
                   Your worry was successfully created.
               </div>
 
-                <ngx-file-drop 
-                  dropZoneLabel="Drop Image Here" 
-                  (onFileDrop)="fileDropped($event)" 
-                  (onFileOver)="fileOver($event)" 
-                  (onFileLeave)="fileLeave($event)"
+                <ngx-file-drop
+                  dropZoneLabel="Drop Image Here"
+                  (onFileDrop)="fileDropped($event)"
                   accept="png,jpg,jpeg"
                   directory="false"
                   multiple="false"
                   *ngIf="!imagePath">
                   <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                    
+
                     <div class="d-flex flex-column align-items-center">
                       <div>Drop Image Here</div>
                       <div>OR</div>
                       <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
                     </div>
-                    
+
                   </ng-template>
                 </ngx-file-drop>
 
@@ -50,7 +48,7 @@
                       <h4>{{newWorryForm.controls.name.value}}</h4>
                       <p>{{newWorryForm.controls.description.value}}</p>
                   </div>
-                  
+
                   <mat-form-field *ngIf="!worry" class="w-100">
                       <input matInput placeholder="Worry Title" formControlName="name">
                       <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
@@ -60,11 +58,11 @@
                         A worry title is <strong>required</strong>
                       </mat-error>
                   </mat-form-field>
-          
+
                   <mat-form-field class="w-100" *ngIf="!worry">
                       <textarea matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
-          
+
                   <mat-form-field class="w-100">
                       <mat-label>Category</mat-label>
                       <mat-select formControlName="categoryId" required [disabled]="worry">
@@ -75,7 +73,7 @@
                       </mat-select>
                       <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
                   </mat-form-field>
-          
+
                   <div class="row form-group">
                       <div class="col">
                           <mat-form-field class="w-100">
@@ -100,7 +98,7 @@
                           </mat-form-field>
                       </div>
                   </div>
-          
+
                   <div class="row form-group">
                       <div class="col">
                           <mat-form-field class="w-100">
@@ -117,17 +115,17 @@
                             </mat-form-field>
                       </div>
                   </div>
-          
+
                   <div class="form-group">
                       <label for="tags">Tags</label>
                       <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
                       </tag-input>
                   </div>
-          
+
                   <button type="submit" class="btn btn-primary float-right" [disabled]="!newWorryForm.valid">Submit</button>
               </form>
             </div>
-          
+
           </div>
     </div>
 </div>
