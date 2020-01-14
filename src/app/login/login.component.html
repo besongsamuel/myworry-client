@@ -6,6 +6,10 @@
             {{ errorMessage }}
         </div>
 
+        <div class="alert alert-success d-flex justify-content-center" role="alert" *ngIf='newUserEmail'>
+           <div>Account <strong> {{newUserEmail}} </strong> was created successfully</div> 
+        </div>
+
         <mat-form-field class="w-100">
             <input matInput placeholder="Email" formControlName="email">
             <mat-error *ngIf="loginForm.controls.email.hasError('email')">

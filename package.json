@@ -28,12 +28,13 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ngx-chips": "^2.1.0",
+    "ngx-file-drop": "^8.0.8",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.20",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~8.3.20",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",

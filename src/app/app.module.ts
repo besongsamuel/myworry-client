@@ -14,6 +14,7 @@ import { AuthService } from './services/auth.service';
 import { NewWorryComponent } from './worry/new-worry/new-worry.component';
 import { FileInputComponent } from './custom-inputs/file-input.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
@@ -24,6 +25,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SignupComponent } from './account/signup/signup.component';
+import { NgxFileDropModule} from 'ngx-file-drop'
 
 
 
@@ -54,7 +56,9 @@ import { SignupComponent } from './account/signup/signup.component';
     MatSelectModule,
     MatCardModule,
     MatButtonModule,
-    MatToolbarModule
+    MatIconModule,
+    MatToolbarModule,
+    NgxFileDropModule
   ],
   providers: [httpInterceptorProviders, AuthService],
   bootstrap: [AppComponent]

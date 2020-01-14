@@ -8,15 +8,43 @@
                 Edit worry
             </div>
             <div class="card-body">
+
+              <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
+                  {{ errorMessage }}
+              </div>
+      
+              <div class="alert alert-success" role="alert" *ngIf='success'>
+                  Your worry was successfully created.
+              </div>
+
+                <ngx-file-drop 
+                  dropZoneLabel="Drop Image Here" 
+                  (onFileDrop)="fileDropped($event)" 
+                  (onFileOver)="fileOver($event)" 
+                  (onFileLeave)="fileLeave($event)"
+                  accept="png,jpg,jpeg"
+                  directory="false"
+                  multiple="false"
+                  *ngIf="!imagePath">
+                  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                    
+                    <div class="d-flex flex-column align-items-center">
+                      <div>Drop Image Here</div>
+                      <div>OR</div>
+                      <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+                    </div>
+                    
+                  </ng-template>
+                </ngx-file-drop>
+
+                <div class="w-100 d-flex justify-content-center" *ngIf="imagePath">
+                  <img class="worryImage border p-1" [src]="imagePath">
+                  <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </div>
+
                 <form enctype="multipart/form-data" [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
-          
-                  <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
-                      {{ errorMessage }}
-                  </div>
-          
-                  <div class="alert alert-success" role="alert" *ngIf='success'>
-                      Your worry was successfully created.
-                  </div>
 
                   <div *ngIf="worry">
                       <h4>{{newWorryForm.controls.name.value}}</h4>
@@ -36,12 +64,6 @@
                   <mat-form-field class="w-100" *ngIf="!worry">
                       <textarea matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
-          
-          
-                  <div class="form-group">
-                      <label for="image">Image File</label>
-                      <app-file-input [(ngModel)]='image' [ngModelOptions]="{standalone: true}" id="image"></app-file-input>
-                  </div>
           
                   <mat-form-field class="w-100">
                       <mat-label>Category</mat-label>

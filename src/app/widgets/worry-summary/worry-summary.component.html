@@ -14,7 +14,7 @@
 
         <div class="d-flex">
             <button class="mr-auto" mat-raised-button color="primary">View</button>
-            <button [routerLink]="['/worry/new', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="warn">Edit</button>
+            <button [routerLink]="['/worry/edit', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="warn">Edit</button>
         </div>
     </div>
 </div>

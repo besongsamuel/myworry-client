@@ -18,7 +18,10 @@ const routes: Routes = [
     path: 'signup', component: SignupComponent
   },
   {
-    path: 'worry/new/:id', component: NewWorryComponent, canActivate: [AuthGuard]
+    path: 'worry/new', component: NewWorryComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'worry/edit/:id', component: NewWorryComponent, canActivate: [AuthGuard]
   }
 ];
 

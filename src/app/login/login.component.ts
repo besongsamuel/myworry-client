@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 
@@ -20,10 +20,20 @@ export class LoginComponent implements OnInit {
 
   error: boolean = false;
   errorMessage: string = '';
+  newUserEmail: string = null;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, 
+    private userService: UserService, 
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.route.paramMap.subscribe((params) => 
+    {
+       this.newUserEmail = params.get('email');
+    });
+    
   }
 
   onSubmit()

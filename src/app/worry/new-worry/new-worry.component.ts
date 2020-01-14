@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { HelperService } from 'src/app/services/helper.service';
 import { of } from 'rxjs';
+import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 
 const moment =  _moment;
 
@@ -48,7 +49,6 @@ export const MY_FORMATS = {
 })
 export class NewWorryComponent implements OnInit {
 
-
   newWorryForm : FormGroup;
   error: boolean = false;
   success: boolean = false;
@@ -57,6 +57,9 @@ export class NewWorryComponent implements OnInit {
   tags = [];
   image: File;
   worry: Worry;
+  imagePath: string;
+  imageName: string;
+  public fileDroped: NgxFileDropEntry;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private helperService: HelperService,
@@ -75,19 +78,25 @@ export class NewWorryComponent implements OnInit {
 
       if(!this.worry || this.worry.id != worry.id)
       {
-        if(worry.image)
+
+        if(this.worry)
         {
-          worry.image = `${environment.ApiUrl}${worry.image}`;
+          if(worry.image)
+          {
+            worry.image = `${environment.ApiUrl}${worry.image}`;
+          }
+          else
+          {
+            worry.image = DEFAULT_IMAGE;
+          }
+    
+          this.helperService.createFile(worry.image).then((file: File) => 
+          {
+            this.image = file;
+          });
+
         }
-        else
-        {
-          worry.image = DEFAULT_IMAGE;
-        }
-  
-        this.helperService.createFile(worry.image).then((file: File) => 
-        {
-          this.image = file;
-        });
+        
   
         this.initForm(worry);
       }
@@ -131,12 +140,14 @@ export class NewWorryComponent implements OnInit {
     worry.tags = this.tags.map(x => x.value);
     worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-    var requestBody = { data: JSON.stringify(worry), image: this.image };
+    worry.image = this.imageName;
 
-    this.worryService.createWorry(requestBody).subscribe(() =>
+    this.worryService.createWorry(worry).subscribe(() =>
     {
       this.errorMessage = null;
       this.success = true;
+      this.imageName = "";
+      this.imagePath = "";
       this.initForm();
     },
     (err) =>
@@ -145,6 +156,44 @@ export class NewWorryComponent implements OnInit {
       this.errorMessage = err.error.error.message;
     });
 
+  }
+
+  fileOver(event)
+  {
+
+  }
+
+  fileLeave(event)
+  {
+
+  }
+
+  removeImage()
+  {
+    this.worryService.deleteImage(this.imageName).subscribe(() => 
+    {
+      this.imageName = "";
+      this.imagePath =  "";
+    });
+  }
+
+  fileDropped(files: NgxFileDropEntry[])
+  {
+    this.fileDroped = files[0];
+
+    if(this.fileDroped.fileEntry.isFile)
+    {
+      const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
+
+      fileEntry.file((file: File) => 
+      {
+        this.worryService.uploadImage(file, 'worry').subscribe((response) => 
+        {
+          this.imageName = response.imagePath;
+          this.imagePath =  `${environment.ApiUrl}uploads/tmp/images/${response.imagePath}`;
+        });
+      });
+    }
   }
 
 }

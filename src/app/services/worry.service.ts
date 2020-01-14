@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Worry } from '../models/worry';
 import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
@@ -28,9 +28,19 @@ export class WorryService {
     return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter[include][][relation]=user`, this.httpOptions);
   }
 
+  uploadImage(file: File, type: string) : Observable<any>
+  {
+    return this.http.post<any>(`${environment.ApiUrl}uploadImage`, toFormData({ worryImage: file, type: type}));
+  }
+
+  deleteImage(imageName: string ) : Observable<any>
+  {
+    return this.http.delete<any>(`${environment.ApiUrl}deleteImage/${imageName}`);
+  }
+
   createWorry(worry: object) : Observable<Worry>
   {
-    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, toFormData(worry));
+    return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
   }
 
   getCategories() : Observable<Category[]>
