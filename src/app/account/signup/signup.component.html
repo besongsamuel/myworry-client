@@ -1,7 +1,25 @@
 <mat-card  class="m-5">
 
+      <ngx-file-drop
+          dropZoneLabel="Drop Profile Image Here"
+          (onFileDrop)="fileDropped($event)"
+          accept="png,jpg,jpeg"
+          directory="false"
+          multiple="false"
+          *ngIf="!profileImagePath">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+
+            <div class="d-flex flex-column align-items-center">
+              <div>Drop Profile Image Here</div>
+              <div>OR</div>
+              <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+            </div>
+
+          </ng-template>
+        </ngx-file-drop>
+
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    
+
             <div class="alert alert-danger" role="alert" *ngIf='error'>
                 {{ errorMessage }}
             </div>
@@ -29,8 +47,8 @@
                     <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
                 </mat-form-field>
             </div>
-    
-            
+
+
 
             <div class="d-flex">
                 <mat-form-field class="pr-2 flex-grow-1">
@@ -52,14 +70,13 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-    
+
             <div class="d-flex w-100">
                 <button class="ml-auto" type="submit" mat-stroked-button color="primary" [disabled]="!signupForm.valid">Register</button>
             </div>
-    
+
         </form>
     </mat-card>
-    
-    
-    
-    
+
+
+

@@ -4,6 +4,11 @@ import { ValidateEmailNotTaken } from 'src/app/validators/async-email-not-taken.
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import * as _ from 'lodash'
+import { WorryService } from 'src/app/services/worry.service';
+import { environment } from 'src/environments/environment';
+import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
+import { User } from 'src/app/models/user';
+import { Profile } from 'src/app/models/profile';
 
 @Component({
   selector: 'app-signup',
@@ -14,8 +19,14 @@ export class SignupComponent implements OnInit {
 
 
   signupForm: FormGroup;
+  imageName: string;
+  profileImagePath: string;
+  public fileDroped: NgxFileDropEntry;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router,) 
+  constructor(private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+    private worryService: WorryService)
   {
     this.signupForm = fb.group(
     {
@@ -49,7 +60,17 @@ onSubmit()
 {
   if(this.signupForm.valid)
   {
-    this.userService.createUser(_.omit(this.signupForm.value, ['confirmPassword']) ).subscribe((user) => 
+    var user: User = new User();
+    user.profile = new Profile();
+
+    if(this.imageName)
+    {
+      user.profile.image = this.imageName;
+    }
+
+    _.assign(user, _.omit(this.signupForm.value, ['confirmPassword']));
+
+    this.userService.createUser(user).subscribe((user) =>
     {
       this.router.navigate(['/login', { email: user.email }]);
     });
@@ -58,5 +79,33 @@ onSubmit()
 
 ngOnInit() {
 }
+
+removeImage()
+  {
+    this.worryService.deleteImage(this.imageName).subscribe(() =>
+    {
+      this.imageName = "";
+      this.profileImagePath =  "";
+    });
+  }
+
+  fileDropped(files: NgxFileDropEntry[])
+  {
+    this.fileDroped = files[0];
+
+    if(this.fileDroped.fileEntry.isFile)
+    {
+      const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
+
+      fileEntry.file((file: File) =>
+      {
+        this.worryService.uploadImage(file, 'profile').subscribe((response) =>
+        {
+          this.imageName = response.imagePath;
+          this.profileImagePath =  `${environment.ApiUrl}uploads/tmp/images/${response.imagePath}`;
+        });
+      });
+    }
+  }
 
 }

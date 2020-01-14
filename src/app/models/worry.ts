@@ -1,5 +1,6 @@
 import { Opinion } from './opinion';
 import * as moment from 'moment';
+import { User } from './user';
 
 export class Worry {
 
@@ -8,6 +9,8 @@ export class Worry {
     categoryId: string;
 
     userId: string = null;
+
+    user: User;
 
     name: string = '';
 

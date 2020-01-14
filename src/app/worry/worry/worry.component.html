@@ -1,1 +1,29 @@
-<p>worry works!</p>
+<div class="container-fluid" *ngIf="worry$ | async as worry">
+
+  <div class="col-lg-3 col-md-4 col-sm-12" >
+    <mat-card class="w-100">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{worry.name}}</mat-card-title>
+        <mat-card-subtitle>{{worry.user.displayName}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="imagePath" alt="Worry Description Image">
+      <mat-card-content>
+        <p>
+          {{worry.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions class="d-flex">
+        <button class="mr-auto" mat-button>{{worry.labelFor}}</button>
+        <button class="ml-auto" mat-button>{{worry.labelAgainst}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="opinions">
+    <div class="col-lg-3 col-md-4 col-sm-12" [class.pl-3]="opinion.type == 0" [class.pr-3]="opinion.type == 1" *ngFOr="let opinion of worry.opinions">
+      <app-opinion opinion="opinion"></app-opinion>
+    </div>
+  </div>
+
+</div>

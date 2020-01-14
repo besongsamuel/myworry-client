@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Worry } from 'src/app/models/worry';
+import { switchMap } from 'rxjs/operators';
+import { WorryService } from 'src/app/services/worry.service';
 
 @Component({
   selector: 'app-worry',
@@ -7,9 +12,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorryComponent implements OnInit {
 
-  constructor() { }
+  worry$: Observable<Worry>;
+
+  constructor(private route: ActivatedRoute, private worryService: WorryService) { }
 
   ngOnInit() {
+
+    this.worry$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.worryService.getWorry(params.get('id')))
+    );
   }
 
 }
