@@ -65,7 +65,7 @@ onSubmit()
 
     if(this.imageName)
     {
-      user.profile.image = this.imageName;
+      user.profile.image = `${environment.ApiUrl}${this.imageName}`;
     }
 
     _.assign(user, _.omit(this.signupForm.value, ['confirmPassword']));
