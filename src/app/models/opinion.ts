@@ -1,4 +1,5 @@
 import { User } from './user';
+import { OpinionLike } from './opinion-like';
 
 export class Opinion {
   public type: number;
@@ -7,4 +8,5 @@ export class Opinion {
   public date_created: string;
   public id: string;
   public userId: string;
+  public opinionLikes: OpinionLike[] = [];
 }

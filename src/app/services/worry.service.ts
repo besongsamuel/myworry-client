@@ -5,6 +5,7 @@ import { Worry } from '../models/worry';
 import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
 import { Opinion } from '../models/opinion';
+import { OpinionLike } from '../models/opinion-like';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,11 @@ export class WorryService {
   };
 
   constructor(private http: HttpClient) { }
+
+  toggleLike(opinionId: string) : Observable<OpinionLike[]>
+  {
+    return this.http.post<OpinionLike[]>(`${environment.ApiUrl}toggleLike/${opinionId}`, null);
+  }
 
   getWorries() : Observable<Worry[]>
   {

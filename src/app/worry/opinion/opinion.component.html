@@ -4,7 +4,7 @@
       <img [src]="opinion.user.profile.image">
     </div>
     <mat-card-title *ngIf="opinion.user">{{opinion.user.displayName}}</mat-card-title>
-    <mat-card-subtitle>{{opinion.date_created}}</mat-card-subtitle>
+    <mat-card-subtitle>{{opinion.date_created | date}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <p>
@@ -12,7 +12,14 @@
     </p>
   </mat-card-content>
   <mat-card-actions class="d-flex">
-    <button class="ml-auto" mat-button>LIKE</button>
-    <button class="ml-auto" mat-button>DISLIKE</button>
+
+    <button
+      class="ml-auto"
+      mat-icon-button [color]="likedByUser() ? 'primary' : ''"
+      (click)="toggleLike()"
+    >
+      <mat-icon [matBadge]="opinion.opinionLikes.length" matBadgeColor="warn">thumb_up</mat-icon>
+    </button>
+
   </mat-card-actions>
 </mat-card>
