@@ -17,16 +17,41 @@ export class WorryService {
     })
   };
 
+  worryFilter: object =
+  {
+    include: [
+      {
+        relation: 'user',
+        scope: {
+          fields: ['displayName', 'profile']
+        }
+      },
+      {
+        relation: 'opinions',
+        scope:{
+          include: [
+            {
+              relation: 'user',
+              scope: {
+                fields: ['displayName', 'profile']
+              }
+            }
+          ]
+        }
+      }
+    ]
+  };
+
   constructor(private http: HttpClient) { }
 
   getWorries() : Observable<Worry[]>
   {
-    return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter[include][][relation]=user&filter[include][][relation]=opinions`, this.httpOptions);
+    return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
   }
 
   getWorry(id: string) : Observable<Worry>
   {
-    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter[include][0][relation]=user&filter[include][1][relation]=opinions`, this.httpOptions);
+    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
   }
 
   uploadImage(file: File, type: string) : Observable<any>
