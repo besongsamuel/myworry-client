@@ -13,6 +13,8 @@ export class OpinionComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    console.log(this.opinion);
   }
 
 }

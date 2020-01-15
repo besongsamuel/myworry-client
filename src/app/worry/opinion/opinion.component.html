@@ -1,9 +1,9 @@
-<mat-card class="w-100" *ngIf="opinion" [class.for-border]="opinion.type == 1" [class.against-border]="opinion.type == 0">
+<mat-card class="my-3" *ngIf="opinion" [class.for-border]="opinion.type == 1" [class.against-border]="opinion.type == 0">
   <mat-card-header>
-    <div mat-card-avatar *ngIf="opinion.user.profile && opinion.user.profile.image">
+    <div mat-card-avatar *ngIf="opinion.user && opinion.user.profile && opinion.user.profile.image">
       <img [src]="opinion.user.profile.image">
     </div>
-    <mat-card-title>{{opinion.user.displayName}}</mat-card-title>
+    <mat-card-title *ngIf="opinion.user">{{opinion.user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{opinion.date_created}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>

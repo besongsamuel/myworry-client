@@ -42,7 +42,7 @@
                   </button>
                 </div>
 
-                <form enctype="multipart/form-data" [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
+                <form [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
 
                   <div *ngIf="worry">
                       <h4>{{newWorryForm.controls.name.value}}</h4>

@@ -4,6 +4,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,7 @@ import { NewWorryComponent } from './worry/new-worry/new-worry.component';
 import { FileInputComponent } from './custom-inputs/file-input.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
@@ -61,12 +64,15 @@ import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opin
     MatMomentDateModule,
     MatSelectModule,
     MatCardModule,
+    MatRadioModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatToolbarModule,
     NgxFileDropModule
   ],
   providers: [httpInterceptorProviders, AuthService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewOpinionDialogComponent]
 })
 export class AppModule { }

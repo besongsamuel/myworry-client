@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Worry } from '../models/worry';
 import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
+import { Opinion } from '../models/opinion';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,12 @@ export class WorryService {
 
   getWorries() : Observable<Worry[]>
   {
-    return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter[include][][relation]=user`, this.httpOptions);
+    return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter[include][][relation]=user&filter[include][][relation]=opinions`, this.httpOptions);
   }
 
   getWorry(id: string) : Observable<Worry>
   {
-    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter[include][][relation]=user`, this.httpOptions);
+    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter[include][0][relation]=user&filter[include][1][relation]=opinions`, this.httpOptions);
   }
 
   uploadImage(file: File, type: string) : Observable<any>
@@ -47,6 +48,19 @@ export class WorryService {
     else
     {
       return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
+    }
+
+  }
+
+  createOpinion(opinion: Opinion) : Observable<Opinion>
+  {
+    if(opinion.id)
+    {
+      return this.http.put<Opinion>(`${environment.ApiUrl}/opinions/${opinion.id}`, opinion, this.httpOptions);
+    }
+    else
+    {
+      return this.http.post<Opinion>(`${environment.ApiUrl}/opinions`, opinion, this.httpOptions);
     }
 
   }
