@@ -19,13 +19,13 @@ const routes: Routes = [
     path: 'signup', component: SignupComponent
   },
   {
+    path: 'new/worry', component: NewWorryComponent, canActivate: [AuthGuard]
+  },
+  {
     path: 'worry/:id', component: WorryComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'worry/new', component: NewWorryComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: 'worry/edit/:id', component: NewWorryComponent, canActivate: [AuthGuard]
+    path: 'edit/worry/:id', component: NewWorryComponent, canActivate: [AuthGuard]
   }
 ];
 

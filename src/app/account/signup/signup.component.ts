@@ -102,7 +102,7 @@ removeImage()
         this.worryService.uploadImage(file, 'profile').subscribe((response) =>
         {
           this.imageName = response.imagePath;
-          this.profileImagePath =  `${environment.ApiUrl}uploads/tmp/images/${response.imagePath}`;
+          this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
         });
       });
     }

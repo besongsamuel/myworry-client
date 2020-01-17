@@ -1,8 +1,6 @@
 <mat-card class="my-3" *ngIf="opinion" [class.for-border]="opinion.type == 1" [class.against-border]="opinion.type == 0">
   <mat-card-header>
-    <div mat-card-avatar *ngIf="opinion.user && opinion.user.profile && opinion.user.profile.image">
-      <img [src]="opinion.user.profile.image">
-    </div>
+    <img mat-card-avatar [src]="getImagePath(opinion.user.profile.image)">
     <mat-card-title *ngIf="opinion.user">{{opinion.user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{opinion.date_created | date}}</mat-card-subtitle>
   </mat-card-header>
@@ -15,10 +13,10 @@
 
     <button
       class="ml-auto"
-      mat-icon-button [color]="likedByUser() ? 'primary' : ''"
+      mat-icon-button [color]="likedByUser ? 'primary' : ''"
       (click)="toggleLike()"
     >
-      <mat-icon [matBadge]="opinion.opinionLikes.length" matBadgeColor="warn">thumb_up</mat-icon>
+      <mat-icon [matBadge]="opinion.opinionLikes ? opinion.opinionLikes.length : 0" matBadgeColor="warn">thumb_up</mat-icon>
     </button>
 
   </mat-card-actions>

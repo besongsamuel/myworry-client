@@ -17,6 +17,10 @@
                   Your worry was successfully created.
               </div>
 
+              <div class="text-center text-danger my-2" *ngIf="editLimited">
+                This worry has opinions associated with it. Edition will be limited. 
+              </div>
+
                 <ngx-file-drop
                   dropZoneLabel="Drop Image Here"
                   (onFileDrop)="fileDropped($event)"
@@ -35,7 +39,7 @@
                   </ng-template>
                 </ngx-file-drop>
 
-                <div class="w-100 d-flex justify-content-center" *ngIf="imagePath">
+                <div class="w-100 d-flex justify-content-center my-2" *ngIf="imagePath">
                   <img class="worryImage border p-1" [src]="imagePath">
                   <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
                     <mat-icon>cancel</mat-icon>
@@ -44,13 +48,8 @@
 
                 <form [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
 
-                  <div *ngIf="worry">
-                      <h4>{{newWorryForm.controls.name.value}}</h4>
-                      <p>{{newWorryForm.controls.description.value}}</p>
-                  </div>
-
-                  <mat-form-field *ngIf="!worry" class="w-100">
-                      <input matInput placeholder="Worry Title" formControlName="name">
+                  <mat-form-field class="w-100">
+                      <input [disabled]="editLimited" matInput placeholder="Worry Title" formControlName="name">
                       <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
                         A min length of 6 is required.
                       </mat-error>
@@ -59,13 +58,13 @@
                       </mat-error>
                   </mat-form-field>
 
-                  <mat-form-field class="w-100" *ngIf="!worry">
-                      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                  <mat-form-field class="w-100" >
+                      <textarea [disabled]="editLimited" matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
 
                   <mat-form-field class="w-100">
                       <mat-label>Category</mat-label>
-                      <mat-select formControlName="categoryId" required [disabled]="worry">
+                      <mat-select [disabled]="editLimited" formControlName="categoryId" required>
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let category of categories" [value]="category.id">
                           {{category.name}}
@@ -77,7 +76,7 @@
                   <div class="row form-group">
                       <div class="col">
                           <mat-form-field class="w-100">
-                              <input [disabled]="worry" matInput placeholder="Label used for arguments for" formControlName="labelFor">
+                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments for" formControlName="labelFor">
                               <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
                                 A min length of 2 is required.
                               </mat-error>
@@ -88,7 +87,7 @@
                       </div>
                       <div class="col">
                           <mat-form-field class="w-100">
-                              <input [disabled]="worry" matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
+                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
                               <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
                                 A min length of 2 is required.
                               </mat-error>

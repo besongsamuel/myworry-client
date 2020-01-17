@@ -6,8 +6,9 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 
-
+import {MatBadgeModule} from '@angular/material/badge';
 import { AppRoutingModule } from './app-routing.module';
+import {MatChipsModule} from '@angular/material/chips';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +33,9 @@ import { NgxFileDropModule} from 'ngx-file-drop';
 import { WorryComponent } from './worry/worry/worry.component';
 import { OpinionComponent } from './worry/opinion/opinion.component';
 import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opinion-dialog.component'
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-bar.component';
 
 
 
@@ -47,7 +51,8 @@ import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opin
     SignupComponent,
     WorryComponent,
     OpinionComponent,
-    NewOpinionDialogComponent
+    NewOpinionDialogComponent,
+    ErrorSnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -62,17 +67,21 @@ import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opin
     MatNativeDateModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatMenuModule,
+    MatSnackBarModule,
     MatSelectModule,
     MatCardModule,
     MatRadioModule,
     MatButtonModule,
     MatDialogModule,
+    MatBadgeModule,
+    MatChipsModule,
     MatIconModule,
     MatToolbarModule,
     NgxFileDropModule
   ],
   providers: [httpInterceptorProviders, AuthService],
   bootstrap: [AppComponent],
-  entryComponents: [NewOpinionDialogComponent]
+  entryComponents: [NewOpinionDialogComponent, ErrorSnackBarComponent]
 })
 export class AppModule { }

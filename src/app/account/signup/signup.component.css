@@ -2,3 +2,10 @@
 {
     flex-grow: 1;
 }
+
+.profileImage
+{
+    height: 190px;
+    width: 190px;
+    border-radius: 50%;
+}

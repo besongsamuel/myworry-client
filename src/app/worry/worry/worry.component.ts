@@ -7,6 +7,8 @@ import { WorryService } from 'src/app/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { NewOpinionDialogComponent } from 'src/app/dialogs/new-opinion-dialog/new-opinion-dialog.component';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-worry',
@@ -20,10 +22,15 @@ export class WorryComponent implements OnInit {
 
   public imagePath: string;
 
-
   constructor(private route: ActivatedRoute, private worryService: WorryService,
-    public dialog: MatDialog) 
+    public dialog: MatDialog, public userService: UserService) 
   {
+    
+  }
+
+  getImagePath(image)
+  {
+    return `${environment.ApiUrl}${image}`;
   }
 
   ngOnInit() {
@@ -51,7 +58,17 @@ export class WorryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result)
       {
-        this.worry.opinions.push(result);
+        if(!this.worry.opinions)
+        {
+          this.worry.opinions = [];
+        }
+
+        // get the created opinion with it's relations
+        this.worryService.getOpinion(result.id).subscribe((opinion) => 
+        {
+          this.worry.opinions.unshift(opinion);
+        });
+        
       }
     });
   }

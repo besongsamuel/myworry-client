@@ -4,7 +4,7 @@ import { User } from './user';
 
 export class Worry {
 
-    id: string = null;
+    id: string;
 
     categoryId: string;
 
@@ -14,7 +14,7 @@ export class Worry {
 
     name: string = '';
 
-    opinions: Opinion[] = [];
+    opinions: Opinion[];
 
     description?: string = '';
 

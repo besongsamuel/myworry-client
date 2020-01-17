@@ -11,6 +11,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
 // the `default as` syntax.
 import * as _moment from 'moment';
+import * as _ from 'lodash';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
@@ -57,6 +58,8 @@ export class NewWorryComponent implements OnInit {
   imageName: string;
   public fileDroped: NgxFileDropEntry;
 
+  editLimited: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -79,6 +82,15 @@ export class NewWorryComponent implements OnInit {
       startDate: moment(worry.startDate),
       endDate: moment(worry.endDate)
     });
+
+    if(this.editLimited)
+    {
+      this.newWorryForm.get('name').disable();
+      this.newWorryForm.get('description').disable();
+      this.newWorryForm.get('categoryId').disable();
+      this.newWorryForm.get('labelFor').disable();
+      this.newWorryForm.get('labelAgainst').disable();
+    }
 
     this.tags = worry.tags;
 
@@ -104,34 +116,58 @@ export class NewWorryComponent implements OnInit {
 
         this.worry = worry;
 
+        if(worry.opinions && worry.opinions.length > 0)
+        {
+          this.editLimited = true;
+        }
+
+        this.worryService.getCategories().subscribe((categories: Category[]) =>
+        {
+          this.categories = categories;
+          this.initForm(this.worry);
+        });
+
       });
     }
-
-    this.worryService.getCategories().subscribe((categories: Category[]) =>
+    else
     {
-      this.categories = categories;
-      this.initForm(this.worry);
-    });
-
+      this.worryService.getCategories().subscribe((categories: Category[]) =>
+      {
+        this.categories = categories;
+        this.initForm(this.worry);
+      });
+    }
   }
 
   onSubmit()
   {
     let worry: Worry = this.newWorryForm.value;
-    worry.tags = this.tags.map(x => x.value);
-    worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
-    worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-    // The image was changed.
-    if(this.imageName)
-    {
-      worry.image = this.imageName;
-    }
 
     Object.assign(this.worry, worry);
 
-    this.worryService.createWorry(this.worry).subscribe((newWorry: Worry) =>
+    this.worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
+    this.worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
+    // The image was changed.
+    if(this.imageName)
     {
-      this.router.navigate([`/worry/${newWorry.id}`]);
+      this.worry.image = this.imageName;
+    }
+    this.worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
+
+    let saveRequest$;
+
+    if(this.editLimited)
+    {
+      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate']));
+    }
+    else
+    {
+      saveRequest$ = this.worryService.createWorry(this.worry);
+    }
+
+    saveRequest$.subscribe((newWorry: Worry) =>
+    {
+      this.router.navigate([`/worry/${newWorry ? newWorry.id : this.worry.id}`]);
     },
     (err) =>
     {
@@ -163,7 +199,7 @@ export class NewWorryComponent implements OnInit {
         this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
           this.imageName = response.imagePath;
-          this.imagePath =  `${environment.ApiUrl}uploads/tmp/images/${response.imagePath}`;
+          this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
         });
       });
     }

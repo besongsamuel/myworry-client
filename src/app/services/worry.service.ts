@@ -20,28 +20,37 @@ export class WorryService {
 
   worryFilter: object =
   {
-    include: [
+    "include": [
       {
-        relation: 'user',
-        scope: {
-          fields: ['displayName', 'profile']
-        }
+        "relation": "user",
       },
       {
-        relation: 'opinions',
-        scope:{
-          include: [
+        "relation": "opinions",
+        "scope":{
+          "include": [
             {
-              relation: 'user',
-              scope: {
-                fields: ['displayName', 'profile']
-              }
+              "relation": "user",
+            },
+            {
+              "relation": "opinionLikes"
             }
           ]
         }
       }
     ]
   };
+
+  opinionFilter: object = 
+  {
+    "include": [
+      {
+        "relation": "user",
+      },
+      {
+        "relation": "opinionLikes"
+      }
+    ]
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -58,6 +67,11 @@ export class WorryService {
   getWorry(id: string) : Observable<Worry>
   {
     return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
+  }
+
+  getOpinion(id: string) : Observable<Opinion>
+  {
+    return this.http.get<Opinion>(`${environment.ApiUrl}/opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
   }
 
   uploadImage(file: File, type: string) : Observable<any>
@@ -81,6 +95,11 @@ export class WorryService {
       return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
     }
 
+  }
+
+  patchWorry(worry: Worry) : Observable<Worry>
+  {
+    return this.http.patch<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
   }
 
   createOpinion(opinion: Opinion) : Observable<Opinion>
