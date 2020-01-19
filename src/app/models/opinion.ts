@@ -7,6 +7,7 @@ export class Opinion {
   public worryId: string;
   public date_created: string;
   public id: string;
+  public text: string;
   public userId: string;
   public opinionLikes: OpinionLike[] = [];
 }

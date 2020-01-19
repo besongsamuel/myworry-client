@@ -54,9 +54,9 @@ export class WorryService {
 
   constructor(private http: HttpClient) { }
 
-  toggleLike(opinionId: string) : Observable<OpinionLike[]>
+  toggleLike(opinionId: string) : Observable<any>
   {
-    return this.http.post<OpinionLike[]>(`${environment.ApiUrl}toggleLike/${opinionId}`, null);
+    return this.http.post<any>(`${environment.ApiUrl}toggleLike/${opinionId}`, null);
   }
 
   getWorries() : Observable<Worry[]>
@@ -72,6 +72,16 @@ export class WorryService {
   getOpinion(id: string) : Observable<Opinion>
   {
     return this.http.get<Opinion>(`${environment.ApiUrl}/opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+  }
+
+  deleteOpinion(id: string) : Observable<void>
+  {
+    return this.http.delete<any>(`${environment.ApiUrl}/opinions/${id}`, this.httpOptions);
+  }
+
+  getOpinionLike(id: string) : Observable<OpinionLike>
+  {
+    return this.http.get<OpinionLike>(`${environment.ApiUrl}/opinion-likes/${id}`, this.httpOptions);
   }
 
   uploadImage(file: File, type: string) : Observable<any>
@@ -102,7 +112,7 @@ export class WorryService {
     return this.http.patch<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
   }
 
-  createOpinion(opinion: Opinion) : Observable<Opinion>
+  createOrEditOpinion(opinion: Opinion) : Observable<Opinion>
   {
     if(opinion.id)
     {

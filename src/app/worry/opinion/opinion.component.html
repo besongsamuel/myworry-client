@@ -3,6 +3,21 @@
     <img mat-card-avatar [src]="getImagePath(opinion.user.profile.image)">
     <mat-card-title *ngIf="opinion.user">{{opinion.user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{opinion.date_created | date}}</mat-card-subtitle>
+    <div class="ml-auto" *ngIf="opinion.user.id == userService.user.id">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Opinion Menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="editOpinionClicked(opinion)" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button (click)="removeOpinionClicked(opinion)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Remove</span>
+        </button>
+      </mat-menu>
+    </div>
   </mat-card-header>
   <mat-card-content>
     <p>

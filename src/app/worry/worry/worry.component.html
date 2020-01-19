@@ -43,7 +43,7 @@
   
     <div class="opinions w-100">
       <div [class.pl-5]="opinion.type == 0" [class.pr-5]="opinion.type == 1" *ngFor="let opinion of worry.opinions">
-        <app-opinion [opinion]="opinion"></app-opinion>
+        <app-opinion (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion"></app-opinion>
       </div>
     </div>
 

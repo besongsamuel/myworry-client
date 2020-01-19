@@ -6,6 +6,7 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {MatBadgeModule} from '@angular/material/badge';
 import { AppRoutingModule } from './app-routing.module';
 import {MatChipsModule} from '@angular/material/chips';
@@ -36,9 +37,9 @@ import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opin
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-bar.component';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 
-
-
+const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {} };
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-ba
     WorryComponent,
     OpinionComponent,
     NewOpinionDialogComponent,
-    ErrorSnackBarComponent
+    ErrorSnackBarComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -78,10 +80,11 @@ import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-ba
     MatChipsModule,
     MatIconModule,
     MatToolbarModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [httpInterceptorProviders, AuthService],
   bootstrap: [AppComponent],
-  entryComponents: [NewOpinionDialogComponent, ErrorSnackBarComponent]
+  entryComponents: [NewOpinionDialogComponent, ErrorSnackBarComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }
