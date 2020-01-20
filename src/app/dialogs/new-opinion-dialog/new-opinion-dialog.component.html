@@ -13,8 +13,8 @@
 
         <div class="d-flex flex-column">
             <mat-radio-group aria-label="Select an option" formControlName="type">
-                <mat-radio-button color="primary" [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="for_val">{{data.worry.labelFor}}</mat-radio-button>
-                <mat-radio-button  color="warn" [checked]="createOpinionForm.controls.type.value == 0" class="mx-2" [value]="against_val">{{data.worry.labelAgainst}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="for_val">{{data.worry.labelFor}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 0" class="mx-2" [value]="against_val">{{data.worry.labelAgainst}}</mat-radio-button>
             </mat-radio-group>
         </div>
         
@@ -26,6 +26,6 @@
   </form>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-end">
-  <button class="warn" mat-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
-  <button class="primary" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-button>Submit</button>
+  <button color="warn" mat-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
+  <button color="primary" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-button>Submit</button>
 </div>

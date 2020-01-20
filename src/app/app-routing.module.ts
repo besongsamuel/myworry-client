@@ -6,6 +6,7 @@ import { NewWorryComponent } from './worry/new-worry/new-worry.component';
 import { AuthGuard } from './guard/auth.guard';
 import { SignupComponent } from './account/signup/signup.component';
 import { WorryComponent } from './worry/worry/worry.component';
+import { ProfileComponent } from './account/profile/profile.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'edit/worry/:id', component: NewWorryComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'account/profile', component: ProfileComponent, canActivate: [AuthGuard]
   }
 ];
 

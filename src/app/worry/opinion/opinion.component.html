@@ -8,7 +8,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button (click)="editOpinionClicked(opinion)" mat-menu-item>
+        <button [disabled]="worry.locked" (click)="editOpinionClicked(opinion)" mat-menu-item>
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
@@ -28,6 +28,7 @@
 
     <button
       class="ml-auto"
+      [disabled]="worry.locked"
       mat-icon-button [color]="likedByUser ? 'primary' : ''"
       (click)="toggleLike()"
     >

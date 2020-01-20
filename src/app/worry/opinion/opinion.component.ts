@@ -10,6 +10,7 @@ import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Worry } from 'src/app/models/worry';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class OpinionComponent implements OnInit {
   
 
   @Input() opinion: Opinion;
+  @Input() worry: Worry;
   @Output() removeOpinion = new EventEmitter<string>();
   @Output() editOpinion = new EventEmitter<string>();
   likedByUser: boolean = false;

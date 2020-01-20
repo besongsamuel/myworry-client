@@ -12,3 +12,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 {
   border-left: 3px solid red;
 }
+
+.profileImage
+{
+    height: 190px;
+    width: 190px;
+    border-radius: 50%;
+}

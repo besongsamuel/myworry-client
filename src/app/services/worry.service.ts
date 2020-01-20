@@ -107,7 +107,7 @@ export class WorryService {
 
   }
 
-  patchWorry(worry: Worry) : Observable<Worry>
+  patchWorry(worry: Partial<Worry>) : Observable<Worry>
   {
     return this.http.patch<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
   }

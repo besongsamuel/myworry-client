@@ -38,6 +38,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-bar.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ProfileComponent } from './account/profile/profile.component';
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {} };
 
@@ -54,7 +55,8 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     OpinionComponent,
     NewOpinionDialogComponent,
     ErrorSnackBarComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

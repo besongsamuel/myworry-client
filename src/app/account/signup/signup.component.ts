@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { User } from 'src/app/models/user';
 import { Profile } from 'src/app/models/profile';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +27,8 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private worryService: WorryService)
+    private worryService: WorryService,
+    private helperService: HelperService)
   {
     this.signupForm = fb.group(
     {
@@ -43,18 +45,7 @@ export class SignupComponent implements OnInit {
   }
 
 
-checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-  return (group: FormGroup) => {
-    let passwordInput = group.controls[passwordKey],
-        passwordConfirmationInput = group.controls[passwordConfirmationKey];
-    if (passwordInput.value !== passwordConfirmationInput.value) {
-      return passwordConfirmationInput.setErrors({notEquivalent: true})
-    }
-    else {
-        return passwordConfirmationInput.setErrors(null);
-    }
-  }
-}
+
 
 onSubmit()
 {
@@ -89,23 +80,36 @@ removeImage()
     });
   }
 
-  fileDropped(files: NgxFileDropEntry[])
+fileDropped(files: NgxFileDropEntry[])
+{
+  this.fileDroped = files[0];
+
+  if(this.fileDroped.fileEntry.isFile)
   {
-    this.fileDroped = files[0];
+    const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
 
-    if(this.fileDroped.fileEntry.isFile)
+    fileEntry.file((file: File) =>
     {
-      const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
-
-      fileEntry.file((file: File) =>
+      this.worryService.uploadImage(file, 'profile').subscribe((response) =>
       {
-        this.worryService.uploadImage(file, 'profile').subscribe((response) =>
-        {
-          this.imageName = response.imagePath;
-          this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
-        });
+        this.imageName = response.imagePath;
+        this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
       });
+    });
+  }
+}
+
+checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+  return (group: FormGroup) => {
+    let passwordInput = group.controls[passwordKey],
+        passwordConfirmationInput = group.controls[passwordConfirmationKey];
+    if (passwordInput.value !== passwordConfirmationInput.value) {
+      return passwordConfirmationInput.setErrors({notEquivalent: true})
+    }
+    else {
+        return passwordConfirmationInput.setErrors(null);
     }
   }
+}
 
 }

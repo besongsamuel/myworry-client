@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
@@ -13,6 +13,7 @@ import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
 import { Entity } from 'src/app/models/entity.enum';
 import { Opinion } from 'src/app/models/opinion';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-worry',
@@ -23,12 +24,15 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   worry$: Observable<Worry>;
   worry: Worry;
+  expired: boolean = false;
+
 
   public imagePath: string;
 
   constructor(private route: ActivatedRoute, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
-    private socket: Socket) 
+    private socket: Socket,
+    private zone:NgZone) 
   {
     
   }
@@ -48,6 +52,8 @@ export class WorryComponent implements OnInit, OnDestroy {
           this.worry = worry;
           this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
 
+          this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
+
         })))
 
     );
@@ -65,6 +71,22 @@ export class WorryComponent implements OnInit, OnDestroy {
       {
         this.handleOpinionEvent(event);
       }
+
+      if(event.Entity == Entity.WORRY)
+      {
+        this.handleWorryEvent(event);
+      }
+    });
+  }
+
+  toggleLock()
+  {
+    this.worryService.patchWorry({ id: this.worry.id, locked: !this.worry.locked  }).subscribe(() => 
+    {
+      this.worry.locked = !this.worry.locked;
+      let e: SocketEvent = { Action: Crud.UPDATE, Entity: Entity.WORRY, Id: this.worry.id, roomId: this.worry.id };
+      this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+
     });
   }
 
@@ -130,6 +152,25 @@ export class WorryComponent implements OnInit, OnDestroy {
         {
           this.worry.opinions = this.worry.opinions.filter(x => x.id != event.Id);
           this.worry.opinions.unshift(opinion);
+        });
+      }
+    }
+  }
+
+  handleWorryEvent(event: SocketEvent)
+  {
+    if(event.Id)
+    {
+      if(event.Action == Crud.UPDATE)
+      {
+        this.zone.run(() => { 
+          this.worry$ = this.worryService.getWorry(event.Id).pipe(tap((worry) => 
+          {
+            this.imagePath = `${environment.ApiUrl}${worry.image}`; 
+            this.worry = worry;
+            this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
+
+          }));
         });
       }
     }

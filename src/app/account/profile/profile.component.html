@@ -1,0 +1,231 @@
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#worries" data-toggle="tab" class="nav-link">Worries</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                </li>
+            </ul>
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <h5 class="mb-3">User Profile</h5>
+                    <div class="row" *ngIf="user">
+                        <div class="col-md-6">
+                            <h6>About</h6>
+                            <p *ngIf="user.profile.about">{{user.profile.about}}</p>
+                            <p class="text-info" *ngIf="!user.profile.about">Edit your profile and add a brief description about youself.</p>
+                            <h6>Interests</h6>
+                            <p class="text-info" *ngIf="!user.profile.interests">Edit your profile and add your interests.</p>
+                            <mat-chip-list *ngIf="user.profile.interests" aria-label="Interests">
+                                <mat-chip color="primary" *ngFor="let interest of user.profile.interests">{{interest}}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Recent badges</h6>
+                            <a href="#" class="badge badge-dark badge-pill">html5</a>
+                            <a href="#" class="badge badge-dark badge-pill">react</a>
+                            <a href="#" class="badge badge-dark badge-pill">codeply</a>
+                            <a href="#" class="badge badge-dark badge-pill">angularjs</a>
+                            <a href="#" class="badge badge-dark badge-pill">css3</a>
+                            <a href="#" class="badge badge-dark badge-pill">jquery</a>
+                            <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
+                            <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
+                            <hr>
+                            <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
+                            <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
+                            <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                            <table class="table table-sm table-hover table-striped">
+                                <tbody>                                    
+                                    <tr *ngFor="let trail of auditTrails">
+                                        <td>
+                                            <span class="mr-4">{{trail.date_created | date}}</span><strong>{{trail.userName}}</strong> {{trail.Action}}d {{trail.Entity}} <strong>`{{trail.EntityName}}`</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <div class="tab-pane" id="worries">
+                    <div class="alert alert-info alert-dismissable">
+                        <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <tbody>                                    
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="tab-pane" id="edit">
+                    <form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+
+                        <div class="alert alert-danger" role="alert" *ngIf='error'>
+                            {{ errorMessage }}
+                        </div>
+            
+                        <div class="alert alert-success" role="alert" *ngIf='success'>
+                            {{ successMessage }}
+                        </div>
+
+                        <div class="d-flex justify-content-center my-3">
+                            <ngx-file-drop
+                          dropZoneLabel="Drop Profile Image Here"
+                          (onFileDrop)="fileDropped($event)"
+                          accept=".png,.jpg,.jpeg"
+                          directory="false"
+                          multiple="false"
+                          *ngIf="!profileImagePath">
+                          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                
+                            <div class="d-flex flex-column align-items-center">
+                              <div>Drop Profile Image Here</div>
+                              <div>OR</div>
+                              <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+                            </div>
+                
+                          </ng-template>
+                        </ngx-file-drop>
+                
+                        <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
+                            <img class="profileImage p-1 border" [src]="profileImagePath">
+                            <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                        </div>
+                            
+                        </div>
+            
+                        <div class="d-flex text-muted text-center">
+                            <p>{{user.email}}</p>
+                        </div>
+            
+                        <div class="d-flex">
+                            <mat-form-field class="pr-2 flex-grow-1">
+                                <input matInput placeholder="First Name" formControlName="firstName">
+                            </mat-form-field>
+                            <mat-form-field class="pl-2 flex-grow-1">
+                                <input matInput placeholder="Last Name" formControlName="lastName">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="d-flex">
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Display Name" formControlName="displayName">
+                                <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="d-flex flex-column" formGroupName="profile" >
+
+                            <mat-form-field class="w-100 my-2" >
+                                <textarea matInput placeholder="About" formControlName="about"></textarea>
+                                <mat-hint align="start">Enter a short description about yourself.</mat-hint>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-100">
+                                <input matInput [matDatepicker]="dob" placeholder="Birth Date" formControlName="dob">
+                                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                                <mat-datepicker #dob startView="year"></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-label>Gender</mat-label>
+                                <mat-select formControlName="gender" name="gender">
+                                  <mat-option *ngFor="let gender of genders | keyvalue" [value]="gender.value">
+                                    {{gender.value}}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div class="form-group">
+                                <label for="tags">Interests</label>
+                                <tag-input id="interests" maxItems="10" modelAsStrings="true" formControlName="interests">
+                                </tag-input>
+                            </div>
+
+                        </div>
+            
+                        <div class="d-flex flex-column">
+                            <mat-form-field class="flex-grow-1">
+                                <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
+                            </mat-form-field>
+                            <mat-form-field class="flex-grow-1">
+                                <input type="password" matInput placeholder="Password" formControlName="password">
+                            </mat-form-field>
+                            <mat-form-field class="flex-grow-1">
+                                <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
+                                <mat-error *ngIf="profileForm.controls.confirmPassword.hasError('notEquivalent')">
+                                    Passwords don't match
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+            
+                        <div class="d-flex w-100">
+                            <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid">Update</button>
+                        </div>
+            
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 order-lg-1 text-center">
+            <ngx-file-drop
+          dropZoneLabel="Drop Profile Image Here"
+          (onFileDrop)="fileDropped($event)"
+          accept=".png,.jpg,.jpeg"
+          directory="false"
+          multiple="false"
+          *ngIf="!profileImagePath">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+
+            <div class="d-flex flex-column align-items-center">
+              <div>Drop Profile Image Here</div>
+              <div>OR</div>
+              <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+            </div>
+
+          </ng-template>
+        </ngx-file-drop>
+
+        <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
+            <img class="profileImage p-1 border" [src]="profileImagePath">
+        </div>
+            
+        </div>
+    </div>
+</div>
