@@ -36,9 +36,14 @@ import { OpinionComponent } from './worry/opinion/opinion.component';
 import { NewOpinionDialogComponent } from './dialogs/new-opinion-dialog/new-opinion-dialog.component'
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
 import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-bar.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProfileComponent } from './account/profile/profile.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+
+
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {} };
 
@@ -69,13 +74,16 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    MatTableModule,
     MatDatepickerModule,
     MatMomentDateModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     MatSelectModule,
     MatCardModule,
     MatRadioModule,
+    MatSortModule,
     MatButtonModule,
     MatDialogModule,
     MatBadgeModule,

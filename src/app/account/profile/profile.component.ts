@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry } from 'ngx-file-drop';
@@ -16,6 +16,12 @@ import * as _ from "lodash";
 // the `default as` syntax.
 import * as moment from 'moment';
 import { AuditTrail } from 'src/app/models/audit-trail';
+import { WorryService } from 'src/app/services/worry.service';
+import { Worry } from 'src/app/models/worry';
+import { Opinion } from 'src/app/models/opinion';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 export const MY_FORMATS = {
   parse: {
@@ -54,7 +60,10 @@ export class ProfileComponent implements OnInit {
   public fileDroped: NgxFileDropEntry;
   profileForm: FormGroup;
   user: User;
+  worries: Worry[] = [];
+  opinions: Opinion[] = [];
   genders = Gender;
+  recentTags: string[] = []
 
   error: boolean = false;
   success: boolean = false;
@@ -64,11 +73,17 @@ export class ProfileComponent implements OnInit {
   errorMessage: string = "";
   successMessage: string = "Account was successfully updated";
 
-  constructor(public userService: UserService, private fb: FormBuilder, private helperService: HelperService) { }
+  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'actions'];
+  dataSource: MatTableDataSource<Worry>;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  constructor(public userService: UserService, private fb: FormBuilder, private worryService: WorryService) { }
 
   ngOnInit() {
 
-    this.userService.getUser().subscribe((user: User) => 
+    this.userService.getUser().subscribe((user: User) =>
     {
       this.user = user;
 
@@ -92,14 +107,37 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['']
       },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
 
-      this.userService.getAuditTrails().subscribe((auditTrails: AuditTrail[]) => 
+      this.userService.getAuditTrails().subscribe((auditTrails: AuditTrail[]) =>
       {
         this.auditTrails = auditTrails;
+      });
+
+      this.worryService.getWorries(user.id).subscribe((worries: Worry[]) =>
+      {
+        this.worries = worries;
+        this.dataSource = new MatTableDataSource(worries);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.recentTags = _.flatten(this.worries.map(x => x.tags));
+      });
+
+      this.worryService.getOpinions(user.id).subscribe((opinions: Opinion[]) =>
+      {
+        this.opinions = opinions;
+
       });
 
     });
 
 
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   updateProfile()
@@ -119,20 +157,20 @@ export class ProfileComponent implements OnInit {
         value.profile.gender = Gender.UNKNOWN;
       }
 
-      this.userService.updateUser(value).subscribe((user : User) => 
+      this.userService.updateUser(value).subscribe((user : User) =>
       {
         this.success = true;
         this.error = false;
         this.user = user;
       },
-      (err) => 
+      (err) =>
       {
         this.success = false;
         this.error = true;
         this.errorMessage = err.error.error.errorMessage;
       });
 
-    } 
+    }
   }
 
   removeImage()

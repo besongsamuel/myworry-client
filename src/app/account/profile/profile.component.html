@@ -27,24 +27,16 @@
                             </mat-chip-list>
                         </div>
                         <div class="col-md-6">
-                            <h6>Recent badges</h6>
-                            <a href="#" class="badge badge-dark badge-pill">html5</a>
-                            <a href="#" class="badge badge-dark badge-pill">react</a>
-                            <a href="#" class="badge badge-dark badge-pill">codeply</a>
-                            <a href="#" class="badge badge-dark badge-pill">angularjs</a>
-                            <a href="#" class="badge badge-dark badge-pill">css3</a>
-                            <a href="#" class="badge badge-dark badge-pill">jquery</a>
-                            <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
-                            <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
+                            <h6>Recent tags</h6>
+                            <a *ngFor="let tag of recentTags" href="#" class="badge badge-dark badge-pill">{{tag}}</a>
                             <hr>
-                            <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
-                            <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
-                            <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                            <span class="badge badge-primary"><mat-icon aria-hidden="false" aria-label="Worries">mode_comment</mat-icon> {{worries.length}} Worries</span>
+                            <span class="badge badge-success"><mat-icon aria-hidden="false" aria-label="Opinions">poll</mat-icon> {{opinions.length}} Opinions</span>
                         </div>
                         <div class="col-md-12">
                             <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
                             <table class="table table-sm table-hover table-striped">
-                                <tbody>                                    
+                                <tbody>
                                     <tr *ngFor="let trail of auditTrails">
                                         <td>
                                             <span class="mr-4">{{trail.date_created | date}}</span><strong>{{trail.userName}}</strong> {{trail.Action}}d {{trail.Entity}} <strong>`{{trail.EntityName}}`</strong>
@@ -57,38 +49,51 @@
                     <!--/row-->
                 </div>
                 <div class="tab-pane" id="worries">
-                    <div class="alert alert-info alert-dismissable">
-                        <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
-                    </div>
-                    <table class="table table-hover table-striped">
-                        <tbody>                                    
-                            <tr>
-                                <td>
-                                   <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
-                                </td>
-                            </tr>
-                        </tbody> 
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                  </mat-form-field>
+
+                  <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                        <td mat-cell *matCellDef="let row"> <b>{{row.name}}</b> </td>
+                      </ng-container>
+
+                      <!-- Start Date -->
+                      <ng-container matColumnDef="startDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+                        <td mat-cell *matCellDef="let row"> {{row.startdate | date} </td>
+                      </ng-container>
+
+                      <!-- End Date -->
+                      <ng-container matColumnDef="endDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+                        <td mat-cell *matCellDef="let row"> {{row.endDate | date}} </td>
+                      </ng-container>
+
+                      <!-- Actions Column -->
+                      <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                        <td mat-cell *matCellDef="let row">
+                          <div class="d-flex">
+                            <button class="mr-2" mat-raised-button color="warn">Remove</button>
+                            <button [routerLink]="['/worry/', row.id]" class="mr-2" mat-raised-button color="primary">View</button>
+                            <button [routerLink]="['/worry/edit', row.id]" mat-raised-button color="warn">Edit</button>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                      </tr>
                     </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                  </div>
+
                 </div>
                 <div class="tab-pane" id="edit">
                     <form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
@@ -96,7 +101,7 @@
                         <div class="alert alert-danger" role="alert" *ngIf='error'>
                             {{ errorMessage }}
                         </div>
-            
+
                         <div class="alert alert-success" role="alert" *ngIf='success'>
                             {{ successMessage }}
                         </div>
@@ -110,29 +115,29 @@
                           multiple="false"
                           *ngIf="!profileImagePath">
                           <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                
+
                             <div class="d-flex flex-column align-items-center">
                               <div>Drop Profile Image Here</div>
                               <div>OR</div>
                               <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
                             </div>
-                
+
                           </ng-template>
                         </ngx-file-drop>
-                
+
                         <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
                             <img class="profileImage p-1 border" [src]="profileImagePath">
                             <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
                               <mat-icon>cancel</mat-icon>
                             </button>
                         </div>
-                            
+
                         </div>
-            
+
                         <div class="d-flex text-muted text-center">
                             <p>{{user.email}}</p>
                         </div>
-            
+
                         <div class="d-flex">
                             <mat-form-field class="pr-2 flex-grow-1">
                                 <input matInput placeholder="First Name" formControlName="firstName">
@@ -178,7 +183,7 @@
                             </div>
 
                         </div>
-            
+
                         <div class="d-flex flex-column">
                             <mat-form-field class="flex-grow-1">
                                 <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
@@ -193,11 +198,11 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-            
+
                         <div class="d-flex w-100">
                             <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid">Update</button>
                         </div>
-            
+
                     </form>
                 </div>
             </div>
@@ -225,7 +230,7 @@
         <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
             <img class="profileImage p-1 border" [src]="profileImagePath">
         </div>
-            
+
         </div>
     </div>
 </div>

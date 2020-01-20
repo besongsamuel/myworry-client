@@ -40,7 +40,7 @@ export class WorryService {
     ]
   };
 
-  opinionFilter: object = 
+  opinionFilter: object =
   {
     "include": [
       {
@@ -59,9 +59,42 @@ export class WorryService {
     return this.http.post<any>(`${environment.ApiUrl}toggleLike/${opinionId}`, null);
   }
 
-  getWorries() : Observable<Worry[]>
+  getWorries(userId? : string) : Observable<Worry[]>
   {
-    return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
+
+    if(userId)
+    {
+      let worryFilter: object =
+      {
+        "include": [
+          {
+            "relation": "user",
+          },
+          {
+            "relation": "opinions",
+            "scope":{
+              "include": [
+                {
+                  "relation": "user",
+                },
+                {
+                  "relation": "opinionLikes"
+                }
+              ]
+            }
+          }
+        ],
+        "where": { "userId": userId }
+      };
+
+      return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+    }
+    else
+    {
+      return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
+    }
+
+
   }
 
   getWorry(id: string) : Observable<Worry>
@@ -72,6 +105,31 @@ export class WorryService {
   getOpinion(id: string) : Observable<Opinion>
   {
     return this.http.get<Opinion>(`${environment.ApiUrl}/opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+  }
+
+  getOpinions(userId?:string): Observable<Opinion[]>
+  {
+    if(userId)
+    {
+
+      let opinionFilter: object =
+      {
+        "include": [
+          {
+            "relation": "user",
+          },
+          {
+            "relation": "opinionLikes"
+          }
+        ],
+        "where": { "userId": userId }
+      }
+      return this.http.get<Opinion[]>(`${environment.ApiUrl}/opinions?filter=${encodeURIComponent(JSON.stringify(opinionFilter))}`, this.httpOptions);
+    }
+    else
+    {
+      return this.http.get<Opinion[]>(`${environment.ApiUrl}/opinions?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+    }
   }
 
   deleteOpinion(id: string) : Observable<void>
