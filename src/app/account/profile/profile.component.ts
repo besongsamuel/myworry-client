@@ -74,10 +74,15 @@ export class ProfileComponent implements OnInit {
   successMessage: string = "Account was successfully updated";
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'actions'];
+  displayedTrailColumns: string[] = ['date', 'trail'];
   dataSource: MatTableDataSource<Worry>;
+  trailDataSource: MatTableDataSource<AuditTrail>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  @ViewChild(MatPaginator, {static: true}) trailPaginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) trailSort: MatSort;
 
   constructor(public userService: UserService, private fb: FormBuilder, private worryService: WorryService) { }
 
@@ -110,6 +115,10 @@ export class ProfileComponent implements OnInit {
       this.userService.getAuditTrails().subscribe((auditTrails: AuditTrail[]) =>
       {
         this.auditTrails = auditTrails;
+        this.trailDataSource = new MatTableDataSource(auditTrails);
+        this.trailDataSource.paginator = this.trailPaginator;
+        this.trailDataSource.sort = this.trailSort;
+
       });
 
       this.worryService.getWorries(user.id).subscribe((worries: Worry[]) =>
@@ -133,6 +142,14 @@ export class ProfileComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  applyTrailFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {

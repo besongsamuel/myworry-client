@@ -14,6 +14,7 @@ import { Crud } from 'src/app/models/crud.enum';
 import { Entity } from 'src/app/models/entity.enum';
 import { Opinion } from 'src/app/models/opinion';
 import * as moment from 'moment';
+import { Gender } from 'src/app/models/profile';
 
 @Component({
   selector: 'app-worry',
@@ -26,6 +27,12 @@ export class WorryComponent implements OnInit, OnDestroy {
   worry: Worry;
   expired: boolean = false;
 
+  perLeft;
+  perRight;
+  perLeftMale;
+  perRightMale;
+  perLeftFemale;
+  perRightFemale;
 
   public imagePath: string;
 
@@ -42,6 +49,8 @@ export class WorryComponent implements OnInit, OnDestroy {
     return `${environment.ApiUrl}${image}`;
   }
 
+
+
   ngOnInit() {
 
     this.worry$ = this.route.paramMap.pipe(
@@ -50,10 +59,9 @@ export class WorryComponent implements OnInit, OnDestroy {
         {
           this.imagePath = `${environment.ApiUrl}${worry.image}`; 
           this.worry = worry;
-          this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
-
           this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
-
+          this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
+          this.generateStatistics(worry);
         })))
 
     );
@@ -88,6 +96,18 @@ export class WorryComponent implements OnInit, OnDestroy {
       this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
 
     });
+  }
+
+  generateStatistics(worry: Worry)
+  {
+    this.perLeft = ((worry.opinions.filter(x => x.type == 0).length / worry.opinions.length) * 100).toFixed(2);
+    this.perRight = ((worry.opinions.filter(x => x.type == 1).length / worry.opinions.length) * 100).toFixed(2);
+
+    this.perLeftMale = ((worry.opinions.filter(x => x.type == 0 && x.user.profile.gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2)
+    this.perRightMale = ((worry.opinions.filter(x => x.type == 1 && x.user.profile.gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2);
+
+    this.perLeftFemale = ((worry.opinions.filter(x => x.type == 0 && x.user.profile.gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2)
+    this.perRightFemale = ((worry.opinions.filter(x => x.type == 1 && x.user.profile.gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2);
   }
 
   ngOnDestroy(): void {

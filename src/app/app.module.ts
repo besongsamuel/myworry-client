@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
 import { AppRoutingModule } from './app-routing.module';
 import {MatChipsModule} from '@angular/material/chips';
@@ -83,6 +84,7 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     MatSelectModule,
     MatCardModule,
     MatRadioModule,
+    MatExpansionModule,
     MatSortModule,
     MatButtonModule,
     MatDialogModule,

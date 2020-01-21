@@ -1,236 +1,214 @@
-<div class="container">
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#worries" data-toggle="tab" class="nav-link">Worries</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
-                </li>
-            </ul>
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    <h5 class="mb-3">User Profile</h5>
-                    <div class="row" *ngIf="user">
-                        <div class="col-md-6">
-                            <h6>About</h6>
-                            <p *ngIf="user.profile.about">{{user.profile.about}}</p>
-                            <p class="text-info" *ngIf="!user.profile.about">Edit your profile and add a brief description about youself.</p>
-                            <h6>Interests</h6>
-                            <p class="text-info" *ngIf="!user.profile.interests">Edit your profile and add your interests.</p>
-                            <mat-chip-list *ngIf="user.profile.interests" aria-label="Interests">
-                                <mat-chip color="primary" *ngFor="let interest of user.profile.interests">{{interest}}</mat-chip>
-                            </mat-chip-list>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Recent tags</h6>
-                            <a *ngFor="let tag of recentTags" href="#" class="badge badge-dark badge-pill">{{tag}}</a>
-                            <hr>
-                            <span class="badge badge-primary"><mat-icon aria-hidden="false" aria-label="Worries">mode_comment</mat-icon> {{worries.length}} Worries</span>
-                            <span class="badge badge-success"><mat-icon aria-hidden="false" aria-label="Opinions">poll</mat-icon> {{opinions.length}} Opinions</span>
-                        </div>
-                        <div class="col-md-12">
-                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
-                            <table class="table table-sm table-hover table-striped">
-                                <tbody>
-                                    <tr *ngFor="let trail of auditTrails">
-                                        <td>
-                                            <span class="mr-4">{{trail.date_created | date}}</span><strong>{{trail.userName}}</strong> {{trail.Action}}d {{trail.Entity}} <strong>`{{trail.EntityName}}`</strong>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+<div class="container my-4">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="" data-target="#edit" data-toggle="tab" class="nav-link active">Edit Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="" data-target="#worries" data-toggle="tab" class="nav-link">Worries</a>
+        </li>
+        <li class="nav-item">
+            <a href="" data-target="#profile" data-toggle="tab" class="nav-link">Recent Activities</a>
+        </li>
+    </ul>
+    <div class="tab-content py-4">
+        <div class="tab-pane" id="profile">
+            <div class="row" *ngIf="user">
+                <div class="col-md-12">
+                    <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                    
+                    <mat-form-field>
+                        <input matInput (keyup)="applyTrailFilter($event.target.value)" placeholder="Filter">
+                      </mat-form-field>
+                      
+                      <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="trailDataSource" matSort>
+                      
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                            <td mat-cell *matCellDef="let trail"> 
+                                <span class="mr-4">{{trail.date_created | date:'medium'}}</span>
+                            </td>
+                        </ng-container>
+
+                          <ng-container matColumnDef="trail">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Activity</th>
+                            <td mat-cell *matCellDef="let trail"> 
+                                <strong>{{trail.userName}}</strong> {{trail.Action}}d {{trail.Entity}} <strong>`{{trail.EntityName}}`</strong>
+                            </td>
+                          </ng-container>
+                      
+                          <tr mat-header-row *matHeaderRowDef="displayedTrailColumns"></tr>
+                          <tr mat-row *matRowDef="let trail; columns: displayedTrailColumns;">
+                          </tr>
+                        </table>
+                      
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                      </div>
+
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <div class="tab-pane" id="worries">
+
+            <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let row"> <b>{{row.name}}</b> </td>
+                </ng-container>
+
+                <!-- Start Date -->
+                <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+                <td mat-cell *matCellDef="let row"> {{row.startDate | date}} </td>
+                </ng-container>
+
+                <!-- End Date -->
+                <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+                <td mat-cell *matCellDef="let row"> {{row.endDate | date}} </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="d-flex">
+                    <button class="mr-2" mat-raised-button color="warn">Remove</button>
+                    <button [routerLink]="['/worry/', row.id]" class="mr-2" mat-raised-button color="primary">View</button>
+                    <button [routerLink]="['/edit/worry/', row.id]" mat-raised-button color="warn">Edit</button>
                     </div>
-                    <!--/row-->
-                </div>
-                <div class="tab-pane" id="worries">
-                  <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                  </mat-form-field>
+                </td>
+                </ng-container>
 
-                  <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource" matSort>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
 
-                      <!-- Name Column -->
-                      <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                        <td mat-cell *matCellDef="let row"> <b>{{row.name}}</b> </td>
-                      </ng-container>
-
-                      <!-- Start Date -->
-                      <ng-container matColumnDef="startDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
-                        <td mat-cell *matCellDef="let row"> {{row.startdate | date} </td>
-                      </ng-container>
-
-                      <!-- End Date -->
-                      <ng-container matColumnDef="endDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-                        <td mat-cell *matCellDef="let row"> {{row.endDate | date}} </td>
-                      </ng-container>
-
-                      <!-- Actions Column -->
-                      <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-                        <td mat-cell *matCellDef="let row">
-                          <div class="d-flex">
-                            <button class="mr-2" mat-raised-button color="warn">Remove</button>
-                            <button [routerLink]="['/worry/', row.id]" class="mr-2" mat-raised-button color="primary">View</button>
-                            <button [routerLink]="['/worry/edit', row.id]" mat-raised-button color="warn">Edit</button>
-                          </div>
-                        </td>
-                      </ng-container>
-
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                      </tr>
-                    </table>
-
-                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                  </div>
-
-                </div>
-                <div class="tab-pane" id="edit">
-                    <form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-
-                        <div class="alert alert-danger" role="alert" *ngIf='error'>
-                            {{ errorMessage }}
-                        </div>
-
-                        <div class="alert alert-success" role="alert" *ngIf='success'>
-                            {{ successMessage }}
-                        </div>
-
-                        <div class="d-flex justify-content-center my-3">
-                            <ngx-file-drop
-                          dropZoneLabel="Drop Profile Image Here"
-                          (onFileDrop)="fileDropped($event)"
-                          accept=".png,.jpg,.jpeg"
-                          directory="false"
-                          multiple="false"
-                          *ngIf="!profileImagePath">
-                          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-
-                            <div class="d-flex flex-column align-items-center">
-                              <div>Drop Profile Image Here</div>
-                              <div>OR</div>
-                              <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
-                            </div>
-
-                          </ng-template>
-                        </ngx-file-drop>
-
-                        <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
-                            <img class="profileImage p-1 border" [src]="profileImagePath">
-                            <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
-                              <mat-icon>cancel</mat-icon>
-                            </button>
-                        </div>
-
-                        </div>
-
-                        <div class="d-flex text-muted text-center">
-                            <p>{{user.email}}</p>
-                        </div>
-
-                        <div class="d-flex">
-                            <mat-form-field class="pr-2 flex-grow-1">
-                                <input matInput placeholder="First Name" formControlName="firstName">
-                            </mat-form-field>
-                            <mat-form-field class="pl-2 flex-grow-1">
-                                <input matInput placeholder="Last Name" formControlName="lastName">
-                            </mat-form-field>
-                        </div>
-
-                        <div class="d-flex">
-                            <mat-form-field class="w-100">
-                                <input matInput placeholder="Display Name" formControlName="displayName">
-                                <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="d-flex flex-column" formGroupName="profile" >
-
-                            <mat-form-field class="w-100 my-2" >
-                                <textarea matInput placeholder="About" formControlName="about"></textarea>
-                                <mat-hint align="start">Enter a short description about yourself.</mat-hint>
-                            </mat-form-field>
-
-                            <mat-form-field class="w-100">
-                                <input matInput [matDatepicker]="dob" placeholder="Birth Date" formControlName="dob">
-                                <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-                                <mat-datepicker #dob startView="year"></mat-datepicker>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                                <mat-label>Gender</mat-label>
-                                <mat-select formControlName="gender" name="gender">
-                                  <mat-option *ngFor="let gender of genders | keyvalue" [value]="gender.value">
-                                    {{gender.value}}
-                                  </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <div class="form-group">
-                                <label for="tags">Interests</label>
-                                <tag-input id="interests" maxItems="10" modelAsStrings="true" formControlName="interests">
-                                </tag-input>
-                            </div>
-
-                        </div>
-
-                        <div class="d-flex flex-column">
-                            <mat-form-field class="flex-grow-1">
-                                <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
-                            </mat-form-field>
-                            <mat-form-field class="flex-grow-1">
-                                <input type="password" matInput placeholder="Password" formControlName="password">
-                            </mat-form-field>
-                            <mat-form-field class="flex-grow-1">
-                                <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
-                                <mat-error *ngIf="profileForm.controls.confirmPassword.hasError('notEquivalent')">
-                                    Passwords don't match
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="d-flex w-100">
-                            <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid">Update</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 order-lg-1 text-center">
-            <ngx-file-drop
-          dropZoneLabel="Drop Profile Image Here"
-          (onFileDrop)="fileDropped($event)"
-          accept=".png,.jpg,.jpeg"
-          directory="false"
-          multiple="false"
-          *ngIf="!profileImagePath">
-          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-
-            <div class="d-flex flex-column align-items-center">
-              <div>Drop Profile Image Here</div>
-              <div>OR</div>
-              <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
             </div>
 
-          </ng-template>
-        </ngx-file-drop>
-
-        <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
-            <img class="profileImage p-1 border" [src]="profileImagePath">
         </div>
+        <div class="tab-pane active" id="edit">
+            <form *ngIf="user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
 
+                <div class="alert alert-danger" role="alert" *ngIf='error'>
+                    {{ errorMessage }}
+                </div>
+
+                <div class="alert alert-success" role="alert" *ngIf='success'>
+                    {{ successMessage }}
+                </div>
+
+                <div class="d-flex justify-content-center my-3">
+                    <ngx-file-drop
+                    dropZoneLabel="Drop Profile Image Here"
+                    (onFileDrop)="fileDropped($event)"
+                    accept=".png,.jpg,.jpeg"
+                    directory="false"
+                    multiple="false"
+                    *ngIf="!profileImagePath">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+
+                    <div class="d-flex flex-column align-items-center">
+                        <div>Drop Profile Image Here</div>
+                        <div>OR</div>
+                        <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+                    </div>
+
+                    </ng-template>
+                </ngx-file-drop>
+
+                <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
+                    <img class="profileImage p-1 border" [src]="profileImagePath">
+                    <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </div>
+
+                </div>
+
+                <div class="d-flex text-muted text-center">
+                    <p>{{user.email}}</p>
+                </div>
+
+                <div class="d-flex">
+                    <mat-form-field class="pr-2 flex-grow-1">
+                        <input matInput placeholder="First Name" formControlName="firstName">
+                    </mat-form-field>
+                    <mat-form-field class="pl-2 flex-grow-1">
+                        <input matInput placeholder="Last Name" formControlName="lastName">
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex">
+                    <mat-form-field class="w-100">
+                        <input matInput placeholder="Display Name" formControlName="displayName">
+                        <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-column" formGroupName="profile" >
+
+                    <mat-form-field class="w-100 my-2" >
+                        <textarea matInput placeholder="About" formControlName="about"></textarea>
+                        <mat-hint align="start">Enter a short description about yourself.</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100">
+                        <input matInput [matDatepicker]="dob" placeholder="Birth Date" formControlName="dob">
+                        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                        <mat-datepicker #dob startView="year"></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender" name="gender">
+                            <mat-option *ngFor="let gender of genders | keyvalue" [value]="gender.value">
+                            {{gender.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="form-group">
+                        <label for="tags">Interests</label>
+                        <tag-input id="interests" maxItems="10" modelAsStrings="true" formControlName="interests">
+                        </tag-input>
+                    </div>
+
+                </div>
+
+                <div class="d-flex flex-column">
+                    <mat-form-field class="flex-grow-1">
+                        <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
+                    </mat-form-field>
+                    <mat-form-field class="flex-grow-1">
+                        <input type="password" matInput placeholder="Password" formControlName="password">
+                    </mat-form-field>
+                    <mat-form-field class="flex-grow-1">
+                        <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
+                        <mat-error *ngIf="profileForm.controls.confirmPassword.hasError('notEquivalent')">
+                            Passwords don't match
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex w-100">
+                    <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid">Update</button>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
+
+        
+

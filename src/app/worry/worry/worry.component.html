@@ -46,6 +46,32 @@
             <p><strong>This item is locked</strong></p>
           </div>
 
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span>{{perLeft}}% of people <span>are of the opinion <b>{{worry.labelAgainst}}</b></span></span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="d-flex flex-column">
+                <div><b>{{perLeftMale}}%</b> males and <b>{{perLeftFemale}}%</b> females.</div>
+              </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span>{{perRight}}% of people <span>are of the opinion <b>{{worry.labelFor}}</b></span></span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="d-flex flex-column">
+                <div><b>{{perRightMale}}%</b> males and <b>{{perRightFemale}}%</b> females.</div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
         </mat-card-content>
         <mat-card-actions class="d-flex">
           <button [disabled]="expired || worry.locked" class="mr-auto" color="primary" (click)="addOpinion(1)" mat-raised-button>{{worry.labelFor}}</button>
