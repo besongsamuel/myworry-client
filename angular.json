@@ -24,8 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/myworry-theme.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
+              "src/myworry-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [

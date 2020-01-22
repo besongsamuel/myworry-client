@@ -2,12 +2,12 @@
     <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <div class="d-flex">
             <input class="form-control mr-2" formControlName="q">
-            <button class="btn btn-success" type="submit">Search</button>
+            <button color="primary" mat-raised-button type="submit">Search</button>
         </div>
     </form>
 
     <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
-        <button routerLink="/new/worry"  class="btn btn-primary" >New Worry</button>
+        <button routerLink="/new/worry" color="accent" mat-raised-button >New Worry</button>
     </div>
 
     <div class="container-fluid">

@@ -13,8 +13,8 @@
         <p class="card-text">{{worry.description}}</p>
 
         <div class="d-flex">
-            <button [routerLink]="['/worry/', worry.id]" class="mr-auto" mat-raised-button color="primary">View</button>
-            <button [routerLink]="['/worry/edit', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="warn">Edit</button>
+            <button [routerLink]="['/worry/', worry.id]" class="mr-auto" mat-raised-button color="accent">View</button>
+            <button [routerLink]="['/worry/edit', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="primary">Edit</button>
         </div>
     </div>
 </div>
