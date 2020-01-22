@@ -24,8 +24,8 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css",
+              "src/myworry-theme.scss",
+              "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
@@ -128,5 +128,10 @@
       }
     }
   },
-  "defaultProject": "myworry-client"
+  "defaultProject": "myworry-client",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

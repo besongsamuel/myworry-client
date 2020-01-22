@@ -19,7 +19,7 @@ export const AGAINST_VALUE = 0;
 @Component({
   selector: 'app-new-opinion-dialog',
   templateUrl: './new-opinion-dialog.component.html',
-  styleUrls: ['./new-opinion-dialog.component.css']
+  styleUrls: ['./new-opinion-dialog.component.scss']
 })
 export class NewOpinionDialogComponent  {
 

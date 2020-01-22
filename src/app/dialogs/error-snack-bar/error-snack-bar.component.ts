@@ -10,7 +10,7 @@ export interface SnackBarData {
 @Component({
   selector: 'app-error-snack-bar',
   templateUrl: './error-snack-bar.component.html',
-  styleUrls: ['./error-snack-bar.component.css']
+  styleUrls: ['./error-snack-bar.component.scss']
 })
 export class ErrorSnackBarComponent implements OnInit {
 

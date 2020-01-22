@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-worry-summary',
   templateUrl: './worry-summary.component.html',
-  styleUrls: ['./worry-summary.component.css']
+  styleUrls: ['./worry-summary.component.scss']
 })
 export class WorrySummaryComponent implements OnInit {
 

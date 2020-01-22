@@ -16,7 +16,7 @@ import { Worry } from 'src/app/models/worry';
 @Component({
   selector: 'app-opinion',
   templateUrl: './opinion.component.html',
-  styleUrls: ['./opinion.component.css']
+  styleUrls: ['./opinion.component.scss']
 })
 export class OpinionComponent implements OnInit {
   

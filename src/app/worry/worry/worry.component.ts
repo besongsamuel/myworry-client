@@ -19,7 +19,7 @@ import { Gender } from 'src/app/models/profile';
 @Component({
   selector: 'app-worry',
   templateUrl: './worry.component.html',
-  styleUrls: ['./worry.component.css']
+  styleUrls: ['./worry.component.scss']
 })
 export class WorryComponent implements OnInit, OnDestroy {
 
