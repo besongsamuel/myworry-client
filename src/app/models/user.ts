@@ -1,5 +1,6 @@
 import { Worry } from './worry';
 import { Profile } from './profile';
+import { SocialUser } from 'angularx-social-login';
 
 export class User {
 
@@ -22,4 +23,7 @@ export class User {
     worries: Worry[];
 
     roleId: string;
+
+    socialUser?: SocialUser;
+
 }

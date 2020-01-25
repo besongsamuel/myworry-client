@@ -19,7 +19,7 @@ import { AuditTrail } from 'src/app/models/audit-trail';
 import { WorryService } from 'src/app/services/worry.service';
 import { Worry } from 'src/app/models/worry';
 import { Opinion } from 'src/app/models/opinion';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -77,6 +77,10 @@ export class ProfileComponent implements OnInit {
   displayedTrailColumns: string[] = ['date', 'trail'];
   dataSource: MatTableDataSource<Worry>;
   trailDataSource: MatTableDataSource<AuditTrail>;
+  worriesCount;
+  auditsCount;
+  worriesPageSize;
+  auditsPageSize;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -88,9 +92,20 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userService.getUser().subscribe((user: User) =>
+    
+    this.userService.getUser().subscribe(async (user: User) =>
     {
       this.user = user;
+
+      this.worriesCount = (await this.userService.getCount(user.id, 'worries').toPromise()).count;
+      this.auditsCount = (await this.userService.getCount(user.id, 'audit-trails').toPromise()).count;
+
+      let pEvent = new PageEvent();
+      pEvent.pageIndex = 0;
+      pEvent.pageSize = 5;
+
+      this.auditTrailPageChanged(pEvent);
+      this.worriesPageChanged(pEvent);
 
       this.profileImagePath = `${environment.ApiUrl}${user.profile.image}`;
 
@@ -111,24 +126,6 @@ export class ProfileComponent implements OnInit {
         }),
         confirmPassword: ['']
       },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
-
-      this.userService.getAuditTrails().subscribe((auditTrails: AuditTrail[]) =>
-      {
-        this.auditTrails = auditTrails;
-        this.trailDataSource = new MatTableDataSource(auditTrails);
-        this.trailDataSource.paginator = this.trailPaginator;
-        this.trailDataSource.sort = this.trailSort;
-
-      });
-
-      this.worryService.getWorries(user.id).subscribe((worries: Worry[]) =>
-      {
-        this.worries = worries;
-        this.dataSource = new MatTableDataSource(worries);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.recentTags = _.flatten(this.worries.map(x => x.tags));
-      });
 
       this.worryService.getOpinions(user.id).subscribe((opinions: Opinion[]) =>
       {
@@ -207,6 +204,31 @@ export class ProfileComponent implements OnInit {
           return passwordConfirmationInput.setErrors(null);
       }
     }
+  }
+
+  auditTrailPageChanged(event: PageEvent)
+  {
+    this.userService.getAuditTrails(this.user.id, event).subscribe((auditTrails: AuditTrail[]) =>
+    {
+      
+      this.auditTrails = auditTrails;
+      this.trailDataSource = new MatTableDataSource(auditTrails);
+      this.trailDataSource.paginator = this.trailPaginator;
+      this.trailDataSource.sort = this.trailSort;
+
+    });
+  }
+
+  worriesPageChanged(event: PageEvent)
+  {
+    this.worryService.getWorries(this.user.id, event).subscribe((worries: Worry[]) =>
+    {
+      this.worries = worries;
+      this.dataSource = new MatTableDataSource(worries);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.recentTags = _.flatten(this.worries.map(x => x.tags));
+    });
   }
 
 }

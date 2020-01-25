@@ -7,6 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import { UserService } from './user.service';
 import { User } from '../models/user';
+import { SocialUser } from 'angularx-social-login';
 
 
 @Injectable({
@@ -41,6 +42,19 @@ export class AuthService {
   {
     return this.http.post(`${environment.ApiUrl}users/login`, credentials, this.httpOptions)
     .pipe(
+      catchError(this.handleError),
+      tap((x: any) =>
+      {
+        sessionStorage.setItem('token', x.token);
+        this.token = x.token;
+        this.loggedIn = true;
+      })
+    );
+  }
+
+  facebookLogin(credentials: SocialUser)
+  {
+    return this.http.post<User>(`${environment.ApiUrl}users/facebook-login`, credentials, this.httpOptions).pipe(
       catchError(this.handleError),
       tap((x: any) =>
       {

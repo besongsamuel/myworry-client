@@ -5,6 +5,9 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
+import { Identifiers } from '@angular/compiler';
+import { PageEvent } from '@angular/material/paginator';
+import { SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +32,7 @@ export class UserService {
       });
     }
   }
-
+  
   getUser() : Observable<User>
   {
     return this.http.get<User>(`${environment.ApiUrl}/users/me`, this.httpOptions);
@@ -49,14 +52,30 @@ export class UserService {
     return this.http.get(`${environment.ApiUrl}/users/exists?filter[where][email]=${email}`, this.httpOptions);
   }
 
-  getAuditTrails(): Observable<AuditTrail[]>
+  getAuditTrails(userId: string, pageEvent: PageEvent): Observable<AuditTrail[]>
   {
     let myAuditFilter = 
     {
-      where: { userId: this.user.id  }
+      where: { userId: userId  }
+    }
+
+    if(pageEvent)
+    {
+      myAuditFilter["limit"] = pageEvent.length;
+      myAuditFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
     }
 
     return this.http.get<AuditTrail[]>(`${environment.ApiUrl}audit-trails?filter=${JSON.stringify(myAuditFilter)}`, this.httpOptions);
+  }
+
+  getCount(id: string, service: string): Observable<any>
+  {
+    let myFilter = 
+    {
+      where: { userId: id  }
+    }
+
+    return this.http.get<any>(`${environment.ApiUrl}${service}/count?filter=${JSON.stringify(myFilter)}`, this.httpOptions);
   }
 
   logout()

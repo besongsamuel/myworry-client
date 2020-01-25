@@ -37,6 +37,14 @@ export class OpinionComponent implements OnInit {
 
   getImagePath(image)
   {
+    if(this.opinion.user)
+    {
+      if(this.opinion.user.socialUser)
+      {
+        return this.opinion.user.socialUser.photoUrl;
+      }
+    }
+
     return `${environment.ApiUrl}${image}`;
   }
 

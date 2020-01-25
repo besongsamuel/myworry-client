@@ -23,5 +23,10 @@
     background-color: mat-color($primary);
   }
 
+  .primary-lighter
+  {
+    background-color: mat-color($primary, lighter);
+  }
+
 
 }

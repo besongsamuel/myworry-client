@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.worry.name}}</h1>
+<mat-toolbar mat-dialog-title color="primary">{{data.worry.name}}</mat-toolbar>
 <div mat-dialog-content>
   <div class="w-100 text-center text-danger mt-2 mb-4" *ngIf="data.opinion">
     <strong>Warning: </strong>Editing an opinion will remove all likes associated with it. 
@@ -26,6 +26,6 @@
   </form>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-end">
-  <button color="warn" mat-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
-  <button color="primary" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-button>Submit</button>
+  <button color="primary" mat-raised-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
+  <button color="accent" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-raised-button>Submit</button>
 </div>

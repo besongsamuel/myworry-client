@@ -5,7 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 
+import {MatTabsModule} from '@angular/material/tabs';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -44,7 +47,20 @@ import { ProfileComponent } from './account/profile/profile.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 
+let socialLoginConfig = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider("502592090270326")
+  }
+]);
 
+export function provideConfig() {
+  return socialLoginConfig;
+}
 
 const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {} };
 
@@ -75,7 +91,9 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
+    SocialLoginModule,
     MatTableModule,
+    MatTabsModule,
     MatDatepickerModule,
     MatMomentDateModule,
     MatMenuModule,
@@ -95,7 +113,10 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     NgxFileDropModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [httpInterceptorProviders, AuthService],
+  providers: [httpInterceptorProviders, AuthService, {
+    provide: AuthServiceConfig,
+    useFactory: provideConfig
+  }],
   bootstrap: [AppComponent],
   entryComponents: [NewOpinionDialogComponent, ErrorSnackBarComponent, ConfirmationDialogComponent]
 })

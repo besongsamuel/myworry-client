@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 
 @import '~@angular/material/theming';
 @include mat-core();
 
 /* ======== Angular material custom themes ======== */ 
-$my-worry-primary: mat-palette($mat-indigo);
-$my-worry-accent: mat-palette($mat-amber);
+$my-worry-primary: mat-palette($mat-blue-gray);
+$my-worry-accent: mat-palette($mat-blue);
 $my-worry-warn: mat-palette($mat-red);
 
 $my-worry-theme: mat-light-theme($my-worry-primary, $my-worry-accent, $my-worry-warn);

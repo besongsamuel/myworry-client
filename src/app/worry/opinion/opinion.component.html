@@ -29,7 +29,7 @@
     <button
       class="ml-auto"
       [disabled]="worry.locked"
-      mat-icon-button [color]="likedByUser ? 'primary' : ''"
+      mat-icon-button [color]="likedByUser ? 'accent' : ''"
       (click)="toggleLike()"
     >
       <mat-icon [matBadge]="opinion.opinionLikes ? opinion.opinionLikes.length : 0" matBadgeColor="warn">thumb_up</mat-icon>

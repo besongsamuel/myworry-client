@@ -7,7 +7,11 @@
     </form>
 
     <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
-        <button routerLink="/new/worry" color="accent" mat-raised-button >New Worry</button>
+        <div class="d-flex flex-column align-items-center">
+            <p>Are you worried about something?</p>
+            <button routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
+        </div>
+        
     </div>
 
     <div class="container-fluid">

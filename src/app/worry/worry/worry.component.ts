@@ -34,6 +34,8 @@ export class WorryComponent implements OnInit, OnDestroy {
   perLeftFemale;
   perRightFemale;
 
+  canPostOpinion: boolean = false;
+
   public imagePath: string;
 
   constructor(private route: ActivatedRoute, private worryService: WorryService,
@@ -46,6 +48,10 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   getImagePath(image)
   {
+    if(this.worry.user.socialUser)
+    {
+      return this.worry.user.socialUser.photoUrl;
+    }
     return `${environment.ApiUrl}${image}`;
   }
 
@@ -55,10 +61,11 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     this.worry$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.worryService.getWorry(params.get('id')).pipe(tap((worry) => 
+        this.worryService.getWorry(params.get('id')).pipe(tap(async (worry) => 
         {
           this.imagePath = `${environment.ApiUrl}${worry.image}`; 
           this.worry = worry;
+          this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
           this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
           this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
           this.generateStatistics(worry);

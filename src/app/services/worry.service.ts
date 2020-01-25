@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
 import { Opinion } from '../models/opinion';
 import { OpinionLike } from '../models/opinion-like';
+import { PageEvent } from '@angular/material/paginator';
 
 @Injectable({
   providedIn: 'root'
@@ -59,41 +60,28 @@ export class WorryService {
     return this.http.post<any>(`${environment.ApiUrl}toggleLike/${opinionId}`, null);
   }
 
-  getWorries(userId? : string) : Observable<Worry[]>
+  canPostOpinion(worryId: string) : Observable<boolean>
+  {
+    return this.http.get<boolean>(`${environment.ApiUrl}worries/can-post-opinion/${worryId}`, this.httpOptions);
+  }
+
+  getWorries(userId? : string, pageEvent?: PageEvent) : Observable<Worry[]>
   {
 
-    if(userId)
-    {
-      let worryFilter: object =
+      let worryFilter: any = this.worryFilter;
+
+      if(userId)
       {
-        "include": [
-          {
-            "relation": "user",
-          },
-          {
-            "relation": "opinions",
-            "scope":{
-              "include": [
-                {
-                  "relation": "user",
-                },
-                {
-                  "relation": "opinionLikes"
-                }
-              ]
-            }
-          }
-        ],
-        "where": { "userId": userId }
-      };
+        this.worryFilter["where"] = { userId: userId};
+      }
+
+      if(pageEvent)
+      {
+        this.worryFilter["limit"] = pageEvent.length;
+        this.worryFilter["offset"] = (pageEvent.pageIndex) *pageEvent.pageSize;
+      }
 
       return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
-    }
-    else
-    {
-      return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
-    }
-
 
   }
 
