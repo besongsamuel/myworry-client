@@ -1,6 +1,6 @@
 <mat-card class="my-3" *ngIf="opinion" [class.for-border]="opinion.type == 1" [class.against-border]="opinion.type == 0">
   <mat-card-header>
-    <img mat-card-avatar [src]="getImagePath(opinion.user.profile.image)">
+    <img mat-card-avatar [src]="opinion.user.profile.image">
     <mat-card-title *ngIf="opinion.user">{{opinion.user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{opinion.date_created | date}}</mat-card-subtitle>
     <div class="ml-auto" *ngIf="opinion.user.id == userService.user.id">
