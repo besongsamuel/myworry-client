@@ -26,4 +26,6 @@ export class User {
 
     socialUser?: SocialUser;
 
+    tmpImage?: string;
+
 }

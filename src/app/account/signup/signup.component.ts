@@ -20,13 +20,13 @@ export class SignupComponent implements OnInit {
 
 
   signupForm: FormGroup;
-  imageName: string;
   profileImagePath: string;
   public fileDroped: NgxFileDropEntry;
   errorMessage: string;
   successMessage: string;
   error: boolean = false;
   success: boolean = false;
+  user: User = new User();
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
@@ -49,23 +49,15 @@ export class SignupComponent implements OnInit {
   }
 
 
-
-
 onSubmit()
 {
   if(this.signupForm.valid)
   {
-    var user: User = new User();
-    user.profile = new Profile();
+    this.user.profile = new Profile();
+    
+    _.assign(this.user, _.omit(this.signupForm.value, ['confirmPassword']));
 
-    if(this.imageName)
-    {
-      user.profile.image = this.imageName;
-    }
-
-    _.assign(user, _.omit(this.signupForm.value, ['confirmPassword']));
-
-    this.userService.createUser(user).subscribe((user) =>
+    this.userService.createUser(this.user).subscribe((user) =>
     {
       this.router.navigate(['/login', { email: user.email }]);
     });
@@ -77,9 +69,9 @@ ngOnInit() {
 
 removeImage()
   {
-    this.worryService.deleteImage(this.imageName).subscribe(() =>
+    this.worryService.deleteImage(this.user.tmpImage).subscribe(() =>
     {
-      this.imageName = "";
+      this.user.tmpImage = "";
       this.profileImagePath =  "";
     });
   }
@@ -96,7 +88,7 @@ fileDropped(files: NgxFileDropEntry[])
     {
       this.worryService.uploadImage(file, 'profile').subscribe((response) =>
       {
-        this.imageName = response.imagePath;
+        this.user.tmpImage = response.imagePath;
         this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
       });
     });

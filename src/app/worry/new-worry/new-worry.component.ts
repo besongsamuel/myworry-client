@@ -55,7 +55,6 @@ export class NewWorryComponent implements OnInit {
   tags = [];
   worry: Worry = new Worry();
   imagePath: string;
-  imageName: string;
   public fileDroped: NgxFileDropEntry;
 
   editLimited: boolean = false;
@@ -147,11 +146,7 @@ export class NewWorryComponent implements OnInit {
 
     this.worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     this.worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-    // The image was changed.
-    if(this.imageName)
-    {
-      this.worry.image = this.imageName;
-    }
+    
     this.worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
 
     let saveRequest$;
@@ -179,9 +174,9 @@ export class NewWorryComponent implements OnInit {
 
   removeImage()
   {
-    this.worryService.deleteImage(this.imageName).subscribe(() =>
+    this.worryService.deleteImage(this.worry.tmpImage).subscribe(() =>
     {
-      this.imageName = "";
+      this.worry.tmpImage = "";
       this.imagePath =  "";
     });
   }
@@ -198,7 +193,7 @@ export class NewWorryComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
-          this.imageName = response.imagePath;
+          this.worry.tmpImage = response.imagePath;
           this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
         });
       });
