@@ -15,8 +15,8 @@ node {
   withAWS(credentials:'ASW_CRED', region: 'us-east-1') {
 
     stage('Deploy') {
-        s3Delete(bucket:'www.myworry.ca', path:'/')
-        s3Upload(file:'dist/', bucket:'www.myworry.ca', path:'./', acl:'PublicRead')
+        s3Delete(bucket:'www.myworry.ca')
+        s3Upload(file:'dist/', bucket:'www.myworry.ca', acl:'PublicRead')
     }
   }
   
