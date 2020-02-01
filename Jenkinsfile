@@ -12,9 +12,10 @@ node {
       sh 'echo "Testing..."'
     }
   }
-  withAWS(credentials:'AWS_CRED') {
+  withAWS(credentials:'ASW_CRED') {
 
     stage('Deploy') {
+        s3Delete(bucket:'www.myworry.ca', path:'/')
         s3Upload(file:'dist/*', bucket:'www.myworry.ca', path:'.')
     }
   }
