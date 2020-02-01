@@ -20,7 +20,7 @@ export class FileInputComponent implements ControlValueAccessor
   @Input() progress;
   @Input() title: string;
   onChange: Function;
-  private file: File | null = null;
+  public file: File | null = null;
 
   writeValue(obj: any): void {
 

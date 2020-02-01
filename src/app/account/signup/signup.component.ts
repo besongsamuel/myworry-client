@@ -23,6 +23,10 @@ export class SignupComponent implements OnInit {
   imageName: string;
   profileImagePath: string;
   public fileDroped: NgxFileDropEntry;
+  errorMessage: string;
+  successMessage: string;
+  error: boolean = false;
+  success: boolean = false;
 
   constructor(private fb: FormBuilder,
     private userService: UserService,

@@ -27,7 +27,7 @@ export class OpinionComponent implements OnInit {
   @Output() editOpinion = new EventEmitter<string>();
   likedByUser: boolean = false;
 
-  constructor(private userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
+  constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
     public dialog: MatDialog) { }
 
