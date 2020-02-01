@@ -16,7 +16,7 @@ node {
 
     stage('Deploy') {
         s3Delete(bucket:'www.myworry.ca', path:'/')
-        s3Upload(file:'dist/', bucket:'www.myworry.ca', path:'/')
+        s3Upload(file:'dist/', bucket:'www.myworry.ca', path:'/', acl:'PublicRead')
     }
   }
   
