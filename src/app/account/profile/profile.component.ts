@@ -54,8 +54,6 @@ export const MY_FORMATS = {
 })
 export class ProfileComponent implements OnInit {
 
-
-  imageName: string;
   profileImagePath: string;
   public fileDroped: NgxFileDropEntry;
   profileForm: FormGroup;
@@ -92,7 +90,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    
+
     this.userService.getUser().subscribe(async (user: User) =>
     {
       this.user = user;
@@ -107,7 +105,7 @@ export class ProfileComponent implements OnInit {
       this.auditTrailPageChanged(pEvent);
       this.worriesPageChanged(pEvent);
 
-      this.profileImagePath = `${environment.ApiUrl}${user.profile.image}`;
+      this.profileImagePath = user.profile.image;
 
       this.profileForm = this.fb.group(
       {
@@ -189,7 +187,7 @@ export class ProfileComponent implements OnInit {
 
   removeImage()
   {
-    this.imageName = "";
+    this.user.profile.image = "";
     this.profileImagePath =  "";
   }
 
@@ -210,7 +208,7 @@ export class ProfileComponent implements OnInit {
   {
     this.userService.getAuditTrails(this.user.id, event).subscribe((auditTrails: AuditTrail[]) =>
     {
-      
+
       this.auditTrails = auditTrails;
       this.trailDataSource = new MatTableDataSource(auditTrails);
       this.trailDataSource.paginator = this.trailPaginator;

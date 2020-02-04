@@ -5,9 +5,7 @@ import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
-import { Identifiers } from '@angular/compiler';
 import { PageEvent } from '@angular/material/paginator';
-import { SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +19,18 @@ export class UserService {
   };
 
   public user: User;
-  
-  constructor(private http: HttpClient, private authService: AuthService) 
+
+  constructor(private http: HttpClient, private authService: AuthService)
   {
     if(!authService.isTokenExpired())
     {
-      this.getUser().subscribe((user : User) => 
+      this.getUser().subscribe((user : User) =>
       {
         this.user = user;
       });
     }
   }
-  
+
   getUser() : Observable<User>
   {
     return this.http.get<User>(`${environment.ApiUrl}/users/me`, this.httpOptions);
@@ -54,7 +52,7 @@ export class UserService {
 
   getAuditTrails(userId: string, pageEvent: PageEvent): Observable<AuditTrail[]>
   {
-    let myAuditFilter = 
+    let myAuditFilter =
     {
       where: { userId: userId  }
     }
@@ -70,7 +68,7 @@ export class UserService {
 
   getCount(id: string, service: string): Observable<any>
   {
-    let myFilter = 
+    let myFilter =
     {
       where: { userId: id  }
     }
