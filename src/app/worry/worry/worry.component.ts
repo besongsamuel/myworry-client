@@ -41,18 +41,26 @@ export class WorryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
     private socket: Socket,
-    private zone:NgZone) 
+    private zone:NgZone)
   {
-    
+
   }
 
-  getImagePath(image)
+  getUserProfileImage()
   {
     if(this.worry.user.socialUser)
     {
       return this.worry.user.socialUser.photoUrl;
     }
-    return `${environment.ApiUrl}${image}`;
+    else if(this.worry.user.profile && this.worry.user.profile.image)
+    {
+      return this.worry.user.profile.image;
+    }
+    else
+    {
+      return '';
+    }
+
   }
 
 
@@ -61,9 +69,9 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     this.worry$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.worryService.getWorry(params.get('id')).pipe(tap(async (worry) => 
+        this.worryService.getWorry(params.get('id')).pipe(tap(async (worry) =>
         {
-          this.imagePath = `${environment.ApiUrl}${worry.image}`; 
+          this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.worry = worry;
           this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
           this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
@@ -96,7 +104,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   toggleLock()
   {
-    this.worryService.patchWorry({ id: this.worry.id, locked: !this.worry.locked  }).subscribe(() => 
+    this.worryService.patchWorry({ id: this.worry.id, locked: !this.worry.locked  }).subscribe(() =>
     {
       this.worry.locked = !this.worry.locked;
       let e: SocketEvent = { Action: Crud.UPDATE, Entity: Entity.WORRY, Id: this.worry.id, roomId: this.worry.id };
@@ -127,7 +135,7 @@ export class WorryComponent implements OnInit, OnDestroy {
     {
       if(event.Action == Crud.DELETE)
       {
-        this.worry.opinions = this.worry.opinions.map((opinion) => 
+        this.worry.opinions = this.worry.opinions.map((opinion) =>
         {
           if(!opinion.opinionLikes)
           {
@@ -138,13 +146,13 @@ export class WorryComponent implements OnInit, OnDestroy {
 
           return opinion;
         });
-        
+
       }
       else if(event.Action == Crud.CREATE)
       {
-        this.worryService.getOpinionLike(event.Id).subscribe((like) => 
+        this.worryService.getOpinionLike(event.Id).subscribe((like) =>
         {
-          this.worry.opinions = this.worry.opinions.map((opinion) => 
+          this.worry.opinions = this.worry.opinions.map((opinion) =>
           {
 
             if(!opinion.opinionLikes)
@@ -175,7 +183,7 @@ export class WorryComponent implements OnInit, OnDestroy {
       }
       else
       {
-        this.worryService.getOpinion(event.Id).subscribe((opinion) => 
+        this.worryService.getOpinion(event.Id).subscribe((opinion) =>
         {
           this.worry.opinions = this.worry.opinions.filter(x => x.id != event.Id);
           this.worry.opinions.unshift(opinion);
@@ -190,10 +198,10 @@ export class WorryComponent implements OnInit, OnDestroy {
     {
       if(event.Action == Crud.UPDATE)
       {
-        this.zone.run(() => { 
-          this.worry$ = this.worryService.getWorry(event.Id).pipe(tap((worry) => 
+        this.zone.run(() => {
+          this.worry$ = this.worryService.getWorry(event.Id).pipe(tap((worry) =>
           {
-            this.imagePath = `${environment.ApiUrl}${worry.image}`; 
+            this.imagePath = `${environment.ApiUrl}${worry.image}`;
             this.worry = worry;
             this.expired = moment().isSameOrAfter(moment(this.worry.endDate));
 
@@ -223,11 +231,11 @@ export class WorryComponent implements OnInit, OnDestroy {
         this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
 
         // get the created opinion with it's relations
-        this.worryService.getOpinion(result.id).subscribe((opinion) => 
+        this.worryService.getOpinion(result.id).subscribe((opinion) =>
         {
           this.worry.opinions.unshift(opinion);
         });
-        
+
       }
     });
   }
@@ -246,7 +254,7 @@ export class WorryComponent implements OnInit, OnDestroy {
       {
 
         // get the created opinion with it's relations
-        this.worryService.getOpinion(newOpinion.id).subscribe((opinion) => 
+        this.worryService.getOpinion(newOpinion.id).subscribe((opinion) =>
         {
           this.worry.opinions = this.worry.opinions.filter(x => x.id != opinion.id);
           this.worry.opinions.unshift(opinion);
@@ -254,7 +262,7 @@ export class WorryComponent implements OnInit, OnDestroy {
           let e: SocketEvent = { Action: Crud.REPLACE, Entity: Entity.OPINION, Id: newOpinion.id, roomId: this.worry.id };
           this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         });
-        
+
       }
     });
   }
@@ -269,7 +277,7 @@ export class WorryComponent implements OnInit, OnDestroy {
     let e: SocketEvent = { Action: Crud.DELETE, Entity: Entity.OPINION, Id: id, roomId: this.worry.id };
     this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
 
-    this.worryService.deleteOpinion(id).subscribe(() => 
+    this.worryService.deleteOpinion(id).subscribe(() =>
     {
       this.worry.opinions = this.worry.opinions.filter(x => x.id != id);
     });

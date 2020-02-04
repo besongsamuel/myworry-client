@@ -54,7 +54,7 @@ onSubmit()
   if(this.signupForm.valid)
   {
     this.user.profile = new Profile();
-    
+
     _.assign(this.user, _.omit(this.signupForm.value, ['confirmPassword']));
 
     this.userService.createUser(this.user).subscribe((user) =>
@@ -69,9 +69,9 @@ ngOnInit() {
 
 removeImage()
   {
-    this.worryService.deleteImage(this.user.tmpImage).subscribe(() =>
+    this.worryService.deleteImage(this.user.profile.image).subscribe(() =>
     {
-      this.user.tmpImage = "";
+      this.user.profile.image = "";
       this.profileImagePath =  "";
     });
   }
@@ -88,8 +88,8 @@ fileDropped(files: NgxFileDropEntry[])
     {
       this.worryService.uploadImage(file, 'profile').subscribe((response) =>
       {
-        this.user.tmpImage = response.imagePath;
-        this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
+        this.user.profile.image = response.imageName;
+        this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
       });
     });
   }

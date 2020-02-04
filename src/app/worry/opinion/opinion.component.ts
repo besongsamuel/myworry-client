@@ -19,7 +19,7 @@ import { Worry } from 'src/app/models/worry';
   styleUrls: ['./opinion.component.scss']
 })
 export class OpinionComponent implements OnInit {
-  
+
 
   @Input() opinion: Opinion;
   @Input() worry: Worry;
@@ -35,17 +35,22 @@ export class OpinionComponent implements OnInit {
     this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
   }
 
-  getImagePath(image)
+
+  getUserProfileImage()
   {
-    if(this.opinion.user)
+    if(this.opinion.user.socialUser)
     {
-      if(this.opinion.user.socialUser)
-      {
-        return this.opinion.user.socialUser.photoUrl;
-      }
+      return this.opinion.user.socialUser.photoUrl;
+    }
+    else if(this.opinion.user.profile && this.opinion.user.profile.image)
+    {
+      return this.opinion.user.profile.image;
+    }
+    else
+    {
+      return '';
     }
 
-    return `${environment.ApiUrl}${image}`;
   }
 
   toggleLike()
@@ -72,7 +77,7 @@ export class OpinionComponent implements OnInit {
       }
       this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
 
-    }, (err) => 
+    }, (err) =>
     {
       this._snackBar.openFromComponent(ErrorSnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: err.error.error.message } })
     });
@@ -87,10 +92,10 @@ export class OpinionComponent implements OnInit {
   {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '450px',
-      data: { 
+      data: {
         message: 'Are you sure you want to delete this opinion?',
         title: 'Delete Opinion',
-        type: ConfirmationIconType.WARNING 
+        type: ConfirmationIconType.WARNING
       }
     });
 

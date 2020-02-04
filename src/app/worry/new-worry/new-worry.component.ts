@@ -106,7 +106,7 @@ export class NewWorryComponent implements OnInit {
       {
         if(worry.image)
         {
-          this.imagePath = `${environment.ApiUrl}${worry.image}`;
+          this.imagePath = worry.image;
         }
         else
         {
@@ -146,7 +146,7 @@ export class NewWorryComponent implements OnInit {
 
     this.worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     this.worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-    
+
     this.worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
 
     let saveRequest$;
@@ -174,9 +174,9 @@ export class NewWorryComponent implements OnInit {
 
   removeImage()
   {
-    this.worryService.deleteImage(this.worry.tmpImage).subscribe(() =>
+    this.worryService.deleteImage(this.worry.image).subscribe(() =>
     {
-      this.worry.tmpImage = "";
+      this.worry.image = "";
       this.imagePath =  "";
     });
   }
@@ -193,8 +193,8 @@ export class NewWorryComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
-          this.worry.tmpImage = response.imagePath;
-          this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imagePath}`;
+          this.worry.image = response.imageName;
+          this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
         });
       });
     }

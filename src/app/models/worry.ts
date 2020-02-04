@@ -36,8 +36,6 @@ export class Worry {
 
     date_modified: Date;
 
-    tmpImage?: string;
-
     constructor()
     {
       this.startDate = moment().format('YYYY-MM-DD hh:mm:ss');
