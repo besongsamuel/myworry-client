@@ -132,7 +132,7 @@ export class WorryService {
 
   uploadImage(file: File, type: string) : Observable<any>
   {
-    return this.http.post<any>(`${environment.ApiUrl}uploadImage`, toFormData({ worryImage: file, type: type}));
+    return this.http.post<any>(`${environment.ApiUrl}uploadImage`, toFormData({ image: file, type: type}));
   }
 
   deleteImage(imageName: string ) : Observable<any>
