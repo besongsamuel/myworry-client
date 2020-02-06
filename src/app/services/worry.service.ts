@@ -78,7 +78,7 @@ export class WorryService {
       if(pageEvent)
       {
         this.worryFilter["limit"] = pageEvent.length;
-        this.worryFilter["offset"] = (pageEvent.pageIndex) *pageEvent.pageSize;
+        this.worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
       }
 
       return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);

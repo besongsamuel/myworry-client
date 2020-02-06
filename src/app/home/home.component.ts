@@ -4,6 +4,7 @@ import { WorryService } from '../services/worry.service';
 import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../../environments/environment'
+import { PageEvent } from '@angular/material/paginator';
 
 export const DEFAULT_IMAGE = 'assets/images/worry.png';
 
@@ -24,7 +25,12 @@ export class HomeComponent implements OnInit {
   constructor(private worryService: WorryService, public authService: AuthService) { }
 
   ngOnInit() {
-    this.worryService.getWorries().subscribe((worries: Worry[]) => 
+
+    let pageEvent: PageEvent = new PageEvent();
+    pageEvent.length = 6;
+    pageEvent.pageIndex = 0;
+
+    this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) => 
     {
       this.worries = worries;
       worries.map(x => 
