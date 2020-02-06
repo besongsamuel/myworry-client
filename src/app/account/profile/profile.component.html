@@ -18,6 +18,7 @@
                         dropZoneLabel="Drop Profile Image Here"
                         accept=".png,.jpg,.jpeg"
                         directory="false"
+                        (onFileDrop)="fileDropped($event)"
                         multiple="false"
                         *ngIf="!profileImagePath">
                         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">

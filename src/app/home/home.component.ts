@@ -29,11 +29,7 @@ export class HomeComponent implements OnInit {
       this.worries = worries;
       worries.map(x => 
       {
-        if(x.image)
-        {
-          x.image = `${environment.ApiUrl}${x.image}`;
-        }
-        else
+        if(!x.image)
         {
           x.image = DEFAULT_IMAGE;
         }

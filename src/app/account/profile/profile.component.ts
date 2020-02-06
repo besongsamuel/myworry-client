@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
-import { NgxFileDropEntry } from 'ngx-file-drop';
+import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HelperService } from 'src/app/services/helper.service';
@@ -136,6 +136,25 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  fileDropped(files: NgxFileDropEntry[])
+  {
+    this.fileDroped = files[0];
+
+    if(this.fileDroped.fileEntry.isFile)
+    {
+      const fileEntry = this.fileDroped.fileEntry as FileSystemFileEntry;
+
+      fileEntry.file((file: File) =>
+      {
+        this.worryService.uploadImage(file, 'profile').subscribe((response) =>
+        {
+          this.profileForm.get('profile').get('image').setValue(response.imageName);
+          this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
+        });
+      });
+    }
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -162,6 +181,10 @@ export class ProfileComponent implements OnInit {
       if(!value.oldPassword)
       {
         value = _.omit(value, ['password', 'oldPassword', 'confirmPassword']);
+      }
+      else
+      {
+        value = _.omit(value, ['confirmPassword']);
       }
 
       if(!value.profile.gender)
