@@ -33,6 +33,7 @@ import { TagInputModule } from 'ngx-chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { WorryService } from './services/worry.service';
 
 
 
@@ -76,6 +77,7 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     MatToolbarModule
 
-  ]
+  ],
+  providers: [WorryService]
 })
 export class WorryModule { }

@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
 import { switchMap, tap } from 'rxjs/operators';
-import { WorryService } from 'src/app/services/worry.service';
+import { WorryService } from 'src/app/worry/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOpinionComponent } from 'src/app/worry/add-opinion/add-opinion.component';

@@ -4,8 +4,8 @@ import { Worry } from 'src/app/models/worry';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Opinion } from 'src/app/models/opinion';
 import { UserService } from 'src/app/services/user.service';
-import { WorryService } from 'src/app/services/worry.service';
 import * as _ from 'lodash';
+import { WorryService } from '../services/worry.service';
 
 export interface DialogData {
   worry: Worry;

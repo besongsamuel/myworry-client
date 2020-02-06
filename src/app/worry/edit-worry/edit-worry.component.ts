@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/category';
-import { WorryService } from 'src/app/services/worry.service';
 import { Worry } from 'src/app/models/worry';
 import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -16,6 +15,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
+import { WorryService } from '../services/worry.service';
 
 const moment =  _moment;
 

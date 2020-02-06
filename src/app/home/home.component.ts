@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { WorryService } from '../services/worry.service';
 import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
-import { environment } from '../../environments/environment'
 import { PageEvent } from '@angular/material/paginator';
-
+import { WorryService } from '../worry/services/worry.service';
 export const DEFAULT_IMAGE = 'assets/images/worry.png';
 
 @Component({
@@ -30,10 +28,10 @@ export class HomeComponent implements OnInit {
     pageEvent.length = 6;
     pageEvent.pageIndex = 0;
 
-    this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) => 
+    this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) =>
     {
       this.worries = worries;
-      worries.map(x => 
+      worries.map(x =>
       {
         if(!x.image)
         {

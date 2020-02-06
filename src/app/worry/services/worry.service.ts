@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Worry } from '../models/worry';
+import { Worry } from '../../models/worry';
 import { environment } from 'src/environments/environment';
-import { Category } from '../models/category';
-import { Opinion } from '../models/opinion';
-import { OpinionLike } from '../models/opinion-like';
+import { Category } from '../../models/category';
+import { Opinion } from '../../models/opinion';
+import { OpinionLike } from '../../models/opinion-like';
 import { PageEvent } from '@angular/material/paginator';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class WorryService {
 
   httpOptions = {

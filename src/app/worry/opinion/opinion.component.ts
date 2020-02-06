@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Opinion } from 'src/app/models/opinion';
 import { UserService } from 'src/app/services/user.service';
-import { WorryService } from 'src/app/services/worry.service';
-import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackBarComponent, SNACKBAR_DURATION } from 'src/app/dialogs/error-snack-bar/error-snack-bar.component';
 import { Socket } from 'ngx-socket-io';
@@ -11,6 +9,7 @@ import { Crud } from 'src/app/models/crud.enum';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Worry } from 'src/app/models/worry';
+import { WorryService } from '../services/worry.service';
 
 
 @Component({

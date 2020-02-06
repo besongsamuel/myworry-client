@@ -16,7 +16,7 @@ import * as _ from "lodash";
 // the `default as` syntax.
 import * as moment from 'moment';
 import { AuditTrail } from 'src/app/models/audit-trail';
-import { WorryService } from 'src/app/services/worry.service';
+import { WorryService } from 'src/app/worry/services/worry.service';
 import { Worry } from 'src/app/models/worry';
 import { Opinion } from 'src/app/models/opinion';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';

@@ -4,12 +4,12 @@ import { ValidateEmailNotTaken } from 'src/app/validators/async-email-not-taken.
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import * as _ from 'lodash'
-import { WorryService } from 'src/app/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { User } from 'src/app/models/user';
 import { Profile } from 'src/app/models/profile';
 import { HelperService } from 'src/app/services/helper.service';
+import { WorryService } from 'src/app/worry/services/worry.service';
 
 @Component({
   selector: 'app-signup',
