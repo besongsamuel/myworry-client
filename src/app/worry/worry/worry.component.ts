@@ -6,7 +6,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { WorryService } from 'src/app/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
-import { NewOpinionDialogComponent } from 'src/app/dialogs/new-opinion-dialog/new-opinion-dialog.component';
+import { AddOpinionComponent } from 'src/app/worry/add-opinion/add-opinion.component';
 import { UserService } from 'src/app/services/user.service';
 import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
@@ -213,7 +213,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   addOpinion(type: number)
   {
-    const dialogRef = this.dialog.open(NewOpinionDialogComponent, {
+    const dialogRef = this.dialog.open(AddOpinionComponent, {
       width: '450px',
       data: {worry: this.worry, initialValue: type}
     });
@@ -244,7 +244,7 @@ export class WorryComponent implements OnInit, OnDestroy {
   {
     let opinion: Opinion = this.worry.opinions.find(x => x.id == id);
 
-    const dialogRef = this.dialog.open(NewOpinionDialogComponent, {
+    const dialogRef = this.dialog.open(AddOpinionComponent, {
       data: {worry: this.worry, initialValue: opinion.type, opinion: opinion}
     });
 

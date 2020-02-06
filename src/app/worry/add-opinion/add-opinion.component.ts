@@ -17,11 +17,11 @@ export const FOR_VALUE = 1;
 export const AGAINST_VALUE = 0;
 
 @Component({
-  selector: 'app-new-opinion-dialog',
-  templateUrl: './new-opinion-dialog.component.html',
-  styleUrls: ['./new-opinion-dialog.component.scss']
+  selector: 'app-add-opinion',
+  templateUrl: './add-opinion.component.html',
+  styleUrls: ['./add-opinion.component.scss']
 })
-export class NewOpinionDialogComponent  {
+export class AddOpinionComponent  {
 
   createOpinionForm: FormGroup;
   for_val: number = FOR_VALUE;
@@ -30,12 +30,12 @@ export class NewOpinionDialogComponent  {
   errorMessage: string = '';
 
   constructor(
-    public dialogRef: MatDialogRef<NewOpinionDialogComponent>,
+    public dialogRef: MatDialogRef<AddOpinionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private fb: FormBuilder,
     private userService: UserService,
     private worryService: WorryService
-    ) 
+    )
     {
       this.createOpinionForm = this.fb.group(
       {
@@ -56,8 +56,8 @@ export class NewOpinionDialogComponent  {
     {
       opinion.id = this.data.opinion.id;
     }
-    
-    this.worryService.createOrEditOpinion(opinion).subscribe((newOpinion) => 
+
+    this.worryService.createOrEditOpinion(opinion).subscribe((newOpinion) =>
     {
       if(this.data.opinion)
       {
@@ -67,7 +67,7 @@ export class NewOpinionDialogComponent  {
       {
         this.dialogRef.close(newOpinion);
       }
-      
+
     },
     err =>
     {

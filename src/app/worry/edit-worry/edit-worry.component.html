@@ -1,0 +1,134 @@
+<div class="w-100 d-flex justify-content-center">
+    <div class="col-lg-6 col-sm-12 col-md-6">
+        <div class="m-5 card border-secondary" *ngIf="newWorryForm">
+
+
+            <mat-toolbar class="card-header" color="primary" *ngIf="worry">Edit worry</mat-toolbar>
+            <mat-toolbar class="card-header" color="primary" *ngIf="!worry">Create worry</mat-toolbar>
+            
+            <div class="card-body">
+
+              <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
+                  {{ errorMessage }}
+              </div>
+
+              <div class="alert alert-success" role="alert" *ngIf='success'>
+                  Your worry was successfully created.
+              </div>
+
+              <div class="text-center text-danger my-2" *ngIf="editLimited">
+                This worry has opinions associated with it. Edition will be limited. 
+              </div>
+
+                <ngx-file-drop
+                  dropZoneLabel="Drop Image Here"
+                  (onFileDrop)="fileDropped($event)"
+                  accept="png,jpg,jpeg"
+                  directory="false"
+                  multiple="false"
+                  *ngIf="!imagePath">
+                  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+
+                    <div class="d-flex flex-column align-items-center">
+                      <div>Drop Image Here</div>
+                      <div>OR</div>
+                      <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
+                    </div>
+
+                  </ng-template>
+                </ngx-file-drop>
+
+                <div class="w-100 d-flex justify-content-center my-2" *ngIf="imagePath">
+                  <img class="worryImage border p-1" [src]="imagePath">
+                  <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </div>
+
+                <form [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
+
+                  <mat-form-field class="w-100">
+                      <input [disabled]="editLimited" matInput placeholder="Worry Title" formControlName="name">
+                      <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
+                        A min length of 6 is required.
+                      </mat-error>
+                      <mat-error *ngIf="newWorryForm.controls.name.hasError('required')">
+                        A worry title is <strong>required</strong>
+                      </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" >
+                      <textarea [disabled]="editLimited" matInput placeholder="Description" formControlName="description"></textarea>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                      <mat-label>Category</mat-label>
+                      <mat-select [disabled]="editLimited" formControlName="categoryId" required>
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let category of categories" [value]="category.id">
+                          {{category.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
+                  </mat-form-field>
+
+                  <div class="row form-group">
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments for" formControlName="labelFor">
+                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
+                                A min length of 2 is required.
+                              </mat-error>
+                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('required')">
+                                A "For" label is <strong>required</strong>
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
+                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
+                                A min length of 2 is required.
+                              </mat-error>
+                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('required')">
+                                An "Against" label is <strong>required</strong>
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                  </div>
+
+                  <div class="row form-group">
+                      <div class="col">
+                          <mat-form-field class="w-100">
+                              <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" formControlName="startDate">
+                              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                              <mat-datepicker #startDatePicker></mat-datepicker>
+                            </mat-form-field>
+                      </div>
+                      <div class="col">
+                          <mat-form-field class="w-100" >
+                              <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" formControlName="endDate">
+                              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                              <mat-datepicker #endDatePicker></mat-datepicker>
+                            </mat-form-field>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="tags">Tags</label>
+                      <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                      </tag-input>
+                  </div>
+
+                  <button type="submit" mat-raised-button color="primary" class="float-right" [disabled]="!newWorryForm.valid">Submit</button>
+              </form>
+            </div>
+
+          </div>
+    </div>
+</div>
+
+
+
+
+

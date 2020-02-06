@@ -34,9 +34,9 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-new-worry',
-  templateUrl: './new-worry.component.html',
-  styleUrls: ['./new-worry.component.scss'],
+  selector: 'app-add-worry',
+  templateUrl: './add-worry.component.html',
+  styleUrls: ['./add-worry.component.scss'],
   providers: [
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level
@@ -45,7 +45,7 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ]
 })
-export class NewWorryComponent implements OnInit {
+export class AddWorryComponent implements OnInit {
 
   newWorryForm : FormGroup;
   error: boolean = false;

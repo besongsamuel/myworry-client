@@ -11,16 +11,16 @@
             <p>Are you worried about something?</p>
             <button routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
         </div>
-        
+
     </div>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-4" *ngFor='let worry of worries'>
-                <app-worry-summary [worry]="worry"></app-worry-summary>
+                <app-worry-item [worry]="worry"></app-worry-item>
             </div>
-            
+
         </div>
-        
+
     </div>
 </div>

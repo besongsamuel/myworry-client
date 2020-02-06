@@ -4,14 +4,13 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { WorryService } from 'src/app/services/worry.service';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-worry-summary',
-  templateUrl: './worry-summary.component.html',
-  styleUrls: ['./worry-summary.component.scss']
+  selector: 'app-worry-item',
+  templateUrl: './worry-item.component.html',
+  styleUrls: ['./worry-item.component.scss']
 })
-export class WorrySummaryComponent implements OnInit {
+export class WorryItemComponent implements OnInit {
 
   @Input() worry: Worry;
 
@@ -20,14 +19,14 @@ export class WorrySummaryComponent implements OnInit {
   constructor(userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private worryService: WorryService) 
+    private worryService: WorryService)
   {
     this.currentUser = userService.user;
   }
 
   ngOnInit() {
 
-    
+
   }
 
 }

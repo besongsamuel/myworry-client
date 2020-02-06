@@ -1,0 +1,31 @@
+<mat-toolbar mat-dialog-title color="primary">{{data.worry.name}}</mat-toolbar>
+<div mat-dialog-content>
+  <div class="w-100 text-center text-danger mt-2 mb-4" *ngIf="data.opinion">
+    <strong>Warning: </strong>Editing an opinion will remove all likes associated with it. 
+  </div>
+  <div class="alert alert-danger text-center" *ngIf="error">
+    {{errorMessage}}
+  </div>
+  <p class="text-center">{{data.worry.description}}</p>
+  <form [formGroup]="createOpinionForm">
+
+    <div class="w-100 d-flex justify-content-center">
+
+        <div class="d-flex flex-column">
+            <mat-radio-group aria-label="Select an option" formControlName="type">
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="for_val">{{data.worry.labelFor}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 0" class="mx-2" [value]="against_val">{{data.worry.labelAgainst}}</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        
+    </div>
+
+    <mat-form-field class="w-100">
+        <textarea matInput placeholder="Your Opinion" formControlName="text"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button color="primary" mat-raised-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
+  <button color="accent" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-raised-button>Submit</button>
+</div>

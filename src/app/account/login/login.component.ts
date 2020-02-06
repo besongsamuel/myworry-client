@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user';
+import { User } from '../../models/user';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,18 +22,18 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   newUserEmail: string = null;
 
-  constructor(private authService: AuthService, 
-    private userService: UserService, 
+  constructor(private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    this.route.paramMap.subscribe((params) => 
+    this.route.paramMap.subscribe((params) =>
     {
        this.newUserEmail = params.get('email');
     });
-    
+
   }
 
   onSubmit()

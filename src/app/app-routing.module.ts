@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './account/login/login.component';
 import { HomeComponent } from './home/home.component';
-import { NewWorryComponent } from './worry/new-worry/new-worry.component';
+import { AddWorryComponent } from './worry/add-worry/add-worry.component';
 import { AuthGuard } from './guard/auth.guard';
 import { SignupComponent } from './account/signup/signup.component';
 import { WorryComponent } from './worry/worry/worry.component';
 import { ProfileComponent } from './account/profile/profile.component';
+import { AccountModule } from './account/account.module';
+import { WorryModule } from './worry/worry.module';
 
 
 const routes: Routes = [
@@ -20,13 +22,13 @@ const routes: Routes = [
     path: 'signup', component: SignupComponent
   },
   {
-    path: 'new/worry', component: NewWorryComponent, canActivate: [AuthGuard]
+    path: 'new/worry', component: AddWorryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'worry/:id', component: WorryComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'edit/worry/:id', component: NewWorryComponent, canActivate: [AuthGuard]
+    path: 'edit/worry/:id', component: AddWorryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'account/profile', component: ProfileComponent, canActivate: [AuthGuard]
@@ -34,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes), AccountModule, WorryModule],
+  exports: [RouterModule, AccountModule, WorryModule]
 })
 export class AppRoutingModule { }
