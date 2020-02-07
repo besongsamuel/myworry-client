@@ -3,9 +3,8 @@
         <div class="m-5 card border-secondary" *ngIf="newWorryForm">
 
 
-            <mat-toolbar class="card-header" color="primary" *ngIf="worry">Edit worry</mat-toolbar>
-            <mat-toolbar class="card-header" color="primary" *ngIf="!worry">Create worry</mat-toolbar>
-            
+            <mat-toolbar class="card-header" color="primary">Edit worry</mat-toolbar>
+
             <div class="card-body">
 
               <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
@@ -17,7 +16,7 @@
               </div>
 
               <div class="text-center text-danger my-2" *ngIf="editLimited">
-                This worry has opinions associated with it. Edition will be limited. 
+                This worry has opinions associated with it. Edition will be limited.
               </div>
 
                 <ngx-file-drop

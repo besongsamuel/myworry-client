@@ -68,14 +68,15 @@ export class EditWorryComponent implements OnInit {
 
   }
 
-  initForm(worry?: Worry)
+  initForm(worry: Worry)
   {
     this.newWorryForm = this.fb.group(
     {
-      categoryId: [worry.categoryId ? worry.categoryId : this.categories[0].id, Validators.required],
+      categoryId: [worry.categoryId, Validators.required],
       name: [worry.name, [Validators.required, Validators.minLength(6)]],
       description: worry.description,
       locked: worry.locked,
+      image: worry.image,
       labelFor: [worry.labelFor, [Validators.required, Validators.minLength(2)]],
       labelAgainst: [worry.labelAgainst, [Validators.required, Validators.minLength(2)]],
       startDate: moment(worry.startDate),
@@ -92,26 +93,18 @@ export class EditWorryComponent implements OnInit {
     }
 
     this.tags = worry.tags;
-
   }
 
   ngOnInit() {
 
-    // Attempt to get the id for a worry if we are in edit mode.
     let id = this.route.snapshot.paramMap.get('id');
 
     if(id)
     {
       this.worryService.getWorry(id).subscribe((worry: Worry) =>
       {
-        if(worry.image)
-        {
-          this.imagePath = worry.image;
-        }
-        else
-        {
-          this.imagePath = DEFAULT_IMAGE;
-        }
+
+        this.imagePath = worry.image ? worry.image : DEFAULT_IMAGE;
 
         this.worry = worry;
 
@@ -126,14 +119,8 @@ export class EditWorryComponent implements OnInit {
           this.initForm(this.worry);
         });
 
-      });
-    }
-    else
-    {
-      this.worryService.getCategories().subscribe((categories: Category[]) =>
-      {
-        this.categories = categories;
-        this.initForm(this.worry);
+      }, (err) => {
+        console.error(`An unexpected error occured while trying to get worry with id ${id}. Details: `, err)
       });
     }
   }

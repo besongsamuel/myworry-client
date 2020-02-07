@@ -11,9 +11,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 // the `default as` syntax.
 import * as _moment from 'moment';
 import * as _ from 'lodash';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
 
@@ -53,116 +52,52 @@ export class AddWorryComponent implements OnInit {
   errorMessage: string = null;
   categories: Category[] = [];
   tags = [];
-  worry: Worry = new Worry();
   imagePath: string;
   public fileDroped: NgxFileDropEntry;
 
-  editLimited: boolean = false;
-
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router,
     private worryService: WorryService)
   {
 
   }
 
-  initForm(worry?: Worry)
-  {
-    this.newWorryForm = this.fb.group(
-    {
-      categoryId: [worry.categoryId ? worry.categoryId : this.categories[0].id, Validators.required],
-      name: [worry.name, [Validators.required, Validators.minLength(6)]],
-      description: worry.description,
-      locked: worry.locked,
-      labelFor: [worry.labelFor, [Validators.required, Validators.minLength(2)]],
-      labelAgainst: [worry.labelAgainst, [Validators.required, Validators.minLength(2)]],
-      startDate: moment(worry.startDate),
-      endDate: moment(worry.endDate)
-    });
-
-    if(this.editLimited)
-    {
-      this.newWorryForm.get('name').disable();
-      this.newWorryForm.get('description').disable();
-      this.newWorryForm.get('categoryId').disable();
-      this.newWorryForm.get('labelFor').disable();
-      this.newWorryForm.get('labelAgainst').disable();
-    }
-
-    this.tags = worry.tags;
-
-  }
-
   ngOnInit() {
 
-    // Attempt to get the id for a worry if we are in edit mode.
-    let id = this.route.snapshot.paramMap.get('id');
+      this.worryService.getCategories().subscribe((categories: Category[]) => {
 
-    if(id)
-    {
-      this.worryService.getWorry(id).subscribe((worry: Worry) =>
-      {
-        if(worry.image)
-        {
-          this.imagePath = worry.image;
-        }
-        else
-        {
-          this.imagePath = DEFAULT_IMAGE;
-        }
-
-        this.worry = worry;
-
-        if(worry.opinions && worry.opinions.length > 0)
-        {
-          this.editLimited = true;
-        }
-
-        this.worryService.getCategories().subscribe((categories: Category[]) =>
-        {
-          this.categories = categories;
-          this.initForm(this.worry);
+        this.categories = categories;
+        this.newWorryForm = this.fb.group({
+          categoryId: [this.categories[0].id, Validators.required],
+          name: ["", [Validators.required, Validators.minLength(6)]],
+          description: "",
+          locked: false,
+          image: "",
+          labelFor: ["Yes", [Validators.required, Validators.minLength(2)]],
+          labelAgainst: ["No", [Validators.required, Validators.minLength(2)]],
+          startDate: moment(),
+          endDate: moment().add(1, 'M')
         });
 
+        this.tags = [];
       });
-    }
-    else
-    {
-      this.worryService.getCategories().subscribe((categories: Category[]) =>
-      {
-        this.categories = categories;
-        this.initForm(this.worry);
-      });
-    }
   }
 
   onSubmit()
   {
-    let worry: Worry = this.newWorryForm.value;
+    let worry: Worry = new Worry();
 
-    Object.assign(this.worry, worry);
+    Object.assign(worry, this.newWorryForm.value);
 
-    this.worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
-    this.worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
+    worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
+    worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
 
-    this.worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
+    worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
 
-    let saveRequest$;
-
-    if(this.editLimited)
+    this.worryService.createWorry(worry).subscribe((newWorry: Worry) =>
     {
-      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate']));
-    }
-    else
-    {
-      saveRequest$ = this.worryService.createWorry(this.worry);
-    }
-
-    saveRequest$.subscribe((newWorry: Worry) =>
-    {
-      this.router.navigate([`/worry/${newWorry ? newWorry.id : this.worry.id}`]);
+      this.router.navigate([`/worry/${newWorry ? newWorry.id : worry.id}`]);
     },
     (err) =>
     {
@@ -174,9 +109,9 @@ export class AddWorryComponent implements OnInit {
 
   removeImage()
   {
-    this.worryService.deleteImage(this.worry.image).subscribe(() =>
+    this.worryService.deleteImage(this.newWorryForm.get("image").value).subscribe(() =>
     {
-      this.worry.image = "";
+      this.newWorryForm.get("image").setValue("");
       this.imagePath =  "";
     });
   }
@@ -193,7 +128,7 @@ export class AddWorryComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
-          this.worry.image = response.imageName;
+          this.newWorryForm.get("image").setValue(response.imageName);
           this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
         });
       });
