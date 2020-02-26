@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [SignupComponent, ProfileComponent, LoginComponent],
@@ -25,6 +26,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     RouterModule,
     NgxFileDropModule,
     MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,

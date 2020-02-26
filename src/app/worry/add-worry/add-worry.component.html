@@ -18,7 +18,8 @@
                 <ngx-file-drop
                   dropZoneLabel="Drop Image Here"
                   (onFileDrop)="fileDropped($event)"
-                  accept="png,jpg,jpeg"
+                  accept="image/*"
+                  dropZoneClassName="drop-zone"
                   directory="false"
                   multiple="false"
                   *ngIf="!imagePath">
