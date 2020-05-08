@@ -133,7 +133,6 @@ export class EditWorryComponent implements OnInit {
 
     this.worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     this.worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
-
     this.worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
 
     let saveRequest$;
@@ -144,7 +143,7 @@ export class EditWorryComponent implements OnInit {
     }
     else
     {
-      saveRequest$ = this.worryService.createWorry(this.worry);
+      saveRequest$ = this.worryService.createWorry(_.omit(this.worry, ['user']));
     }
 
     saveRequest$.subscribe((newWorry: Worry) =>
@@ -180,7 +179,7 @@ export class EditWorryComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'worry').subscribe((response) =>
         {
-          this.worry.image = response.imageName;
+          this.newWorryForm.get("image").setValue(response.imageName);
           this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
         });
       });

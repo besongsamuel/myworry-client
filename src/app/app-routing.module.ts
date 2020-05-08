@@ -9,6 +9,7 @@ import { WorryComponent } from './worry/worry/worry.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { AccountModule } from './account/account.module';
 import { WorryModule } from './worry/worry.module';
+import { EditWorryComponent } from './worry/edit-worry/edit-worry.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,7 @@ const routes: Routes = [
     path: 'worry/:id', component: WorryComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'edit/worry/:id', component: AddWorryComponent, canActivate: [AuthGuard]
+    path: 'edit/worry/:id', component: EditWorryComponent, canActivate: [AuthGuard]
   },
   {
     path: 'account/profile', component: ProfileComponent, canActivate: [AuthGuard]

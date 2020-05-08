@@ -33,7 +33,9 @@
               </mat-menu>
             </div>
           </mat-card-header>
-          <img mat-card-image class="worry-image" [src]="worry.image" alt="Worry Description Image">
+          <div class="d-flex justify-content-center p-4">
+            <img mat-card-image class="worry-image" [src]="worry.image" alt="Worry Description Image">
+          </div>
           <mat-card-content>
             <p>
               {{worry.description}}
@@ -43,9 +45,9 @@
 
 
           </mat-card-content>
-          <mat-card-actions class="d-flex">
-            <button [disabled]="expired || worry.locked" class="mr-auto left-background" (click)="addOpinion(1)" mat-raised-button>{{worry.labelFor}}</button>
-            <button [disabled]="expired || worry.locked" class="ml-auto right-background" (click)="addOpinion(0)" mat-raised-button>{{worry.labelAgainst}}</button>
+          <mat-card-actions class="d-flex flex-wrap">
+            <button [disabled]="expired || worry.locked" class="mr-auto left-background mb-2" (click)="addOpinion(1)" mat-raised-button>{{worry.labelFor}}</button>
+            <button [disabled]="expired || worry.locked" class="ml-auto right-background mb-2" (click)="addOpinion(0)" mat-raised-button>{{worry.labelAgainst}}</button>
           </mat-card-actions>
 
           <mat-card-content>
