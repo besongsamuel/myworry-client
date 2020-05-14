@@ -52,9 +52,9 @@ export class AuthService {
     );
   }
 
-  facebookLogin(credentials: SocialUser)
+  facebookLogin()
   {
-    return this.http.post<User>(`${environment.ApiUrl}users/facebook-login`, credentials, this.httpOptions).pipe(
+    return this.http.get(`${environment.ApiUrl}/auth/thirdparty/facebook`, this.httpOptions).pipe(
       catchError(this.handleError),
       tap((x: any) =>
       {

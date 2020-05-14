@@ -1,38 +1,42 @@
-<mat-card  class="m-5">
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+    <mat-card  class="m-5">
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    
+            <div class="alert alert-danger" role="alert" *ngIf='error'>
+                {{ errorMessage }}
+            </div>
+    
+            <div class="alert alert-success d-flex justify-content-center" role="alert" *ngIf='newUserEmail'>
+               <div>Account <strong> {{newUserEmail}} </strong> was created successfully</div> 
+            </div>
+    
+            <mat-form-field class="w-100">
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="loginForm.controls.email.hasError('email')">
+                  The email entered is not valid
+                </mat-error>
+                <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+                  Please enter a email
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="w-100">
+                <input type="password" matInput placeholder="Password" formControlName="password">
+                <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                    Please enter a password
+                  </mat-error>
+            </mat-form-field>
+    
+            <div class="d-flex w-100">
+                <button class="ml-auto" type="submit" mat-stroked-button color="primary" [disabled]="!loginForm.valid">Submit</button>
+            </div>
+    
+        </form>
+    </mat-card>
+</div>
 
-        <div class="alert alert-danger" role="alert" *ngIf='error'>
-            {{ errorMessage }}
-        </div>
 
-        <div class="alert alert-success d-flex justify-content-center" role="alert" *ngIf='newUserEmail'>
-           <div>Account <strong> {{newUserEmail}} </strong> was created successfully</div> 
-        </div>
-
-        <mat-form-field class="w-100">
-            <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="loginForm.controls.email.hasError('email')">
-              The email entered is not valid
-            </mat-error>
-            <mat-error *ngIf="loginForm.controls.email.hasError('required')">
-              Please enter a email
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-            <input type="password" matInput placeholder="Password" formControlName="password">
-            <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-                Please enter a password
-              </mat-error>
-        </mat-form-field>
-
-        <div class="d-flex w-100">
-            <button class="ml-auto" type="submit" mat-stroked-button color="primary" [disabled]="!loginForm.valid">Submit</button>
-        </div>
-
-    </form>
-</mat-card>
 
 
 

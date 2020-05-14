@@ -1,6 +1,8 @@
 
 <div class="card mb-2">
-    <img class="card-img-top w-auto" [src]="worry.image" alt="Card image cap">
+    <div class="d-flex justify-content-center">
+        <img class="card-img-top w-auto" [src]="worry.image" alt="Card image cap">
+    </div>
     <div class="card-body">
         <h5 class="card-title">{{worry.name}}</h5>
         <p *ngIf="worry.user" class="card-subtitle mb-2 text-muted d-flex">

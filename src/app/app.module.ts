@@ -24,7 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
 let socialLoginConfig = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
+    provider: new GoogleLoginProvider("692988413035-h58vdctiqo07c72lnmv22uuofieca6at.apps.googleusercontent.com")
   },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
@@ -63,6 +63,7 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     provide: AuthServiceConfig,
     useFactory: provideConfig
   }],
+  
   bootstrap: [AppComponent],
   entryComponents: [AddOpinionComponent, EditOpinionComponent, ErrorSnackBarComponent, ConfirmationDialogComponent]
 })

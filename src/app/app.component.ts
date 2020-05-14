@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { AuthService as SocialAuthService, SocialUser } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import { User } from './models/user';
+import { environment } from 'src/environments/environment';
+
+
 
 @Component({
   selector: 'app-root',
@@ -15,34 +18,14 @@ export class AppComponent implements OnInit {
   
   title = 'myworry-client';
 
-  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router){}
+  environment : any = {}
+
+  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router){
+    this.environment = environment;
+  }
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe((socialUser : SocialUser) => {
-      
-      if(socialUser)
-      {
-        this.authService.facebookLogin(socialUser).subscribe(_ => {
-          
-          this.userService.getUser().subscribe((user: User) =>
-          {
-            this.userService.user = user;
-
-            if(this.authService.redirectUrl)
-            {
-              this.router.navigate([this.authService.redirectUrl]);
-            }
-            else
-            {
-              this.router.navigate(['']);
-            }
-
-          }, () => {});
-
-        });
-      }
-      
-    });
+    this.userService.getUser().subscribe(user => console.log(user));
   }
 
   logout()
@@ -56,7 +39,7 @@ export class AppComponent implements OnInit {
   }
  
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.facebookLogin().subscribe(x => console.log(x), (err) => console.error(err));
   } 
  
   signOut(): void {
