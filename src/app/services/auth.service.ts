@@ -5,9 +5,7 @@ import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
-import { UserService } from './user.service';
-import { User } from '../models/user';
-import { SocialUser } from 'angularx-social-login';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Injectable({
@@ -25,11 +23,13 @@ export class AuthService {
 
   public token: string;
 
+  public provider: string = 'myworry';
+
   public loggedIn: boolean;
 
   public redirectUrl: string = null;
 
-  constructor(private http: HttpClient)
+  constructor(private http: HttpClient, private route: ActivatedRoute)
   {
     if(!this.isTokenExpired())
     {
@@ -76,8 +76,19 @@ export class AuthService {
     return sessionStorage.getItem('token');
   }
 
+  setProvider(provider: string){
+    this.provider = provider;
+  }
+
   setToken(token: string): void {
     sessionStorage.setItem('token', token);
+
+    if(!this.isTokenExpired())
+    {
+      this.token = token;
+      this.loggedIn = true;
+    }
+
   }
 
   getTokenExpirationDate(token: string): Date {

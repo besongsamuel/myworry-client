@@ -1,6 +1,6 @@
 import { Worry } from './worry';
-import { Profile } from './profile';
-import { SocialUser } from 'angularx-social-login';
+import { Profile as UserIdentity } from './profile';
+import { AuthService } from '../services/auth.service';
 
 export class User {
 
@@ -10,22 +10,17 @@ export class User {
 
     email: string;
 
-    firstName: string;
-
-    lastName: string;
-
     emailVerified?: boolean;
 
-    displayName?: string;
-
-    profile?: Profile;
+    userIdentities?: UserIdentity[];
 
     worries: Worry[];
 
     roleId: string;
 
-    socialUser?: SocialUser;
+    image?: string;
 
-    tmpImage?: string;
-
+    constructor(){
+        
+    }
 }

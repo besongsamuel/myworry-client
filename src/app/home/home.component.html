@@ -1,17 +1,24 @@
-<div class="container mt-5 home-container" style="min-height: calc(100vh - 124px);">
-    <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-        <div class="d-flex">
-            <input class="form-control mr-2" formControlName="q">
-            <button color="primary" mat-raised-button type="submit">Search</button>
-        </div>
-    </form>
+<div class="d-flex flex-column home-container" style="min-height: calc(100vh - 124px);">
 
-    <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
-        <div class="d-flex flex-column align-items-center">
-            <p>Are you worried about something?</p>
-            <button routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
-        </div>
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
 
+        <div class="container py-3">
+            <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                <div class="d-flex">
+                    <input class="form-control mr-2" formControlName="q">
+                    <button color="primary" mat-raised-button type="submit">Search</button>
+                </div>
+            </form>
+        
+            <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
+                <div class="d-flex flex-column align-items-center">
+                    <p>Are you worried about something?</p>
+                    <button routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
+                </div>
+        
+            </div>
+        </div>
+        
     </div>
 
     <div class="container-fluid">

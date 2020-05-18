@@ -48,19 +48,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   getUserProfileImage()
   {
-    if(this.worry.user.socialUser)
-    {
-      return this.worry.user.socialUser.photoUrl;
-    }
-    else if(this.worry.user.profile && this.worry.user.profile.image)
-    {
-      return this.worry.user.profile.image;
-    }
-    else
-    {
-      return '';
-    }
-
+    return this.userService.getProfileImage(this.worry.user, null);
   }
 
 
@@ -118,11 +106,11 @@ export class WorryComponent implements OnInit, OnDestroy {
     this.perLeft = ((worry.opinions.filter(x => x.type == 0).length / worry.opinions.length) * 100).toFixed(2);
     this.perRight = ((worry.opinions.filter(x => x.type == 1).length / worry.opinions.length) * 100).toFixed(2);
 
-    this.perLeftMale = ((worry.opinions.filter(x => x.type == 0 && x.user.profile.gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2)
-    this.perRightMale = ((worry.opinions.filter(x => x.type == 1 && x.user.profile.gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2);
+    this.perLeftMale = ((worry.opinions.filter(x => x.type == 0 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2)
+    this.perRightMale = ((worry.opinions.filter(x => x.type == 1 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2);
 
-    this.perLeftFemale = ((worry.opinions.filter(x => x.type == 0 && x.user.profile.gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2)
-    this.perRightFemale = ((worry.opinions.filter(x => x.type == 1 && x.user.profile.gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2);
+    this.perLeftFemale = ((worry.opinions.filter(x => x.type == 0 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2)
+    this.perRightFemale = ((worry.opinions.filter(x => x.type == 1 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2);
   }
 
   ngOnDestroy(): void {

@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   
   title = 'myworry-client';
 
@@ -22,10 +22,6 @@ export class AppComponent implements OnInit {
 
   constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router){
     this.environment = environment;
-  }
-
-  ngOnInit(): void {
-    this.userService.getUser().subscribe(user => console.log(user));
   }
 
   logout()

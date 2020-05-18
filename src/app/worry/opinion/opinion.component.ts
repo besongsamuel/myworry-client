@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialo
 import { MatDialog } from '@angular/material/dialog';
 import { Worry } from 'src/app/models/worry';
 import { WorryService } from '../services/worry.service';
+import { Profile } from 'src/app/models/profile';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class OpinionComponent implements OnInit {
   @Output() removeOpinion = new EventEmitter<string>();
   @Output() editOpinion = new EventEmitter<string>();
   likedByUser: boolean = false;
+  public userProfile: Profile;
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
@@ -32,18 +34,16 @@ export class OpinionComponent implements OnInit {
 
   ngOnInit() {
     this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
+    this.userProfile = this.userService.getProfile(this.opinion.user, null);
   }
 
 
   getUserProfileImage()
   {
-    if(this.opinion.user.socialUser)
+
+    if(this.opinion.user.userIdentities.length > 0 && this.opinion.user.userIdentities[0].photos.length > 0)
     {
-      return this.opinion.user.socialUser.photoUrl;
-    }
-    else if(this.opinion.user.profile && this.opinion.user.profile.image)
-    {
-      return this.opinion.user.profile.image;
+      return this.opinion.user.userIdentities[0].photos[0].value;
     }
     else
     {

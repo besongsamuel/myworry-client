@@ -17,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [SignupComponent, ProfileComponent, LoginComponent],
@@ -38,6 +39,7 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatPaginatorModule,
     TagInputModule,
+    MatButtonModule,
   ]
 })
 export class AccountModule { }

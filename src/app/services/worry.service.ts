@@ -24,6 +24,11 @@ export class WorryService {
     "include": [
       {
         "relation": "user",
+        "scope": {
+          "include": [
+            {"relation": "profiles"}
+          ]
+        }
       },
       {
         "relation": "opinions",

@@ -2,7 +2,7 @@
 
     <mat-tab-group>
         <mat-tab label="Profile"> 
-            <div class="tab-pane active" id="edit">
+            <div class="tab-pane active pt-3" id="edit">
                 <form *ngIf="profileForm && user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
     
                     <div class="alert alert-danger" role="alert" *ngIf='error'>
@@ -13,55 +13,52 @@
                         {{ successMessage }}
                     </div>
     
-                    <div class="d-flex justify-content-center my-3">
+                    <div class="d-flex justify-content-center align-items-start my-3">
                         <ngx-file-drop
                         dropZoneLabel="Drop Profile Image Here"
-                        accept=".png,.jpg,.jpeg"
+                        accept="image/*"
                         directory="false"
+                        dropZoneLabel="Drop profile picture here"
+                        dropZoneClassName="d-zone-area"
+                        contentClassName="d-zone-content text-muted"
                         (onFileDrop)="fileDropped($event)"
                         multiple="false"
                         *ngIf="!profileImagePath">
-                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-    
-                        <div class="d-flex flex-column align-items-center">
-                            <div>Drop Profile Image Here</div>
-                            <div>OR</div>
-                            <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
-                        </div>
-    
-                        </ng-template>
                     </ngx-file-drop>
     
-                    <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
+                    <div class="w-100 d-flex justify-content-center align-items-start" *ngIf="profileImagePath">
                         <img class="profileImage p-1 border" [src]="profileImagePath">
-                        <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
+                        <button mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
                             <mat-icon>cancel</mat-icon>
                         </button>
                     </div>
     
                     </div>
     
-                    <div class="d-flex text-muted text-center">
-                        <p>{{user.email}}</p>
+                    <div class="d-flex text-muted justify-content-center">
+                        {{user.email}}
                     </div>
-    
-                    <div class="d-flex">
-                        <mat-form-field class="pr-2 flex-grow-1">
-                            <input matInput placeholder="First Name" formControlName="firstName">
-                        </mat-form-field>
-                        <mat-form-field class="pl-2 flex-grow-1">
-                            <input matInput placeholder="Last Name" formControlName="lastName">
-                        </mat-form-field>
-                    </div>
-    
-                    <div class="d-flex">
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Display Name" formControlName="displayName">
-                            <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
-                        </mat-form-field>
-                    </div>
-    
+
                     <div class="d-flex flex-column" formGroupName="profile" >
+                        <div class="d-flex mb-3">
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Display Name" formControlName="displayName">
+                                <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="d-flex" formGroupName="name">
+
+                            <mat-form-field class="pr-2 flex-grow-1">
+                                <input matInput placeholder="First Name" formControlName="givenName">
+                            </mat-form-field>
+                            <mat-form-field class="pl-2 flex-grow-1">
+                                <input matInput placeholder="Middle Name" formControlName="middleName">
+                            </mat-form-field>
+                            <mat-form-field class="pl-2 flex-grow-1">
+                                <input matInput placeholder="Last Name" formControlName="familyName">
+                            </mat-form-field>
+                        </div>
     
                         <mat-form-field class="w-100 my-2" >
                             <textarea matInput placeholder="About" formControlName="about"></textarea>
@@ -92,9 +89,10 @@
                     </div>
     
                     <div class="d-flex flex-column">
-                        <mat-form-field class="flex-grow-1">
+                        <mat-form-field class="flex-grow-1" *ngIf="profile.provider == 'myworry'" >
                             <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
                         </mat-form-field>
+                        <h4 class="text-info" *ngIf="profile.provider != 'myworry'">Create New Password</h4>
                         <mat-form-field class="flex-grow-1">
                             <input type="password" matInput placeholder="Password" formControlName="password">
                         </mat-form-field>

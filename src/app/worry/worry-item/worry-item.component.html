@@ -6,7 +6,7 @@
     <div class="card-body">
         <h5 class="card-title">{{worry.name}}</h5>
         <p *ngIf="worry.user" class="card-subtitle mb-2 text-muted d-flex">
-            <span class="mr-auto">{{worry.user.displayName}}</span>
+            <span class="mr-auto">{{userProfile.displayName}}</span>
             <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
         </p>
         <p class="card-subtitle mb-2 text-muted d-flex">

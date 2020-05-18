@@ -5,7 +5,7 @@ import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HelperService } from 'src/app/services/helper.service';
-import { Gender } from 'src/app/models/profile';
+import { Gender, Profile } from 'src/app/models/profile';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import * as _ from "lodash";
@@ -22,6 +22,7 @@ import { Opinion } from 'src/app/models/opinion';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthService } from 'src/app/services/auth.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -79,6 +80,7 @@ export class ProfileComponent implements OnInit {
   auditsCount;
   worriesPageSize;
   auditsPageSize;
+  profile : Profile;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -86,14 +88,13 @@ export class ProfileComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) trailPaginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) trailSort: MatSort;
 
-  constructor(public userService: UserService, private fb: FormBuilder, private worryService: WorryService) { }
+  constructor(public authService: AuthService, public userService: UserService, private fb: FormBuilder, private worryService: WorryService) { }
 
   ngOnInit() {
 
-
     this.userService.getUser().subscribe(async (user: User) =>
     {
-      this.user = user;
+      this.user = user as User;
 
       this.worriesCount = (await this.userService.getCount(user.id, 'worries').toPromise()).count;
       this.auditsCount = (await this.userService.getCount(user.id, 'audit-trails').toPromise()).count;
@@ -105,23 +106,29 @@ export class ProfileComponent implements OnInit {
       this.auditTrailPageChanged(pEvent);
       this.worriesPageChanged(pEvent);
 
-      this.profileImagePath = user.profile.image;
+      this.profileImagePath = this.userService.getProfileImage(user, this.authService.provider);
+
+      this.profile = this.userService.getProfile(user, this.authService.provider);
 
       this.profileForm = this.fb.group(
       {
         id: [user.id],
-        firstName: [user.firstName, Validators.required],
-        lastName: [user.lastName, Validators.required],
         password: [''],
         oldPassword: [''],
-        displayName: [user.displayName, Validators.required],
         profile: this.fb.group({
-          image: [user.profile.image],
-          dob: [user.profile.dob ? user.profile.dob : moment().format(MY_FORMATS.parse.dateInput)],
-          gender: [user.profile.gender ? user.profile.gender : Gender.UNKNOWN],
-          about: [user.profile.about],
-          interests: [user.profile.interests]
-        }),
+          displayName: [this.profile.displayName, Validators.min(3)],
+          name: this.fb.group({
+            givenName: [this.profile.name.givenName, Validators.required],
+            middleName: [this.profile.name.middleName],
+            familyName: [this.profile.name.familyName, Validators.required],
+          }),
+          about: [this.profile.about],
+          dob: [this.profile.dob],
+          interests: [this.profile.interests],
+          gender: [this.profile.gender],
+          photos: [this.profile.photos],
+          emails: [this.profile.emails]
+        }) ,
         confirmPassword: ['']
       },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
 
@@ -132,8 +139,6 @@ export class ProfileComponent implements OnInit {
       });
 
     });
-
-
   }
 
   fileDropped(files: NgxFileDropEntry[])
@@ -148,7 +153,9 @@ export class ProfileComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'profile').subscribe((response) =>
         {
-          this.profileForm.get('profile').get('image').setValue(response.imageName);
+          let photos = this.profileForm.get('profile').get('photos').value;
+          photos = [ {value: response.imageName, isNew: true}];
+          this.profileForm.get('profile').get('photos').setValue(photos);
           this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
         });
       });
@@ -176,9 +183,9 @@ export class ProfileComponent implements OnInit {
     if(this.profileForm.valid)
     {
       let value = this.profileForm.value;
-      value.profile.dob = moment(value.profile.dob).format(MY_FORMATS.parse.dateInput)
+      value.profile.dob = moment(value.profile.dob).toISOString();
 
-      if(!value.oldPassword)
+      if(this.profile.provider != 'myworry' && !value.password)
       {
         value = _.omit(value, ['password', 'oldPassword', 'confirmPassword']);
       }
@@ -192,11 +199,11 @@ export class ProfileComponent implements OnInit {
         value.profile.gender = Gender.UNKNOWN;
       }
 
-      this.userService.updateUser(value).subscribe((user : User) =>
+      this.userService.patchUserIdentity(value).subscribe(() =>
       {
         this.success = true;
         this.error = false;
-        this.user = user;
+        //this.user = user;
       },
       (err) =>
       {
@@ -210,7 +217,7 @@ export class ProfileComponent implements OnInit {
 
   removeImage()
   {
-    this.user.profile.image = "";
+    this.profileForm.get('profile').get('photos').setValue([]);
     this.profileImagePath =  "";
   }
 

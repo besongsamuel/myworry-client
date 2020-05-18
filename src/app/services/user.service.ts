@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,13 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
-    })
+    }),
+    withCredentials: true
   };
 
   public user: User;
 
-  constructor(private http: HttpClient, private authService: AuthService)
+  constructor(private http: HttpClient, public authService: AuthService, private route: ActivatedRoute)
   {
     if(!authService.isTokenExpired())
     {
@@ -29,6 +31,24 @@ export class UserService {
         this.user = user;
       });
     }
+
+    this.route.queryParams.subscribe(params => {
+      if(params['token']){
+        this.authService.setToken(params['token'])
+        this.getUser().subscribe((user : User) =>
+        {
+          this.user = user;
+        });
+
+        if(params['provider']){
+          this.authService.setProvider(params['provider']);
+        }
+      }
+
+      
+  });
+
+    
   }
 
   getUser() : Observable<User>
@@ -41,9 +61,9 @@ export class UserService {
     return this.http.post<User>(`${environment.ApiUrl}users`, user, this.httpOptions);
   }
 
-  updateUser(user: Partial<User>) : Observable<User>
+  patchUserIdentity(userIdentityProfile: any) : Observable<User>
   {
-    return this.http.patch<User>(`${environment.ApiUrl}users/${user.id}`, user, this.httpOptions);
+    return this.http.patch<any>(`${environment.ApiUrl}user-identity`, userIdentityProfile, this.httpOptions);
   }
 
   emailTaken(email: string) : Observable<any> {
@@ -80,6 +100,54 @@ export class UserService {
   {
     this.authService.logout();
     this.user = null;
+  }
+
+  getProfileImage(user: User, provider : string){
+
+      let profile = this.getProfile(user, provider);
+
+      if(profile && profile.photos.length > 0){
+          return profile.photos[0].value;
+      }
+
+      return '';
+  }
+
+  getProfile(user: User, provider : string){
+
+      let identity : any = user.userIdentities.find(x => x.provider == provider) || user.userIdentities[0];
+
+      if(identity.profile){
+        return identity.profile;
+      }
+
+      return null;
+  }
+
+  getUserIdentity(user: User, provider : string){
+
+    let identity : any = user.userIdentities.find(x => x.provider == provider) || user.userIdentities[0];
+
+    return identity;
+}
+
+  generateFormControlData(data, result = {}){
+
+    Object.keys(data).forEach(key => {
+
+      if(typeof data[key] != 'object'){
+
+        result[key] = [data[key]];
+      }
+      else{
+
+        result[key] = this.generateFormControlData(data[key], {})
+      }
+
+    });
+
+    return result;
+
   }
 
 

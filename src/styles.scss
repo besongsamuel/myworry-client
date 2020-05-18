@@ -28,8 +28,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .profileImage
 {
-    height: 190px;
-    width: 190px;
+    max-height: 190px;
+    max-width: 190px;
     border-radius: 50%;
 }
 
@@ -39,8 +39,13 @@ footer
   
 }
 
-.drop-zone
-{
-    border-radius: 10px;
-    border: 2px dotted gray;
+.d-zone-area{
+
+  padding: 15px;
+  border: 1px dotted gray;
+  border-radius: 5px;
+}
+
+.d-zone-content{
+
 }
