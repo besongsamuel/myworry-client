@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
     pageEvent.length = 6;
     pageEvent.pageIndex = 0;
 
+    this.worryService.getTrending().subscribe(x => console.log(x));
+
     this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) =>
     {
       this.worries = worries;

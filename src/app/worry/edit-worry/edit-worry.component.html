@@ -60,17 +60,6 @@
                       <textarea [disabled]="editLimited" matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
 
-                  <mat-form-field class="w-100">
-                      <mat-label>Category</mat-label>
-                      <mat-select [disabled]="editLimited" formControlName="categoryId" required>
-                        <mat-option>--</mat-option>
-                        <mat-option *ngFor="let category of categories" [value]="category.id">
-                          {{category.name}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
-                  </mat-form-field>
-
                   <div class="row form-group">
                       <div class="col">
                           <mat-form-field class="w-100">
@@ -115,7 +104,8 @@
 
                   <div class="form-group">
                       <label for="tags">Tags</label>
-                      <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                      <tag-input modelAsStrings="true" (onAdd)="onTagAdded($event)" id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                        <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
                       </tag-input>
                   </div>
 

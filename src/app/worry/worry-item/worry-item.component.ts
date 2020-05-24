@@ -17,16 +17,19 @@ export class WorryItemComponent implements OnInit {
 
   public userProfile: Profile;
 
-  constructor(userService: UserService)
+  constructor(private userService: UserService)
   {
-    this.currentUser = userService.user;
-
-    this.userProfile = userService.getProfile(this.currentUser, null);
+    
   }
 
   ngOnInit() {
 
-
+    if(this.worry)
+    {
+      this.currentUser = this.worry.user;
+      this.userProfile = this.userService.getProfile(this.worry.user, null);
+    }
+    
   }
 
 }

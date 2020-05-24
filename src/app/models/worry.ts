@@ -6,8 +6,6 @@ export class Worry {
 
     id: string;
 
-    categoryId: string;
-
     userId: string = null;
 
     user: User;

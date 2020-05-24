@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Category } from 'src/app/models/category';
 import { Worry } from 'src/app/models/worry';
 import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -15,6 +14,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
+import { WorryTag } from '../worry-tag';
 
 const moment =  _moment;
 
@@ -50,7 +50,6 @@ export class AddWorryComponent implements OnInit {
   error: boolean = false;
   success: boolean = false;
   errorMessage: string = null;
-  categories: Category[] = [];
   tags = [];
   imagePath: string;
   public fileDroped: NgxFileDropEntry;
@@ -65,23 +64,30 @@ export class AddWorryComponent implements OnInit {
 
   ngOnInit() {
 
-      this.worryService.getCategories().subscribe((categories: Category[]) => {
-
-        this.categories = categories;
-        this.newWorryForm = this.fb.group({
-          categoryId: [this.categories[0].id, Validators.required],
-          name: ["", [Validators.required, Validators.minLength(6)]],
-          description: "",
-          locked: false,
-          image: "",
-          labelFor: ["Yes", [Validators.required, Validators.minLength(2)]],
-          labelAgainst: ["No", [Validators.required, Validators.minLength(2)]],
-          startDate: moment(),
-          endDate: moment().add(1, 'M')
-        });
-
-        this.tags = [];
+      this.newWorryForm = this.fb.group({
+        name: ["", [Validators.required, Validators.minLength(6)]],
+        description: "",
+        locked: false,
+        image: "",
+        labelFor: ["Yes", [Validators.required, Validators.minLength(2)]],
+        labelAgainst: ["No", [Validators.required, Validators.minLength(2)]],
+        startDate: moment(),
+        endDate: moment().add(1, 'M')
       });
+
+      this.tags = [];
+      
+  }
+
+  onTagAdded = (t) =>
+  {
+    let tag: WorryTag = { approved: false, name: t.value };
+    this.worryService.createTag(tag).subscribe();
+  }
+
+  requestAutocompleteItems = () =>
+  {
+    return this.worryService.getTags();
   }
 
   onSubmit()

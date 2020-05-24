@@ -7,6 +7,8 @@ import { Category } from '../../models/category';
 import { Opinion } from '../../models/opinion';
 import { OpinionLike } from '../../models/opinion-like';
 import { PageEvent } from '@angular/material/paginator';
+import { WorryTag } from '../worry-tag';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WorryService {
@@ -22,6 +24,13 @@ export class WorryService {
     "include": [
       {
         "relation": "user",
+        "scope":{
+          "include": [
+            {
+              "relation": "userIdentities",
+            }
+          ]
+        }
       },
       {
         "relation": "opinions",
@@ -29,6 +38,13 @@ export class WorryService {
           "include": [
             {
               "relation": "user",
+              "scope":{
+                "include": [
+                  {
+                    "relation": "userIdentities",
+                  }
+                ]
+              }
             },
             {
               "relation": "opinionLikes"
@@ -44,6 +60,13 @@ export class WorryService {
     "include": [
       {
         "relation": "user",
+        "scope":{
+          "include": [
+            {
+              "relation": "userIdentities",
+            }
+          ]
+        }
       },
       {
         "relation": "opinionLikes"
@@ -61,6 +84,21 @@ export class WorryService {
   canPostOpinion(worryId: string) : Observable<boolean>
   {
     return this.http.get<boolean>(`${environment.ApiUrl}worries/can-post-opinion/${worryId}`, this.httpOptions);
+  }
+
+  getTrending(){
+    return this.http.get<object>(`${environment.ApiUrl}worries/trending`, this.httpOptions);
+  }
+
+  getTags() : Observable<string[]>
+  {
+     return this.http.get<WorryTag[]>(`${environment.ApiUrl}tags`, this.httpOptions).pipe(map((x) => { 
+       return x.map(tag => tag.name);
+      }));
+  }
+
+  createTag(tag: WorryTag) : Observable<WorryTag>{
+    return this.http.post<any>(`${environment.ApiUrl}tags`, tag, this.httpOptions);
   }
 
   getWorries(userId? : string, pageEvent?: PageEvent) : Observable<Worry[]>

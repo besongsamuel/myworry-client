@@ -40,16 +40,7 @@ export class OpinionComponent implements OnInit {
 
   getUserProfileImage()
   {
-
-    if(this.opinion.user.userIdentities.length > 0 && this.opinion.user.userIdentities[0].photos.length > 0)
-    {
-      return this.opinion.user.userIdentities[0].photos[0].value;
-    }
-    else
-    {
-      return '';
-    }
-
+    return this.userService.getProfileImage(this.opinion.user, null);
   }
 
   toggleLike()

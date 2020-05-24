@@ -15,23 +15,19 @@
                   Your worry was successfully created.
               </div>
 
+
+
                 <ngx-file-drop
                   dropZoneLabel="Drop Image Here"
                   (onFileDrop)="fileDropped($event)"
                   accept="image/*"
-                  dropZoneClassName="drop-zone"
+                  dropZoneLabel="Drop image here"
+                  dropZoneClassName="d-zone-area"
+                  contentClassName="d-zone-content text-muted"
                   directory="false"
                   multiple="false"
                   *ngIf="!imagePath">
-                  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-
-                    <div class="d-flex flex-column align-items-center">
-                      <div>Drop Image Here</div>
-                      <div>OR</div>
-                      <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
-                    </div>
-
-                  </ng-template>
+                  
                 </ngx-file-drop>
 
                 <div class="w-100 d-flex justify-content-center my-2" *ngIf="imagePath">
@@ -44,7 +40,7 @@
                 <form [formGroup]="newWorryForm"  (ngSubmit)="onSubmit()">
 
                   <mat-form-field class="w-100">
-                      <input matInput placeholder="Worry Title" formControlName="name">
+                      <input matInput placeholder="Title" formControlName="name">
                       <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
                         A min length of 6 is required.
                       </mat-error>
@@ -55,17 +51,6 @@
 
                   <mat-form-field class="w-100" >
                       <textarea matInput placeholder="Description" formControlName="description"></textarea>
-                  </mat-form-field>
-
-                  <mat-form-field class="w-100">
-                      <mat-label>Category</mat-label>
-                      <mat-select formControlName="categoryId" required>
-                        <mat-option>--</mat-option>
-                        <mat-option *ngFor="let category of categories" [value]="category.id">
-                          {{category.name}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="newWorryForm.controls.categoryId.hasError('required')">Please select a category for your worry</mat-error>
                   </mat-form-field>
 
                   <div class="row form-group">
@@ -112,7 +97,8 @@
 
                   <div class="form-group">
                       <label for="tags">Tags</label>
-                      <tag-input id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                      <tag-input modelAsStrings="true" (onAdd)="onTagAdded($event)" id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
+                        <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
                       </tag-input>
                   </div>
 

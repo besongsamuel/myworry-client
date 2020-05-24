@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Category } from 'src/app/models/category';
 import { Worry } from 'src/app/models/worry';
 import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -16,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
+import { WorryTag } from '../worry-tag';
 
 const moment =  _moment;
 
@@ -51,7 +51,6 @@ export class EditWorryComponent implements OnInit {
   error: boolean = false;
   success: boolean = false;
   errorMessage: string = null;
-  categories: Category[] = [];
   tags = [];
   worry: Worry = new Worry();
   imagePath: string;
@@ -72,7 +71,6 @@ export class EditWorryComponent implements OnInit {
   {
     this.newWorryForm = this.fb.group(
     {
-      categoryId: [worry.categoryId, Validators.required],
       name: [worry.name, [Validators.required, Validators.minLength(6)]],
       description: worry.description,
       locked: worry.locked,
@@ -87,7 +85,6 @@ export class EditWorryComponent implements OnInit {
     {
       this.newWorryForm.get('name').disable();
       this.newWorryForm.get('description').disable();
-      this.newWorryForm.get('categoryId').disable();
       this.newWorryForm.get('labelFor').disable();
       this.newWorryForm.get('labelAgainst').disable();
     }
@@ -112,17 +109,21 @@ export class EditWorryComponent implements OnInit {
         {
           this.editLimited = true;
         }
-
-        this.worryService.getCategories().subscribe((categories: Category[]) =>
-        {
-          this.categories = categories;
-          this.initForm(this.worry);
-        });
-
       }, (err) => {
         console.error(`An unexpected error occured while trying to get worry with id ${id}. Details: `, err)
       });
     }
+  }
+
+  onTagAdded = (t) =>
+  {
+    let tag: WorryTag = { approved: false, name: t.value };
+    this.worryService.createTag(tag).subscribe();
+  }
+
+  requestAutocompleteItems = () =>
+  {
+    return this.worryService.getTags();
   }
 
   onSubmit()
