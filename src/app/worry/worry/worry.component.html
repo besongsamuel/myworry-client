@@ -2,16 +2,10 @@
 
   <div class="container-fluid">
 
-    <div class="row">
-
-      <div class="opinions d-none d-md-block col-md-3">
-        <div *ngFor="let opinion of worry.opinions">
-          <app-opinion *ngIf="opinion.type == 0" (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
-        </div>
-      </div>
+    <div class="d-flex flex-column align-items-center">
 
       <div class="col-md-6 col-sm-12">
-        <mat-card class="w-100">
+        <div class="w-100">
           <mat-card-header>
             <img mat-card-avatar [src]="getUserProfileImage()">
             <mat-card-title>{{worry.name}}</mat-card-title>
@@ -24,6 +18,10 @@
                 <button routerLink="/edit/worry/{{worry.id}}" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
+                </button>
+                <button (click)="share()" mat-menu-item>
+                  <mat-icon>share</mat-icon>
+                  <span>Share with</span>
                 </button>
                 <button (click)="toggleLock()" mat-menu-item>
                   <mat-icon *ngIf="!worry.locked">lock</mat-icon>
@@ -41,42 +39,31 @@
               {{worry.description}}
             </p>
 
+            <div class="d-flex">
+              <div class="d-flex flex-column">
+                <button [disabled]="expired || worry.locked" class="mr-auto opinion1-button-background mb-2" (click)="addOpinion(1)" mat-raised-button>{{worry.opinion1Label}}</button>
+                <button [disabled]="expired || worry.locked" class="ml-auto opinion2-button-background mb-2" (click)="addOpinion(2)" mat-raised-button>{{worry.opinion2Label}}</button>
+              </div>
 
-
-
-          </mat-card-content>
-          <mat-card-actions class="d-flex flex-wrap">
-            <button [disabled]="expired || worry.locked" class="mr-auto left-background mb-2" (click)="addOpinion(1)" mat-raised-button>{{worry.labelFor}}</button>
-            <button [disabled]="expired || worry.locked" class="ml-auto right-background mb-2" (click)="addOpinion(0)" mat-raised-button>{{worry.labelAgainst}}</button>
-          </mat-card-actions>
-
-          <mat-card-content>
-
-            <mat-accordion>
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <span>{{perLeft}}% of people <span>are of the opinion <b>{{worry.labelAgainst}}</b></span></span>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                <div class="d-flex flex-column">
-                  <div><b>{{perLeftMale}}%</b> males and <b>{{perLeftFemale}}%</b> females.</div>
-                </div>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <span>{{perRight}}% of people <span>are of the opinion <b>{{worry.labelFor}}</b></span></span>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                <div class="d-flex flex-column">
-                  <div><b>{{perRightMale}}%</b> males and <b>{{perRightFemale}}%</b> females.</div>
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
+              <mat-accordion class="flex-grow-1 mx-3">
+                <mat-expansion-panel *ngFor="let stat of stats">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span>{{stat.percentage}}% of people <span>are of the opinion <b>{{stat.label}}</b></span></span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+  
+                  <div class="d-flex flex-column">
+                    <div><b>{{stat.percentageMale}}%</b> males and <b>{{stat.percentageFemale}}%</b> females.</div>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+    
+              <div class="d-flex flex-column">
+                <button [disabled]="expired || worry.locked || !worry.opinion3Label" class="mr-auto opinion3-button-background mb-2" (click)="addOpinion(3)" mat-raised-button>{{worry.opinion3Label}}</button>
+                <button [disabled]="expired || worry.locked || !worry.opinion4Label" class="ml-auto opinion4-button-background mb-2" (click)="addOpinion(4)" mat-raised-button>{{worry.opinion4Label}}</button>
+              </div>
+            </div>
 
             <div class="d-flex mt-2 justify-content-center" *ngIf="!expired">
               <p>Available from {{worry.startDate | date}} - {{worry.endDate | date}}</p>
@@ -96,26 +83,20 @@
               <p><strong>This item is locked</strong></p>
             </div>
 
-
           </mat-card-content>
-        </mat-card>
+        </div>
       </div>
 
-
-      <div class="opinions d-none d-md-block col-md-3">
-        <div *ngFor="let opinion of worry.opinions">
-          <app-opinion  *ngIf="opinion.type == 1" (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
+      <div class="container opinions w-100">
+        <div [class.pl-5]="opinion.type == 1 || opinion.type == 3" [class.pr-5]="opinion.type == 2 || opinion.type == 4" *ngFor="let opinion of worry.opinions">
+          <app-opinion (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
         </div>
       </div>
 
     </div>
 
 
-    <div class="opinions d-md-none w-100">
-      <div [class.pl-5]="opinion.type == 0" [class.pr-5]="opinion.type == 1" *ngFor="let opinion of worry.opinions">
-        <app-opinion (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
-      </div>
-    </div>
+    
 
   </div>
 

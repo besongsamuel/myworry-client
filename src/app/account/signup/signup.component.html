@@ -1,22 +1,20 @@
-<div class="container d-flex justify-content-center align-items-center">
+<div class="container d-flex component-container justify-content-center align-items-center">
     <mat-card>
 
         <ngx-file-drop
             dropZoneLabel="Drop Profile Image Here"
             (onFileDrop)="fileDropped($event)"
-            accept="png,jpg,jpeg"
+            accept="image/*"
             directory="false"
+            dropZoneLabel="Drop Profile image here"
+            dropZoneClassName="d-zone-area"
+            contentClassName="d-zone-content text-muted"
+            [showBrowseBtn]="true"
+            browseBtnClassName="btn primary text-white my-2"
+            browseBtnLabel="Browse"
             multiple="false"
             *ngIf="!profileImagePath">
-            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-  
-              <div class="d-flex flex-column align-items-center">
-                <div>Drop Profile Image Here</div>
-                <div>OR</div>
-                <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
-              </div>
-  
-            </ng-template>
+            
           </ngx-file-drop>
   
           <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">

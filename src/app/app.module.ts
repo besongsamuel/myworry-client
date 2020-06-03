@@ -14,7 +14,7 @@ import { httpInterceptorProviders } from './http-interceptors/index';
 import { AuthService } from './services/auth.service';
 import { FileInputComponent } from './custom-inputs/file-input.component';
 import { AddOpinionComponent } from './worry/add-opinion/add-opinion.component'
-import { ErrorSnackBarComponent } from './dialogs/error-snack-bar/error-snack-bar.component';
+import { SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { EditOpinionComponent } from './worry/edit-opinion/edit-opinion.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,7 +43,7 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
     AppComponent,
     HomeComponent,
     FileInputComponent,
-    ErrorSnackBarComponent,
+    SnackBarComponent,
     ConfirmationDialogComponent,
   ],
   imports: [
@@ -65,6 +65,6 @@ const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {}
   }],
   
   bootstrap: [AppComponent],
-  entryComponents: [AddOpinionComponent, EditOpinionComponent, ErrorSnackBarComponent, ConfirmationDialogComponent]
+  entryComponents: [AddOpinionComponent, EditOpinionComponent, SnackBarComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }

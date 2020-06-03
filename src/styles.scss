@@ -4,27 +4,31 @@
 html, body, app-home { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.for-border
-{
-  border-right: 3px solid #338bcc;
+$opinion1Color: #338bcc;
+$opinion2Color: #de4a1f;
+$opinion3Color: #00bfa5;
+$opinion4Color: #ffab00;
+
+.opinion1-text{ color: $opinion1Color; }
+.opinion2-text{ color: $opinion2Color; }
+.opinion3-text{ color: $opinion3Color; }
+.opinion4-text{ color: $opinion4Color; }
+
+.component-container{
+  min-height: calc(100vh - 124px);
+  width: 100vw;
 }
 
-.against-border
-{
-  border-left: 3px solid #de4a1f;
-}
+.opinion1-button-background { background-color: $opinion1Color !important; color: #FFFFFF !important; }
+.opinion2-button-background { background-color: $opinion2Color !important; color: #FFFFFF !important; }
+.opinion3-button-background { background-color: $opinion3Color !important; color: #FFFFFF !important; }
+.opinion4-button-background { background-color: $opinion4Color !important; color: #FFFFFF !important; }
 
-.left-background
-{
-  background-color: #de4a1f !important;
-  color: #FFFFFF !important;
-}
+.opinion1-border { border-right: 3px solid $opinion1Color ; }
+.opinion2-border { border-left: 3px solid $opinion2Color ; }
+.opinion3-border { border-right: 3px solid $opinion3Color ; }
+.opinion4-border { border-left: 3px solid $opinion4Color ; }
 
-.right-background
-{
-  background-color: #338bcc !important;
-  color: #FFFFFF !important;
-}
 
 .profileImage
 {
@@ -44,8 +48,14 @@ footer
   padding: 15px;
   border: 1px dotted gray;
   border-radius: 5px;
+  
 }
 
 .d-zone-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 }
+

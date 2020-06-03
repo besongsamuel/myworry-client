@@ -26,7 +26,7 @@ export class WorryItemComponent implements OnInit {
 
     if(this.worry)
     {
-      this.currentUser = this.worry.user;
+      this.currentUser = this.userService.user;
       this.userProfile = this.userService.getProfile(this.worry.user, null);
     }
     

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angu
 import { Opinion } from 'src/app/models/opinion';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorSnackBarComponent, SNACKBAR_DURATION } from 'src/app/dialogs/error-snack-bar/error-snack-bar.component';
+import { SnackBarComponent as SnackBarComponent, SNACKBAR_DURATION } from 'src/app/dialogs/snack-bar/snack-bar.component';
 import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
@@ -27,6 +27,7 @@ export class OpinionComponent implements OnInit {
   @Output() editOpinion = new EventEmitter<string>();
   likedByUser: boolean = false;
   public userProfile: Profile;
+  opinionBorder : string = '';
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
@@ -35,6 +36,7 @@ export class OpinionComponent implements OnInit {
   ngOnInit() {
     this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
     this.userProfile = this.userService.getProfile(this.opinion.user, null);
+    this.opinionBorder = `opinion${this.opinion.type}-border`;
   }
 
 
@@ -69,7 +71,7 @@ export class OpinionComponent implements OnInit {
 
     }, (err) =>
     {
-      this._snackBar.openFromComponent(ErrorSnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: err.error.error.message } })
+      this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: err.error.error.message, error: true } })
     });
   }
 

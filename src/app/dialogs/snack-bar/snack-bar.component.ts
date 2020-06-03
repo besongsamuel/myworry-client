@@ -5,14 +5,15 @@ export const SNACKBAR_DURATION = 5000;
 
 export interface SnackBarData {
   message: string;
+  error: boolean;
 }
 
 @Component({
-  selector: 'app-error-snack-bar',
-  templateUrl: './error-snack-bar.component.html',
-  styleUrls: ['./error-snack-bar.component.scss']
+  selector: 'app-snack-bar',
+  templateUrl: './snack-bar.component.html',
+  styleUrls: ['./snack-bar.component.scss']
 })
-export class ErrorSnackBarComponent implements OnInit {
+export class SnackBarComponent implements OnInit {
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackBarData) { }
 

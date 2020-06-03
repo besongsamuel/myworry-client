@@ -9,6 +9,7 @@ import { OpinionLike } from '../../models/opinion-like';
 import { PageEvent } from '@angular/material/paginator';
 import { WorryTag } from '../worry-tag';
 import { map } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
 
 @Injectable()
 export class WorryService {
@@ -129,6 +130,13 @@ export class WorryService {
   getOpinion(id: string) : Observable<Opinion>
   {
     return this.http.get<Opinion>(`${environment.ApiUrl}/opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+  }
+
+  shareWorry(worry: Worry, users : User[]) : Observable<void>{
+    return this.http.post<any>(`${environment.ApiUrl}worry-shares`, {
+      worryId: worry.id,
+      userIds: users.map(x => x.id)
+    }, this.httpOptions);
   }
 
   getOpinions(userId?:string): Observable<Opinion[]>

@@ -66,6 +66,14 @@ export class UserService {
     return this.http.patch<any>(`${environment.ApiUrl}user-identity`, userIdentityProfile, this.httpOptions);
   }
 
+  getUsers(filter: string) : Observable<User[]>
+  {
+    if(!filter){
+      filter = '';
+    }
+    return this.http.get<User[]>(`${environment.ApiUrl}/users?name=${filter}`, this.httpOptions);
+  }
+
   emailTaken(email: string) : Observable<any> {
     return this.http.get(`${environment.ApiUrl}/users/exists?filter[where][email]=${email}`, this.httpOptions);
   }

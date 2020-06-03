@@ -7,19 +7,10 @@
     {{errorMessage}}
   </div>
   <p class="text-center">{{data.worry.description}}</p>
+  <div class="d-flex w-100 justify-content-center p2">
+    <p class="font-weight-bold" [ngClass]="fontColor">{{selectedOpinionLabel}}</p>
+  </div>
   <form [formGroup]="createOpinionForm">
-
-    <div class="w-100 d-flex justify-content-center">
-
-        <div class="d-flex flex-column">
-            <mat-radio-group aria-label="Select an option" formControlName="type">
-                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="for_val">{{data.worry.labelFor}}</mat-radio-button>
-                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 0" class="mx-2" [value]="against_val">{{data.worry.labelAgainst}}</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        
-    </div>
-
     <mat-form-field class="w-100">
         <textarea matInput placeholder="Your Opinion" formControlName="text"></textarea>
     </mat-form-field>

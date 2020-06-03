@@ -28,6 +28,8 @@ export class AddOpinionComponent  {
   against_val: number = AGAINST_VALUE;
   error: boolean = false;
   errorMessage: string = '';
+  selectedOpinionLabel: string = '';
+  fontColor: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<AddOpinionComponent>,
@@ -44,6 +46,10 @@ export class AddOpinionComponent  {
         worryId: this.data.worry.id,
         userId: this.userService.user.id
       });
+
+      this.selectedOpinionLabel = this.data.worry[`opinion${data.initialValue}Label`];
+
+      this.fontColor = `opinion${data.initialValue}-text`;
 
     }
 

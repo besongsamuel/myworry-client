@@ -1,4 +1,4 @@
-<mat-card class="my-3" *ngIf="opinion" [class.for-border]="opinion.type == 1" [class.against-border]="opinion.type == 0">
+<mat-card class="my-3" *ngIf="opinion" [ngClass]="opinionBorder">
   <mat-card-header>
     <img mat-card-avatar [src]="getUserProfileImage()">
     <mat-card-title *ngIf="opinion.user">{{userProfile.displayName}}</mat-card-title>

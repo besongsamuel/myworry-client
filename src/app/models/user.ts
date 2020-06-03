@@ -1,6 +1,5 @@
 import { Worry } from './worry';
-import { Profile as UserIdentity } from './profile';
-import { AuthService } from '../services/auth.service';
+import { UserIdentity } from './profile';
 
 export class User {
 

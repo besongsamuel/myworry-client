@@ -32,3 +32,12 @@ export class Profile {
   public interests: string[] = [];
   public gender: Gender = Gender.UNKNOWN;
 }
+
+export class UserIdentity {
+  public authScheme: string;
+  public created: Date;
+  public id: string;
+  public userId: string;
+  public provider: string;
+  public profile: Profile;
+}

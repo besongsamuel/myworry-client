@@ -34,11 +34,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { WorryService } from './services/worry.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { WorryShareComponent } from './worry-share/worry-share.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 
 
 
 @NgModule({
-  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent],
+  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent],
   exports: [
     EditWorryComponent,
     AddWorryComponent,
@@ -55,7 +61,9 @@ import { WorryService } from './services/worry.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
     MatInputModule,
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatNativeDateModule,
     MatTableModule,
@@ -75,7 +83,8 @@ import { WorryService } from './services/worry.service';
     MatBadgeModule,
     MatChipsModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSlideToggleModule
 
   ],
   providers: [WorryService]

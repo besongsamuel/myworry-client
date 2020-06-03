@@ -1,6 +1,7 @@
 import { Opinion } from './opinion';
 import * as moment from 'moment';
 import { User } from './user';
+import { WorryShare } from './worry-share';
 
 export class Worry {
 
@@ -9,6 +10,8 @@ export class Worry {
     userId: string = null;
 
     user: User;
+
+    isPrivate: boolean;
 
     name: string = '';
 
@@ -22,9 +25,13 @@ export class Worry {
 
     image: string = '';
 
-    labelFor: string = 'Yes';
+    opinion1Label: string = 'Yes';
 
-    labelAgainst: string = 'No';
+    opinion2Label: string = 'No';
+
+    opinion3Label?: string = 'Maybe';
+
+    opinion4Label?: string = 'Neutral';
 
     startDate: any;
 
@@ -33,6 +40,8 @@ export class Worry {
     date_created: Date;
 
     date_modified: Date;
+
+    worryShares: WorryShare[];
 
     constructor()
     {

@@ -15,6 +15,9 @@ import { Entity } from 'src/app/models/entity.enum';
 import { Opinion } from 'src/app/models/opinion';
 import * as moment from 'moment';
 import { Gender } from 'src/app/models/profile';
+import { WorryShareComponent } from '../worry-share/worry-share.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SNACKBAR_DURATION, SnackBarComponent } from 'src/app/dialogs/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-worry',
@@ -27,12 +30,7 @@ export class WorryComponent implements OnInit, OnDestroy {
   worry: Worry;
   expired: boolean = false;
 
-  perLeft;
-  perRight;
-  perLeftMale;
-  perRightMale;
-  perLeftFemale;
-  perRightFemale;
+  stats: any[] = [];
 
   canPostOpinion: boolean = false;
 
@@ -41,7 +39,8 @@ export class WorryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
     private socket: Socket,
-    private zone:NgZone)
+    private zone:NgZone, 
+    private _snackBar: MatSnackBar)
   {
 
   }
@@ -103,14 +102,23 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   generateStatistics(worry: Worry)
   {
-    this.perLeft = ((worry.opinions.filter(x => x.type == 0).length / worry.opinions.length) * 100).toFixed(2);
-    this.perRight = ((worry.opinions.filter(x => x.type == 1).length / worry.opinions.length) * 100).toFixed(2);
+    if(worry.opinions)
+    {
+      let stats = [];
 
-    this.perLeftMale = ((worry.opinions.filter(x => x.type == 0 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2)
-    this.perRightMale = ((worry.opinions.filter(x => x.type == 1 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2);
+      for(var i = 0; i < 4; i++){
 
-    this.perLeftFemale = ((worry.opinions.filter(x => x.type == 0 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2)
-    this.perRightFemale = ((worry.opinions.filter(x => x.type == 1 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2);
+        stats[i] = {
+          percentage : ((worry.opinions.filter(x => x.type == i + 1).length / worry.opinions.length) * 100).toFixed(2),
+          percentageMale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2),
+          percentageFemale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2),
+          label: worry[`opinion${i + 1}Label`]
+        }
+      }
+
+      this.stats = stats;
+    }
+    
   }
 
   ngOnDestroy(): void {
@@ -250,6 +258,23 @@ export class WorryComponent implements OnInit, OnDestroy {
           let e: SocketEvent = { Action: Crud.REPLACE, Entity: Entity.OPINION, Id: newOpinion.id, roomId: this.worry.id };
           this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         });
+
+      }
+    });
+  }
+
+  share(){
+    const dialogRef = this.dialog.open(WorryShareComponent, {
+      width: '550px',
+      data: {worry: this.worry}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if(result)
+      {
+        this.worry.worryShares = result;
+        this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: 'Worry Shared', error: false } });
 
       }
     });

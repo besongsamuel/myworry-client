@@ -67,10 +67,13 @@ export class AddWorryComponent implements OnInit {
       this.newWorryForm = this.fb.group({
         name: ["", [Validators.required, Validators.minLength(6)]],
         description: "",
+        isPrivate: false,
         locked: false,
         image: "",
-        labelFor: ["Yes", [Validators.required, Validators.minLength(2)]],
-        labelAgainst: ["No", [Validators.required, Validators.minLength(2)]],
+        opinion1Label: ["Yes", [Validators.required, Validators.minLength(2)]],
+        opinion2Label: ["No", [Validators.required, Validators.minLength(2)]],
+        opinion3Label: [""],
+        opinion4Label: [""],
         startDate: moment(),
         endDate: moment().add(1, 'M')
       });

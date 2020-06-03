@@ -61,29 +61,42 @@
                   </mat-form-field>
 
                   <div class="row form-group">
-                      <div class="col">
-                          <mat-form-field class="w-100">
-                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments for" formControlName="labelFor">
-                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
-                                A min length of 2 is required.
-                              </mat-error>
-                              <mat-error *ngIf="newWorryForm.controls.labelFor.hasError('required')">
-                                A "For" label is <strong>required</strong>
-                              </mat-error>
-                          </mat-form-field>
-                      </div>
-                      <div class="col">
-                          <mat-form-field class="w-100">
-                              <input [disabled]="editLimited" matInput placeholder="Label used for arguments against" formControlName="labelAgainst">
-                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
-                                A min length of 2 is required.
-                              </mat-error>
-                              <mat-error *ngIf="newWorryForm.controls.labelAgainst.hasError('required')">
-                                An "Against" label is <strong>required</strong>
-                              </mat-error>
-                          </mat-form-field>
-                      </div>
+                    <div class="col">
+                        <mat-form-field class="w-100">
+                            <input matInput placeholder="Label for first opinion button" formControlName="opinion1Label">
+                            <mat-error *ngIf="newWorryForm.controls.opinion1Label.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
+                              A min length of 2 is required.
+                            </mat-error>
+                            <mat-error *ngIf="newWorryForm.controls.opinion1Label.hasError('required')">
+                              A label for the first opinion is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="w-100">
+                            <input matInput placeholder="Label for second opinion button" formControlName="opinion2Label">
+                            <mat-error *ngIf="newWorryForm.controls.opinion2Label.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
+                              A min length of 2 is required.
+                            </mat-error>
+                            <mat-error *ngIf="newWorryForm.controls.opinion2Label.hasError('required')">
+                              A label for the second opinion is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Label for third opinion button" formControlName="opinion3Label">
+                      </mat-form-field>
                   </div>
+                  <div class="col">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Label for fourth opinion button" formControlName="opinion4Label">
+                      </mat-form-field>
+                  </div>
+                </div>
 
                   <div class="row form-group">
                       <div class="col">
@@ -107,6 +120,10 @@
                       <tag-input modelAsStrings="true" (onAdd)="onTagAdded($event)" id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
                         <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
                       </tag-input>
+                  </div>
+
+                  <div class="form-group">
+                    <mat-slide-toggle formControlName="isPrivate">Private</mat-slide-toggle>
                   </div>
 
                   <button type="submit" mat-raised-button color="primary" class="float-right" [disabled]="!newWorryForm.valid">Submit</button>

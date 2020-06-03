@@ -13,8 +13,10 @@
 
         <div class="d-flex flex-column">
             <mat-radio-group aria-label="Select an option" formControlName="type">
-                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="for_val">{{data.worry.labelFor}}</mat-radio-button>
-                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 0" class="mx-2" [value]="against_val">{{data.worry.labelAgainst}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 1" class="mx-2" [value]="1">{{data.worry.opinion1Label}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 2" class="mx-2" [value]="2">{{data.worry.opinion2Label}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 3" class="mx-2" [value]="3">{{data.worry.opinion3Label}}</mat-radio-button>
+                <mat-radio-button [checked]="createOpinionForm.controls.type.value == 4" class="mx-2" [value]="4">{{data.worry.opinion4Label}}</mat-radio-button>
             </mat-radio-group>
         </div>
         

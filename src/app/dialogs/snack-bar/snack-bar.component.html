@@ -1,0 +1,5 @@
+<div class="d-flex">
+    <mat-icon aria-hidden="false" color="warn" aria-label="Error" *ngIf='data.error'>error</mat-icon>
+    <mat-icon aria-hidden="false" color="primary" aria-label="Info"  *ngIf='!data.error'>info</mat-icon>
+    <div class="ml-2">{{data.message}}</div>
+</div>

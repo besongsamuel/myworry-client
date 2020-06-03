@@ -72,21 +72,26 @@ export class EditWorryComponent implements OnInit {
     this.newWorryForm = this.fb.group(
     {
       name: [worry.name, [Validators.required, Validators.minLength(6)]],
-      description: worry.description,
-      locked: worry.locked,
-      image: worry.image,
-      labelFor: [worry.labelFor, [Validators.required, Validators.minLength(2)]],
-      labelAgainst: [worry.labelAgainst, [Validators.required, Validators.minLength(2)]],
+      description: [worry.description],
+      locked: [worry.locked],
+      image: [worry.image],
+      opinion1Label: [worry.opinion1Label, [Validators.required, Validators.minLength(2)]],
+      opinion2Label: [worry.opinion2Label, [Validators.required, Validators.minLength(2)]],
+      opinion3Label: [worry.opinion3Label],
+      opinion4Label: [worry.opinion4Label],
       startDate: moment(worry.startDate),
-      endDate: moment(worry.endDate)
+      endDate: moment(worry.endDate),
+      isPrivate: [worry.isPrivate]
     });
 
     if(this.editLimited)
     {
       this.newWorryForm.get('name').disable();
       this.newWorryForm.get('description').disable();
-      this.newWorryForm.get('labelFor').disable();
-      this.newWorryForm.get('labelAgainst').disable();
+      this.newWorryForm.get('opinion1Label').disable();
+      this.newWorryForm.get('opinion2Label').disable();
+      this.newWorryForm.get('opinion3Label').disable();
+      this.newWorryForm.get('opinion4Label').disable();
     }
 
     this.tags = worry.tags;
@@ -109,6 +114,8 @@ export class EditWorryComponent implements OnInit {
         {
           this.editLimited = true;
         }
+
+        this.initForm(worry);
       }, (err) => {
         console.error(`An unexpected error occured while trying to get worry with id ${id}. Details: `, err)
       });
