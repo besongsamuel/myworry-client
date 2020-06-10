@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HelperService } from 'src/app/services/helper.service';
 import { Gender, Profile } from 'src/app/models/profile';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -60,9 +59,9 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   user: User;
   worries: Worry[] = [];
+  sharedWorries: Worry[] = [];
   opinions: Opinion[] = [];
   genders = Gender;
-  recentTags: string[] = []
 
   error: boolean = false;
   success: boolean = false;
@@ -74,16 +73,12 @@ export class ProfileComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'actions'];
   displayedTrailColumns: string[] = ['date', 'trail'];
-  dataSource: MatTableDataSource<Worry>;
   trailDataSource: MatTableDataSource<AuditTrail>;
   worriesCount;
+  sharedWorriesCount;
   auditsCount;
-  worriesPageSize;
   auditsPageSize;
   profile : Profile;
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) trailPaginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) trailSort: MatSort;
@@ -97,6 +92,7 @@ export class ProfileComponent implements OnInit {
       this.user = user as User;
 
       this.worriesCount = (await this.userService.getCount(user.id, 'worries').toPromise()).count;
+      this.sharedWorriesCount = (await this.worryService.getSharedWorriesCount().toPromise()).count;
       this.auditsCount = (await this.userService.getCount(user.id, 'audit-trails').toPromise()).count;
 
       let pEvent = new PageEvent();
@@ -104,11 +100,12 @@ export class ProfileComponent implements OnInit {
       pEvent.pageSize = 5;
 
       this.auditTrailPageChanged(pEvent);
-      this.worriesPageChanged(pEvent);
+      this.myWorriesPageChanged(pEvent);
+      this.sharedWorriesPageChanged(pEvent);
 
-      this.profileImagePath = this.userService.getProfileImage(user, this.authService.provider);
+      this.profileImagePath = this.userService.getProfileImage(user);
 
-      this.profile = this.userService.getProfile(user, this.authService.provider);
+      this.profile = this.userService.getProfile(user);
 
       this.profileForm = this.fb.group(
       {
@@ -126,8 +123,8 @@ export class ProfileComponent implements OnInit {
           dob: [this.profile.dob],
           interests: [this.profile.interests],
           gender: [this.profile.gender],
-          photos: [this.profile.photos],
-          emails: [this.profile.emails]
+          profileImage: [this.profile.profileImage],
+          email: [this.profile.email]
         }) ,
         confirmPassword: ['']
       },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
@@ -153,28 +150,18 @@ export class ProfileComponent implements OnInit {
       {
         this.worryService.uploadImage(file, 'profile').subscribe((response) =>
         {
-          let photos = this.profileForm.get('profile').get('photos').value;
-          photos = [ {value: response.imageName, isNew: true}];
-          this.profileForm.get('profile').get('photos').setValue(photos);
+          this.profileForm.get('profile').get('profileImage').setValue(response.imageName);
           this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
         });
       });
     }
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
   applyTrailFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.trailDataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.trailDataSource.paginator) {
+      this.trailDataSource.paginator.firstPage();
     }
   }
 
@@ -203,7 +190,7 @@ export class ProfileComponent implements OnInit {
       {
         this.success = true;
         this.error = false;
-        //this.user = user;
+        this.userService.refreshUser().subscribe((u:User )=> this.user = u)
       },
       (err) =>
       {
@@ -217,7 +204,7 @@ export class ProfileComponent implements OnInit {
 
   removeImage()
   {
-    this.profileForm.get('profile').get('photos').setValue([]);
+    this.profileForm.get('profile').get('profileImage').setValue('');
     this.profileImagePath =  "";
   }
 
@@ -247,16 +234,19 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  worriesPageChanged(event: PageEvent)
-  {
+  myWorriesPageChanged(event: PageEvent){
+
     this.worryService.getWorries(this.user.id, event).subscribe((worries: Worry[]) =>
     {
       this.worries = worries;
-      this.dataSource = new MatTableDataSource(worries);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.recentTags = _.flatten(this.worries.map(x => x.tags));
     });
   }
 
+  sharedWorriesPageChanged(event: PageEvent){
+
+    this.worryService.getSharedWorries(event).subscribe((worries: Worry[]) =>
+    {
+      this.sharedWorries = worries;
+    });
+  }
 }

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash'
 import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
-import { User } from 'src/app/models/user';
+import { User, SignupUser } from 'src/app/models/user';
 import { Profile } from 'src/app/models/profile';
 import { HelperService } from 'src/app/services/helper.service';
 import { WorryService } from 'src/app/worry/services/worry.service';
@@ -26,7 +26,7 @@ export class SignupComponent implements OnInit {
   successMessage: string;
   error: boolean = false;
   success: boolean = false;
-  user: User = new User();
+  user: SignupUser = new SignupUser();
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
@@ -37,8 +37,8 @@ export class SignupComponent implements OnInit {
     this.signupForm = fb.group(
     {
       email: ['', [Validators.email, Validators.required]],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      givenName: ['', Validators.required],
+      familyName: ['', Validators.required],
       password: ['', Validators.required],
       displayName: ['', Validators.required],
       confirmPassword: ['', Validators.required]

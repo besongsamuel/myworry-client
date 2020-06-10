@@ -147,7 +147,7 @@ export class EditWorryComponent implements OnInit {
 
     if(this.editLimited)
     {
-      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate']));
+      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate', 'isPrivate']));
     }
     else
     {

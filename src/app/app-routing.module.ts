@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'new/worry', component: AddWorryComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'worry/:id', component: WorryComponent, canActivate: [AuthGuard]
+    path: 'worry/:id', component: WorryComponent
   },
   {
     path: 'edit/worry/:id', component: EditWorryComponent, canActivate: [AuthGuard]

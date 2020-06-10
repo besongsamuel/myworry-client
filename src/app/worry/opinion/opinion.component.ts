@@ -34,15 +34,15 @@ export class OpinionComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
-    this.userProfile = this.userService.getProfile(this.opinion.user, null);
+    this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => this.userService.user && x.userId == this.userService.user.id).length > 0 : false;
+    this.userProfile = this.userService.getProfile(this.opinion.user);
     this.opinionBorder = `opinion${this.opinion.type}-border`;
   }
 
 
   getUserProfileImage()
   {
-    return this.userService.getProfileImage(this.opinion.user, null);
+    return this.userService.getProfileImage(this.opinion.user);
   }
 
   toggleLike()

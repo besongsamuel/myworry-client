@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Worry Stats</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="w-100 d-flex flex-column">
+        <div class="general-stats">
+            <apx-chart
+            [series]="generalStatsOptions.series"
+            [chart]="generalStatsOptions.chart"
+            [title]="generalStatsOptions.title"
+            [labels]="generalStatsOptions.labels"
+            [colors]="generalStatsOptions.colors"
+          ></apx-chart>
+        </div>
+
+        <div class="d-flex flex-wrap">
+            <apx-chart *ngIf="maleOpinions.length > 0"
+            [series]="maleStatsOptions.series"
+            [chart]="maleStatsOptions.chart"
+            [title]="maleStatsOptions.title"
+            [labels]="maleStatsOptions.labels"
+            [colors]="maleStatsOptions.colors"
+          ></apx-chart>
+          <apx-chart *ngIf="femaleOpinions.length > 0"
+            [series]="femaleStatsOptions.series"
+            [chart]="femaleStatsOptions.chart"
+            [title]="femaleStatsOptions.title"
+            [labels]="femaleStatsOptions.labels"
+            [colors]="femaleStatsOptions.colors"
+          ></apx-chart>
+        </div>
+    </div>  
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+

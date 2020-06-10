@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, catchError } from 'rxjs/operators';
 import { WorryService } from 'src/app/worry/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,8 @@ import { Gender } from 'src/app/models/profile';
 import { WorryShareComponent } from '../worry-share/worry-share.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACKBAR_DURATION, SnackBarComponent } from 'src/app/dialogs/snack-bar/snack-bar.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dialog.component';
 
 @Component({
   selector: 'app-worry',
@@ -29,6 +31,8 @@ export class WorryComponent implements OnInit, OnDestroy {
   worry$: Observable<Worry>;
   worry: Worry;
   expired: boolean = false;
+  unauthorized = false;
+  unauthorizedMessage = '';
 
   stats: any[] = [];
 
@@ -47,7 +51,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   getUserProfileImage()
   {
-    return this.userService.getProfileImage(this.worry.user, null);
+    return this.userService.getProfileImage(this.worry.user);
   }
 
 
@@ -56,8 +60,16 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     this.worry$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.worryService.getWorry(params.get('id')).pipe(tap(async (worry) =>
+        this.worryService.getWorry(params.get('id')).pipe(
+          catchError((httpErrorResponse: HttpErrorResponse) => { 
+
+            this.unauthorized = true;
+            this.unauthorizedMessage = httpErrorResponse.error.error.message;
+            throw httpErrorResponse;
+          }),
+          tap(async (worry) =>
         {
+          this.unauthorized = false;
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.worry = worry;
           this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
@@ -110,8 +122,8 @@ export class WorryComponent implements OnInit, OnDestroy {
 
         stats[i] = {
           percentage : ((worry.opinions.filter(x => x.type == i + 1).length / worry.opinions.length) * 100).toFixed(2),
-          percentageMale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user, null).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2),
-          percentageFemale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user, null).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2),
+          percentageMale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user).gender == Gender.MALE).length / worry.opinions.length) * 100).toFixed(2),
+          percentageFemale: ((worry.opinions.filter(x => x.type == i + 1 && this.userService.getProfile(x.user).gender == Gender.FEMALE).length / worry.opinions.length) * 100).toFixed(2),
           label: worry[`opinion${i + 1}Label`]
         }
       }
@@ -207,10 +219,15 @@ export class WorryComponent implements OnInit, OnDestroy {
     }
   }
 
+  viewStats(){
+    const dialogRef = this.dialog.open(WorryStatsDialogComponent, {
+      data: this.worry
+    });
+  }
+
   addOpinion(type: number)
   {
     const dialogRef = this.dialog.open(AddOpinionComponent, {
-      width: '450px',
       data: {worry: this.worry, initialValue: type}
     });
 

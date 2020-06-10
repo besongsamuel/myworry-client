@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user';
+import { User, SignupUser } from '../models/user';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
@@ -51,12 +51,24 @@ export class UserService {
     
   }
 
+  refreshUser() : Observable<User>{
+
+    let getUser$ = this.getUser();
+
+    getUser$.subscribe((user : User) =>
+    {
+      this.user = user;
+    });
+
+    return getUser$;
+  }
+
   getUser() : Observable<User>
   {
     return this.http.get<User>(`${environment.ApiUrl}/users/me`, this.httpOptions);
   }
 
-  createUser(user: any) : Observable<User>
+  createUser(user: SignupUser) : Observable<User>
   {
     return this.http.post<User>(`${environment.ApiUrl}users`, user, this.httpOptions);
   }
@@ -110,34 +122,26 @@ export class UserService {
     this.user = null;
   }
 
-  getProfileImage(user: User, provider : string){
+  getProfileImage(user: User){
 
-      let profile = this.getProfile(user, provider);
+      let profile = this.getProfile(user);
 
-      if(profile && profile.photos.length > 0){
-          return profile.photos[0].value;
-      }
-
-      return '';
+      return profile.profileImage;
   }
 
-  getProfile(user: User, provider : string){
+  getProfile(user: User) {
 
-      let identity : any = user.userIdentities.find(x => x.provider == provider) || user.userIdentities[0];
+    if(user.userIdentity){
+      return user.userIdentity.profile;
+    }
 
-      if(identity.profile){
-        return identity.profile;
-      }
-
-      return null;
+    return null;
   }
 
-  getUserIdentity(user: User, provider : string){
+  getUserIdentity(user: User){
 
-    let identity : any = user.userIdentities.find(x => x.provider == provider) || user.userIdentities[0];
-
-    return identity;
-}
+    return user.userIdentity;
+  }
 
   generateFormControlData(data, result = {}){
 

@@ -11,13 +11,30 @@ export class User {
 
     emailVerified?: boolean;
 
-    userIdentities?: UserIdentity[];
+    userIdentity: UserIdentity;
 
     worries: Worry[];
 
     roleId: string;
 
-    image?: string;
+    constructor(){
+        
+    }
+}
+
+export class SignupUser {
+
+    username: string;
+
+    email: string;
+
+    image: string;
+
+    givenName: string;
+
+    familyName: string;
+
+    password: string;
 
     constructor(){
         

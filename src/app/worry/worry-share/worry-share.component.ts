@@ -40,43 +40,37 @@ export class WorryShareComponent implements OnInit {
 
           users = users.reduce((acc: User[], user: User) => {
 
-            if (user.email.toLowerCase().includes(name.toLowerCase())) {
-              acc.push(user);
-            }
-            else {
-      
-              if (user.userIdentities) {
-      
-                if (user.userIdentities.find((x: UserIdentity) => {
-      
-                  if (x.profile.name.givenName
-                    && x.profile.name.givenName.toLowerCase().includes(name.toLowerCase())) {
-                    return true;
-                  }
-      
-                  if (x.profile.name.middleName
-                    && x.profile.name.middleName.toLowerCase().includes(name.toLowerCase())) {
-                    return true;
-                  }
-      
-                  if (x.profile.name.familyName
-                    && x.profile.name.familyName.toLowerCase().includes(name.toLowerCase())) {
-                    return true;
-                  }
-      
-                  return false;
-      
-                })) {
-                  acc.push(user);
-                }
+            if(!this.selectedUsers.map(x => x.id).includes(user.id) 
+            && user.id != this.userService.user.id)
+            {
+              if (user.email.toLowerCase().includes(name.toLowerCase())) {
+                acc.push(user);
               }
-      
+              else {
+        
+                if (user.userIdentity) {
+        
+        
+                    if (user.userIdentity.profile.name.givenName
+                      && user.userIdentity.profile.name.givenName.toLowerCase().includes(name.toLowerCase())) {
+                        acc.push(user);
+                    }
+        
+                    if (user.userIdentity.profile.name.middleName
+                      && user.userIdentity.profile.name.middleName.toLowerCase().includes(name.toLowerCase())) {
+                        acc.push(user);
+                    }
+        
+                    if (user.userIdentity.profile.name.familyName
+                      && user.userIdentity.profile.name.familyName.toLowerCase().includes(name.toLowerCase())) {
+                        acc.push(user);
+                    }
+                }
+        
+              }
             }
-      
             return acc;
           }, []);
-
-          users = users.filter((u: User) => !this.selectedUsers.map(x => x.id).includes(u.id));
 
           return users;
         })))
@@ -109,7 +103,7 @@ export class WorryShareComponent implements OnInit {
 
   getProfilePicture(user: User){
 
-    return this.userService.getProfileImage(user, null);
+    return this.userService.getProfileImage(user);
   }
 
   getUserName(user : User){
@@ -117,7 +111,7 @@ export class WorryShareComponent implements OnInit {
     if(!user){
       return '';
     }
-    return `${user.userIdentities[0].profile.name.givenName} ${user.userIdentities[0].profile.name.familyName}`;
+    return `${user.userIdentity.profile.name.givenName} ${user.userIdentity.profile.name.familyName}`;
   }
 
   remove(user){

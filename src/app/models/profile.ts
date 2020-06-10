@@ -12,18 +12,13 @@ export interface ProfileName
   middleName?: string;
 }
 
-export interface ProfileValue
-{
-  value: string;
-}
-
 export class Profile {
 
   public id: string = "";
   public displayName: string = "";
-  public emails: ProfileValue[] = [];
+  public email: string = "";
   public name: ProfileName;
-  public photos: ProfileValue[] = [];
+  public profileImage: string = "";
   public profileUrl: string = "";
   public provider: string = "";
   public username: string = "";

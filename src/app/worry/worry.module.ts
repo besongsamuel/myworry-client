@@ -38,13 +38,15 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { WorryShareComponent } from './worry-share/worry-share.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { WorryStatsDialogComponent } from './worry-stats-dialog/worry-stats-dialog.component';
+import { NgApexchartsModule } from 'ng-apexcharts'
 
 
 
 
 
 @NgModule({
-  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent],
+  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent],
   exports: [
     EditWorryComponent,
     AddWorryComponent,
@@ -84,7 +86,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatChipsModule,
     MatIconModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgApexchartsModule
 
   ],
   providers: [WorryService]

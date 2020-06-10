@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user';
 
 @Injectable()
 export class WorryService {
+  
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -28,7 +29,7 @@ export class WorryService {
         "scope":{
           "include": [
             {
-              "relation": "userIdentities",
+              "relation": "userIdentity",
             }
           ]
         }
@@ -42,7 +43,7 @@ export class WorryService {
               "scope":{
                 "include": [
                   {
-                    "relation": "userIdentities",
+                    "relation": "userIdentity",
                   }
                 ]
               }
@@ -64,7 +65,7 @@ export class WorryService {
         "scope":{
           "include": [
             {
-              "relation": "userIdentities",
+              "relation": "userIdentity",
             }
           ]
         }
@@ -76,6 +77,24 @@ export class WorryService {
   }
 
   constructor(private http: HttpClient) { }
+
+  getSharedWorries(pageEvent: PageEvent) : Observable<Worry[]> {
+
+    let worryFilter: any = this.worryFilter;
+
+    if(pageEvent)
+    {
+      this.worryFilter["limit"] = pageEvent.length;
+      this.worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
+    }
+
+    return this.http.get<Worry[]>(`${environment.ApiUrl}/shared-worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+
+  }
+
+  getSharedWorriesCount() : Observable<any>{
+    return this.http.get<any>(`${environment.ApiUrl}/shared-worries/count`, this.httpOptions);
+  }
 
   toggleLike(opinionId: string) : Observable<any>
   {

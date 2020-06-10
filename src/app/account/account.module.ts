@@ -18,9 +18,10 @@ import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { WorryTableComponent } from './worry-table/worry-table.component';
 
 @NgModule({
-  declarations: [SignupComponent, ProfileComponent, LoginComponent],
+  declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent],
   exports: [SignupComponent, ProfileComponent, LoginComponent],
   imports: [
     CommonModule,
