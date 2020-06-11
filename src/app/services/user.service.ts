@@ -65,7 +65,7 @@ export class UserService {
 
   getUser() : Observable<User>
   {
-    return this.http.get<User>(`${environment.ApiUrl}/users/me`, this.httpOptions);
+    return this.http.get<User>(`${environment.ApiUrl}users/me`, this.httpOptions);
   }
 
   createUser(user: SignupUser) : Observable<User>
@@ -83,11 +83,11 @@ export class UserService {
     if(!filter){
       filter = '';
     }
-    return this.http.get<User[]>(`${environment.ApiUrl}/users?name=${filter}`, this.httpOptions);
+    return this.http.get<User[]>(`${environment.ApiUrl}users?name=${filter}`, this.httpOptions);
   }
 
   emailTaken(email: string) : Observable<any> {
-    return this.http.get(`${environment.ApiUrl}/users/exists?filter[where][email]=${email}`, this.httpOptions);
+    return this.http.get(`${environment.ApiUrl}users/exists?filter[where][email]=${email}`, this.httpOptions);
   }
 
   getAuditTrails(userId: string, pageEvent: PageEvent): Observable<AuditTrail[]>

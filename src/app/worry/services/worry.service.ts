@@ -88,12 +88,12 @@ export class WorryService {
       this.worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
     }
 
-    return this.http.get<Worry[]>(`${environment.ApiUrl}/shared-worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+    return this.http.get<Worry[]>(`${environment.ApiUrl}shared-worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
 
   }
 
   getSharedWorriesCount() : Observable<any>{
-    return this.http.get<any>(`${environment.ApiUrl}/shared-worries/count`, this.httpOptions);
+    return this.http.get<any>(`${environment.ApiUrl}shared-worries/count`, this.httpOptions);
   }
 
   toggleLike(opinionId: string) : Observable<any>
@@ -137,18 +137,18 @@ export class WorryService {
         this.worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
       }
 
-      return this.http.get<Worry[]>(`${environment.ApiUrl}/worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+      return this.http.get<Worry[]>(`${environment.ApiUrl}worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
 
   }
 
   getWorry(id: string) : Observable<Worry>
   {
-    return this.http.get<Worry>(`${environment.ApiUrl}/worries/${id}?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
+    return this.http.get<Worry>(`${environment.ApiUrl}worries/${id}?filter=${encodeURIComponent(JSON.stringify(this.worryFilter))}`, this.httpOptions);
   }
 
   getOpinion(id: string) : Observable<Opinion>
   {
-    return this.http.get<Opinion>(`${environment.ApiUrl}/opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+    return this.http.get<Opinion>(`${environment.ApiUrl}opinions/${id}?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
   }
 
   shareWorry(worry: Worry, users : User[]) : Observable<void>{
@@ -175,22 +175,22 @@ export class WorryService {
         ],
         "where": { "userId": userId }
       }
-      return this.http.get<Opinion[]>(`${environment.ApiUrl}/opinions?filter=${encodeURIComponent(JSON.stringify(opinionFilter))}`, this.httpOptions);
+      return this.http.get<Opinion[]>(`${environment.ApiUrl}opinions?filter=${encodeURIComponent(JSON.stringify(opinionFilter))}`, this.httpOptions);
     }
     else
     {
-      return this.http.get<Opinion[]>(`${environment.ApiUrl}/opinions?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
+      return this.http.get<Opinion[]>(`${environment.ApiUrl}opinions?filter=${encodeURIComponent(JSON.stringify(this.opinionFilter))}`, this.httpOptions);
     }
   }
 
   deleteOpinion(id: string) : Observable<void>
   {
-    return this.http.delete<any>(`${environment.ApiUrl}/opinions/${id}`, this.httpOptions);
+    return this.http.delete<any>(`${environment.ApiUrl}opinions/${id}`, this.httpOptions);
   }
 
   getOpinionLike(id: string) : Observable<OpinionLike>
   {
-    return this.http.get<OpinionLike>(`${environment.ApiUrl}/opinion-likes/${id}`, this.httpOptions);
+    return this.http.get<OpinionLike>(`${environment.ApiUrl}opinion-likes/${id}`, this.httpOptions);
   }
 
   uploadImage(file: File, type: string) : Observable<any>
@@ -207,36 +207,36 @@ export class WorryService {
   {
     if(worry.id)
     {
-      return this.http.put<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
+      return this.http.put<Worry>(`${environment.ApiUrl}worries/${worry.id}`, worry, this.httpOptions);
     }
     else
     {
-      return this.http.post<Worry>(`${environment.ApiUrl}/worries`, worry, this.httpOptions);
+      return this.http.post<Worry>(`${environment.ApiUrl}worries`, worry, this.httpOptions);
     }
 
   }
 
   patchWorry(worry: Partial<Worry>) : Observable<Worry>
   {
-    return this.http.patch<Worry>(`${environment.ApiUrl}/worries/${worry.id}`, worry, this.httpOptions);
+    return this.http.patch<Worry>(`${environment.ApiUrl}worries/${worry.id}`, worry, this.httpOptions);
   }
 
   createOrEditOpinion(opinion: Opinion) : Observable<Opinion>
   {
     if(opinion.id)
     {
-      return this.http.put<Opinion>(`${environment.ApiUrl}/opinions/${opinion.id}`, opinion, this.httpOptions);
+      return this.http.put<Opinion>(`${environment.ApiUrl}opinions/${opinion.id}`, opinion, this.httpOptions);
     }
     else
     {
-      return this.http.post<Opinion>(`${environment.ApiUrl}/opinions`, opinion, this.httpOptions);
+      return this.http.post<Opinion>(`${environment.ApiUrl}opinions`, opinion, this.httpOptions);
     }
 
   }
 
   getCategories() : Observable<Category[]>
   {
-    return this.http.get<Category[]>(`${environment.ApiUrl}/categories`, this.httpOptions);
+    return this.http.get<Category[]>(`${environment.ApiUrl}categories`, this.httpOptions);
   }
 }
 

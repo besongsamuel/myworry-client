@@ -3,8 +3,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 import { AuthService as SocialAuthService, SocialUser } from "angularx-social-login";
-import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
-import { User } from './models/user';
+import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
 
 

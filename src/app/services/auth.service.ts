@@ -54,7 +54,7 @@ export class AuthService {
 
   facebookLogin()
   {
-    return this.http.get(`${environment.ApiUrl}/auth/thirdparty/facebook`, this.httpOptions).pipe(
+    return this.http.get(`${environment.ApiUrl}auth/thirdparty/facebook`, this.httpOptions).pipe(
       catchError(this.handleError),
       tap((x: any) =>
       {
