@@ -36,7 +36,7 @@ export function provideConfig() {
   return socialLoginConfig;
 }
 
-const config: SocketIoConfig = { url: 'http://127.0.0.1:3001/worry', options: {} };
+const config: SocketIoConfig = { url: 'https://socket.myworry.ca/worry', options: {} };
 
 @NgModule({
   declarations: [

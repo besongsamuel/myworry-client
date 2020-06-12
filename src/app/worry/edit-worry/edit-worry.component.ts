@@ -168,11 +168,23 @@ export class EditWorryComponent implements OnInit {
 
   removeImage()
   {
-    this.worryService.deleteImage(this.worry.image).subscribe(() =>
+
+    if(!this.newWorryForm.get("image").value || this.newWorryForm.get("image").value == "")
     {
+      this.newWorryForm.get("image").setValue("");
       this.worry.image = "";
       this.imagePath =  "";
-    });
+    }
+    else
+    {
+      this.worryService.deleteImage(this.newWorryForm.get("image").value).subscribe(() =>
+      {
+        this.newWorryForm.get("image").setValue("");
+        this.worry.image = "";
+        this.imagePath =  "";
+      });
+    }
+    
   }
 
   fileDropped(files: NgxFileDropEntry[])

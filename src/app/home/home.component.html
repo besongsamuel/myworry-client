@@ -10,20 +10,23 @@
                 </div>
             </form>
         
-            <div class="d-flex justify-content-center mt-2 mb-5" *ngIf="authService.loggedIn">
+            <div class="d-flex justify-content-center mt-2 mb-5" >
                 <div class="d-flex flex-column align-items-center">
-                    <p>Are you worried about something?</p>
-                    <button routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
+                    <p>Worried about something? Voice it!</p>
+                    <div class="d-flex w-100 align-items-center my-2" *ngIf="!authService.loggedIn">
+                        <a class="d-inline mx-2" color="primary" mat-flat-button routerLink="/login">Log In</a> or <a class="d-inline mx-2" color="primary" mat-flat-button routerLink="/signup">Sign Up</a> to voice your worries. 
+                    </div>
+                    <button *ngIf="authService.loggedIn" routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
                 </div>
-        
             </div>
+            
         </div>
         
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-12" *ngFor='let worry of worries'>
+            <div class="col-md-4 col-sm-12" *ngFor='let worry of worries'>
                 <app-worry-item [worry]="worry"></app-worry-item>
             </div>
 

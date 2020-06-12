@@ -19,22 +19,15 @@
                 This worry has opinions associated with it. Edition will be limited.
               </div>
 
-                <ngx-file-drop
-                  dropZoneLabel="Drop Image Here"
-                  (onFileDrop)="fileDropped($event)"
-                  accept="png,jpg,jpeg"
-                  directory="false"
-                  multiple="false"
-                  *ngIf="!imagePath">
-                  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-
-                    <div class="d-flex flex-column align-items-center">
-                      <div>Drop Image Here</div>
-                      <div>OR</div>
-                      <button mat-raised-button color="primary" type="button" (click)="openFileSelector()">Browse Files</button>
-                    </div>
-
-                  </ng-template>
+              <ngx-file-drop
+                        dropZoneLabel="Drop Image Here"
+                        accept="image/*"
+                        directory="false"
+                        dropZoneClassName="d-zone-area my-3"
+                        contentClassName="d-zone-content text-muted"
+                        (onFileDrop)="fileDropped($event)"
+                        multiple="false"
+                        *ngIf="!imagePath">
                 </ngx-file-drop>
 
                 <div class="w-100 d-flex justify-content-center my-2" *ngIf="imagePath">

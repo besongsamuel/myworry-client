@@ -200,7 +200,12 @@ export class WorryService {
 
   deleteImage(imageName: string ) : Observable<any>
   {
-    return this.http.delete<any>(`${environment.ApiUrl}deleteImage/${imageName}`);
+
+    let deleteFilter = JSON.stringify({
+      imageName: imageName
+    });
+
+    return this.http.delete<any>(`${environment.ApiUrl}deleteImage?deleteFilter=${deleteFilter}`);
   }
 
   createWorry(worry: Worry) : Observable<Worry>

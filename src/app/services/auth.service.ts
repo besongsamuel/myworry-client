@@ -36,6 +36,10 @@ export class AuthService {
       this.token = this.getToken();
       this.loggedIn = true;
     }
+    else
+    {
+      this.loggedIn = false;
+    }
   }
 
   login(credentials: LoginCredentials)
