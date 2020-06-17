@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.0.4",
     "@angular/platform-browser-dynamic": "~9.0.4",
     "@angular/router": "~9.0.4",
+    "@jefiozie/ngx-aws-deploy": "^1.2.1",
     "angularx-social-login": "^2.2.1",
     "apexcharts": "^3.19.2",
     "bootstrap": "^4.4.1",

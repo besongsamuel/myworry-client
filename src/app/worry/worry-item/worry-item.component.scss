@@ -1,9 +1,29 @@
-.card-img-top
-{
-    height: 190px;
-}
-
 .worry-duration
 {
     font-size: 14px; 
 }
+
+.worry-title{
+    width: calc(100% - 40px);
+    padding: 0px 5px;
+
+    .worry-subtitle{
+        font-size: 13px;
+    }
+}
+
+.worry-image{
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.worry-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+ }

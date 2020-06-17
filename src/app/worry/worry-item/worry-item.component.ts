@@ -17,6 +17,8 @@ export class WorryItemComponent implements OnInit {
 
   public userProfile: Profile;
 
+  public userProfileImage: string  = "";
+
   constructor(private userService: UserService)
   {
     
@@ -28,6 +30,12 @@ export class WorryItemComponent implements OnInit {
     {
       this.currentUser = this.userService.user;
       this.userProfile = this.userService.getProfile(this.worry.user);
+    }
+
+    this.userProfileImage = this.worry.user.userIdentity.profile.profileImage;
+
+    if(this.userProfileImage == "" || !this.userProfileImage){
+      // Set the default one
     }
     
   }

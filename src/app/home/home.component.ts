@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   searchForm = new FormGroup(
   {
-    q: new FormControl('')
+    q: new FormControl('', [Validators.required, Validators.minLength(2)])
   });
 
   worries: Worry[] = [];
@@ -46,7 +46,9 @@ export class HomeComponent implements OnInit {
 
   onSubmit()
   {
-
+    this.worryService.searchWorries(this.searchForm.value.q).subscribe(worries => {
+      
+    });
   }
 
 }

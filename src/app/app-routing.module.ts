@@ -10,6 +10,8 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { AccountModule } from './account/account.module';
 import { WorryModule } from './worry/worry.module';
 import { EditWorryComponent } from './worry/edit-worry/edit-worry.component';
+import { SearchResultsComponent } from './worry/search-results/search-results.component';
+import { ActivateAccountComponent } from './account/activate-account/activate-account.component';
 
 
 const routes: Routes = [
@@ -30,6 +32,12 @@ const routes: Routes = [
   },
   {
     path: 'edit/worry/:id', component: EditWorryComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'search/results', component: SearchResultsComponent
+  },
+  {
+    path: 'activate-account', component: ActivateAccountComponent
   },
   {
     path: 'account/profile', component: ProfileComponent, canActivate: [AuthGuard]

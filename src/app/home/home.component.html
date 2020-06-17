@@ -6,7 +6,7 @@
             <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
                 <div class="d-flex">
                     <input class="form-control mr-2" formControlName="q">
-                    <button color="primary" mat-raised-button type="submit">Search</button>
+                    <button color="primary" [disabled]="!searchForm.valid" mat-raised-button type="submit">Search</button>
                 </div>
             </form>
         
@@ -14,7 +14,7 @@
                 <div class="d-flex flex-column align-items-center">
                     <p>Worried about something? Voice it!</p>
                     <div class="d-flex w-100 align-items-center my-2" *ngIf="!authService.loggedIn">
-                        <a class="d-inline mx-2" color="primary" mat-flat-button routerLink="/login">Log In</a> or <a class="d-inline mx-2" color="primary" mat-flat-button routerLink="/signup">Sign Up</a> to voice your worries. 
+                        <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login">Log In</a> or <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/signup">Sign Up</a> to voice your worries. 
                     </div>
                     <button *ngIf="authService.loggedIn" routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
                 </div>

@@ -40,6 +40,8 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   public imagePath: string;
 
+  public userProfileImage : string = "";
+
   constructor(private route: ActivatedRoute, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
     private socket: Socket,
@@ -71,6 +73,7 @@ export class WorryComponent implements OnInit, OnDestroy {
         {
           this.unauthorized = false;
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
+          this.userProfileImage = worry.user.userIdentity.profile.profileImage;
           this.worry = worry;
           this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
           this.expired = moment().isSameOrAfter(moment(this.worry.endDate));

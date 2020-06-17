@@ -39,14 +39,15 @@ import { WorryShareComponent } from './worry-share/worry-share.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { WorryStatsDialogComponent } from './worry-stats-dialog/worry-stats-dialog.component';
-import { NgApexchartsModule } from 'ng-apexcharts'
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { SearchResultsComponent } from './search-results/search-results.component'
 
 
 
 
 
 @NgModule({
-  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent],
+  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent],
   exports: [
     EditWorryComponent,
     AddWorryComponent,

@@ -19,9 +19,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { WorryTableComponent } from './worry-table/worry-table.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ActivateAccountComponent } from './activate-account/activate-account.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent],
+  declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent, ActivateAccountComponent],
   exports: [SignupComponent, ProfileComponent, LoginComponent],
   imports: [
     CommonModule,
@@ -29,8 +32,10 @@ import { WorryTableComponent } from './worry-table/worry-table.component';
     NgxFileDropModule,
     MatFormFieldModule,
     MatInputModule,
+    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
     MatCardModule,
     MatDatepickerModule,
     MatOptionModule,

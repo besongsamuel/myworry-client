@@ -121,6 +121,25 @@ export class WorryService {
     return this.http.post<any>(`${environment.ApiUrl}tags`, tag, this.httpOptions);
   }
 
+  searchWorries(queryString){
+    let worryFilter: any = this.worryFilter;
+
+    let pattern = new RegExp(`^${queryString.trim()}$`, 'i');
+
+    worryFilter = { ...worryFilter, where: {
+
+      or: [
+        { name : { like : pattern.toString() }  },
+        { tags : { like : pattern.toString() }  },
+        { description : { like : pattern.toString() }  },
+      ]
+
+    }};
+
+    return this.http.get<Worry[]>(`${environment.ApiUrl}worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+
+  }
+
   getWorries(userId? : string, pageEvent?: PageEvent) : Observable<Worry[]>
   {
 

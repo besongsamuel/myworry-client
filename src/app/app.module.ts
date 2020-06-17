@@ -20,6 +20,7 @@ import { EditOpinionComponent } from './worry/edit-opinion/edit-opinion.componen
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { environment } from 'src/environments/environment';
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -36,7 +37,7 @@ export function provideConfig() {
   return socialLoginConfig;
 }
 
-const config: SocketIoConfig = { url: 'https://socket.myworry.ca/worry', options: {} };
+const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, options: {} };
 
 @NgModule({
   declarations: [

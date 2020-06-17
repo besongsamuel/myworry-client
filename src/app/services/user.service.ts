@@ -68,6 +68,16 @@ export class UserService {
     return this.http.get<User>(`${environment.ApiUrl}users/me`, this.httpOptions);
   }
 
+  sendActivationEmail(email: string) : Observable<boolean>{
+    return this.http.get<boolean>(`${environment.ApiUrl}users/send-activation-email?email=${email}`, this.httpOptions);
+
+  }
+
+  activateAccount(token: string) : Observable<boolean>
+  {
+    return this.http.get<boolean>(`${environment.ApiUrl}users/activate-account?activation-token=${token}`, this.httpOptions);
+  }
+
   createUser(user: SignupUser) : Observable<User>
   {
     return this.http.post<User>(`${environment.ApiUrl}users`, user, this.httpOptions);

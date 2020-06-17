@@ -28,6 +28,7 @@ export class OpinionComponent implements OnInit {
   likedByUser: boolean = false;
   public userProfile: Profile;
   opinionBorder : string = '';
+  public userProfileImage: string = "";
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
@@ -37,12 +38,7 @@ export class OpinionComponent implements OnInit {
     this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => this.userService.user && x.userId == this.userService.user.id).length > 0 : false;
     this.userProfile = this.userService.getProfile(this.opinion.user);
     this.opinionBorder = `opinion${this.opinion.type}-border`;
-  }
-
-
-  getUserProfileImage()
-  {
-    return this.userService.getProfileImage(this.opinion.user);
+    this.userProfileImage = this.opinion.user.userIdentity.profile.profileImage;
   }
 
   toggleLike()

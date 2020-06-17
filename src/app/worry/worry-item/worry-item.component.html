@@ -1,22 +1,28 @@
+<mat-card class="mb-2">
+    <div class="d-flex mb-2">
+        <img mat-card-avatar *ngIf="userProfileImage" [src]="userProfileImage" alt="Card image cap">
+        <mat-icon style="font-size: 30px;" mat-card-avatar color="primary" *ngIf="!userProfileImage" aria-hidden="false" aria-label="Profile Image">face</mat-icon>
 
-<div class="card mb-2">
-    <div class="d-flex justify-content-center">
-        <img class="card-img-top w-auto" [src]="worry.image" alt="Card image cap">
+        <div class="worry-title">
+            <div class="text-truncate font-weight-bold">{{worry.name}}</div>
+            <div class="d-flex text-muted worry-subtitle" >
+                <span class="mr-auto">{{userProfile.displayName}}</span>
+                <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
+            </div>
+        </div>
+        
     </div>
-    <div class="card-body">
-        <h5 class="card-title">{{worry.name}}</h5>
-        <p *ngIf="worry.user" class="card-subtitle mb-2 text-muted d-flex">
-            <span class="mr-auto">{{userProfile.displayName}}</span>
-            <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
-        </p>
+    <div class="worry-image mb-2">
+        <img class="w-auto h-100 mw-100" [src]="worry.image" alt="Worry Image">
+    </div>
+    <mat-card-content style="height: 80px; margin-bottom: 10px;">
+        <p class="worry-description">{{worry.description}}</p>
         <p class="card-subtitle mb-2 text-muted d-flex">
             <span class="mr-auto">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{worry.startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{worry.endDate | date:'mediumDate'}}</b></span>
         </p>
-        <p class="card-text">{{worry.description}}</p>
-
-        <div class="d-flex">
-            <button [routerLink]="['/worry/', worry.id]" class="mr-auto" mat-raised-button color="accent">View</button>
-            <button [routerLink]="['/edit/worry', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="primary">Edit</button>
-        </div>
-    </div>
-</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button [routerLink]="['/worry/', worry.id]" class="mr-auto" mat-raised-button color="accent">View</button>
+        <button [routerLink]="['/edit/worry', worry.id]"  *ngIf="worry.user && currentUser && worry.user.id == currentUser.id" class="ml-auto" mat-raised-button color="primary">Edit</button>
+    </mat-card-actions>
+  </mat-card>

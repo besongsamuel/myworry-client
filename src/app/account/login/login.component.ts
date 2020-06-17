@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
+  environment : any = {};
   error: boolean = false;
   errorMessage: string = '';
   newUserEmail: string = null;
@@ -25,7 +27,11 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) { 
+
+      this.environment = environment;
+
+    }
 
   ngOnInit() {
 

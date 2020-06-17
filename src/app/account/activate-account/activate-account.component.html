@@ -1,0 +1,39 @@
+<div class="container w-100 h-100 p-4 mt-5 d-flex flex-column align-items-center">
+
+    <mat-spinner *ngIf="loading"></mat-spinner>
+
+    <div class="w-100"  *ngIf="activationFailure">
+        <div class="alert alert-danger text-center w-100" *ngIf="activationErrorMessage">
+            {{activationErrorMessage}}
+        </div>
+        <div class="alert alert-danger text-center w-100" *ngIf="activationEmailNotSentMessage">
+            {{activationEmailNotSentMessage}}
+        </div>
+        <div class="alert alert-success text-center w-100" *ngIf="activationEmailSent"> 
+            Activation email was successfully sent to {{resendActivationForm.value.email}}. 
+        </div>
+        <p>Resend activation email</p>
+        <form class="w-100" [formGroup]="resendActivationForm" (ngSubmit)="onResendActivation()">
+            <div class="d-flex align-items-start w-100">
+                <mat-form-field class="flex-grow-1">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="email@example.com" formControlName="email" required>
+                    <mat-error *ngIf="resendActivationForm.controls.email.hasError('email')">The email entered is invalid</mat-error>
+                  </mat-form-field>
+                  <button [disabled]="!resendActivationForm.valid" color="accent" mat-raised-button type="submit">Resend</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="d-flex flex-column" *ngIf="activationSuccess">
+        <div class="alert alert-success text-center w-100"  >
+            Your account was successfully activated. 
+        </div>
+        <div class="d-flex justify-content-center">
+            <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login">Log In</a>
+        </div>
+    </div>
+
+    
+
+</div>
