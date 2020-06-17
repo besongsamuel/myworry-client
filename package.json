@@ -26,7 +26,7 @@
     "angularx-social-login": "^2.2.1",
     "apexcharts": "^3.19.2",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
