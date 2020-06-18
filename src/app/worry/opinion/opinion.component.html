@@ -1,7 +1,7 @@
 <mat-card class="my-3" *ngIf="opinion && userProfile" [ngClass]="opinionBorder">
   <mat-card-header>
     <img mat-card-avatar *ngIf="userProfileImage" [src]="userProfileImage">
-    <mat-icon style="font-size: 30px;" mat-card-avatar color="primary" *ngIf="!userProfileImage" aria-hidden="false" aria-label="Profile Image">face</mat-icon>
+    <mat-icon style="font-size: 40px; width: 40px; height: 40px;" mat-card-avatar color="primary" *ngIf="!userProfileImage" aria-hidden="false" aria-label="Profile Image">face</mat-icon>
 
     <mat-card-title *ngIf="opinion.user">{{userProfile.displayName}}</mat-card-title>
     <mat-card-subtitle>{{opinion.date_created | date}}</mat-card-subtitle>
