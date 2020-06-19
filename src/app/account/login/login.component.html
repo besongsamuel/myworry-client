@@ -3,8 +3,10 @@
     <mat-card class="m-5">
 
         <mat-toolbar color='primary' class="d-flex mb-3" >
-            <span class="mr-auto">Login</span>
-            <a color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
+            <a class="d-flex" routerLink="/">
+                <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
+            </a>
+            <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
         </mat-toolbar>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     

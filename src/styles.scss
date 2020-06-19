@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 
 html, body, app-home { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.logo-text{
+  font-family: 'Quicksand', sans-serif;
+}
 
 $opinion1Color: #338bcc;
 $opinion2Color: #de4a1f;

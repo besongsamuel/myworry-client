@@ -11,6 +11,7 @@ import { Profile } from 'src/app/models/profile';
 import { HelperService } from 'src/app/services/helper.service';
 import { WorryService } from 'src/app/worry/services/worry.service';
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -27,6 +28,7 @@ export class SignupComponent implements OnInit {
   error: boolean = false;
   success: boolean = false;
   user: SignupUser = new SignupUser();
+  environment;
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
@@ -34,6 +36,7 @@ export class SignupComponent implements OnInit {
     private worryService: WorryService,
     private helperService: HelperService)
   {
+    this.environment = environment;
     this.signupForm = fb.group(
     {
       email: ['', [Validators.email, Validators.required]],

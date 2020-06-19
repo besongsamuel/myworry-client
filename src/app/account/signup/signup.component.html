@@ -1,5 +1,15 @@
-<div class="container d-flex component-container justify-content-center align-items-center">
+<div class="container d-flex flex-column component-container justify-content-center align-items-center">
+
+    
+
     <mat-card>
+
+        <mat-toolbar color='primary' class="d-flex mb-3" >
+            <a class="d-flex" routerLink="/">
+                <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
+            </a>
+            <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
+        </mat-toolbar>
 
         <ngx-file-drop
             dropZoneLabel="Drop Profile Image Here"
