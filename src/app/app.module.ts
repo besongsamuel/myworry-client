@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { environment } from 'src/environments/environment';
+import { MatChipsModule } from '@angular/material/chips';
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -57,6 +58,7 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     SocialLoginModule,
     MatIconModule,
     MatButtonModule,
+    MatChipsModule,
     MatDialogModule,
     SocketIoModule.forRoot(config)
   ],

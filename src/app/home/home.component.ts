@@ -4,7 +4,9 @@ import { Worry } from '../models/worry';
 import { AuthService } from '../services/auth.service';
 import { PageEvent } from '@angular/material/paginator';
 import { WorryService } from '../worry/services/worry.service';
+import { Router } from '@angular/router';
 export const DEFAULT_IMAGE = 'assets/images/worry.png';
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,11 @@ export class HomeComponent implements OnInit {
 
   worries: Worry[] = [];
 
-  constructor(private worryService: WorryService, public authService: AuthService) { }
+  trendingWorries: Worry[] = [];
+
+  trendingTags: string[] = [];
+
+  constructor(private worryService: WorryService, public authService: AuthService, private router: Router,) { }
 
   ngOnInit() {
 
@@ -28,7 +34,11 @@ export class HomeComponent implements OnInit {
     pageEvent.length = 6;
     pageEvent.pageIndex = 0;
 
-    this.worryService.getTrending().subscribe(x => console.log(x));
+    this.worryService.getTrending().subscribe((worries: Worry[]) => {
+
+      this.trendingTags = _.flatten(worries.map(x => x.tags));
+
+    });
 
     this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) =>
     {
@@ -44,11 +54,15 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  gotoTag(event){
+    this.router.navigate(['search/results'], { queryParams: { q: event.target.textContent } });
+  }
+
   onSubmit()
   {
-    this.worryService.searchWorries(this.searchForm.value.q).subscribe(worries => {
-      
-    });
+
+    this.router.navigate(['search/results'], { queryParams: { q: this.searchForm.value.q } });
+
   }
 
 }

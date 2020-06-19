@@ -1,8 +1,17 @@
-<div class="d-flex flex-column home-container component-container">
+<div class="d-flex flex-column home-container component-container pb-5">
 
     <div class="d-flex justify-content-center align-items-center flex-grow-1">
 
         <div class="container py-3">
+
+            <div class="text-info font-weight-bold my-2 text-center">trending tags</div>
+            <div class="d-flex justify-content-center flex-wrap my-3">
+                
+                <mat-chip-list aria-label="Tags" class="mt-auto">
+                    <mat-chip (click)="gotoTag($event)" color="primary" *ngFor="let tag of trendingTags" selected>{{tag}}</mat-chip>
+                </mat-chip-list>
+            </div>
+
             <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
                 <div class="d-flex">
                     <input class="form-control mr-2" formControlName="q">

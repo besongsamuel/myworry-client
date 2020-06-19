@@ -3,6 +3,7 @@ import { Worry } from 'src/app/models/worry';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { Profile } from 'src/app/models/profile';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-worry-item',
@@ -19,7 +20,11 @@ export class WorryItemComponent implements OnInit {
 
   public userProfileImage: string  = "";
 
-  constructor(private userService: UserService)
+  public startDate: string;
+
+  public endDate: string;
+
+  constructor(public userService: UserService)
   {
     
   }
@@ -28,15 +33,13 @@ export class WorryItemComponent implements OnInit {
 
     if(this.worry)
     {
-      this.currentUser = this.userService.user;
       this.userProfile = this.userService.getProfile(this.worry.user);
     }
 
     this.userProfileImage = this.worry.user.userIdentity.profile.profileImage;
 
-    if(this.userProfileImage == "" || !this.userProfileImage){
-      // Set the default one
-    }
+    this.startDate = moment(this.worry.startDate, 'YYYY-MM-dd hh:mm:dd').format();
+    this.endDate = moment(this.worry.endDate, 'YYYY-MM-dd hh:mm:dd').format();
     
   }
 

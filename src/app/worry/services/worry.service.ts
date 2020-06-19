@@ -121,40 +121,36 @@ export class WorryService {
     return this.http.post<any>(`${environment.ApiUrl}tags`, tag, this.httpOptions);
   }
 
-  searchWorries(queryString){
-    let worryFilter: any = this.worryFilter;
+  searchWorries(queryString, pageEvent?: PageEvent){
 
-    let pattern = new RegExp(`^${queryString.trim()}$`, 'i');
-
-    worryFilter = { ...worryFilter, where: {
-
-      or: [
-        { name : { like : pattern.toString() }  },
-        { tags : { like : pattern.toString() }  },
-        { description : { like : pattern.toString() }  },
-      ]
-
-    }};
-
-    return this.http.get<Worry[]>(`${environment.ApiUrl}worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
+    let limit = 5;
+    let offset = 0;
+    if(pageEvent){
+      limit = pageEvent.length;
+      offset = (pageEvent.pageIndex) * pageEvent.pageSize;
+    }
+    
+    return this.http.get<object>(`${environment.ApiUrl}search?q=${queryString}&limit=${limit}&offset=${offset}`, this.httpOptions);
 
   }
 
   getWorries(userId? : string, pageEvent?: PageEvent) : Observable<Worry[]>
   {
 
-      let worryFilter: any = this.worryFilter;
+      let worryFilter: any = JSON.parse(JSON.stringify(this.worryFilter));
 
       if(userId)
       {
-        this.worryFilter["where"] = { userId: userId};
+        worryFilter["where"] = { userId: userId};
       }
 
       if(pageEvent)
       {
-        this.worryFilter["limit"] = pageEvent.length;
-        this.worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
+        worryFilter["limit"] = pageEvent.length;
+        worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
       }
+
+      worryFilter.order = 'date_created DESC';
 
       return this.http.get<Worry[]>(`${environment.ApiUrl}worries?filter=${encodeURIComponent(JSON.stringify(worryFilter))}`, this.httpOptions);
 
