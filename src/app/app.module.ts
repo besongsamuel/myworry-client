@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { environment } from 'src/environments/environment';
 import { MatChipsModule } from '@angular/material/chips';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -47,6 +49,8 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     FileInputComponent,
     SnackBarComponent,
     ConfirmationDialogComponent,
+    PrivacyPolicyComponent,
+    TermsOfServiceComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,11 +12,19 @@ import { WorryModule } from './worry/worry.module';
 import { EditWorryComponent } from './worry/edit-worry/edit-worry.component';
 import { SearchResultsComponent } from './worry/search-results/search-results.component';
 import { ActivateAccountComponent } from './account/activate-account/activate-account.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent
+  },
+  {
+    path: 'privacy-policy', component: PrivacyPolicyComponent
+  },
+  {
+    path: 'terms-of-service', component: TermsOfServiceComponent
   },
   {
     path: 'login', component: LoginComponent
