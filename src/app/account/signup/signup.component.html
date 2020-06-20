@@ -1,6 +1,6 @@
-<div class="container d-flex flex-column component-container justify-content-center align-items-center">
+<!-- i18n="MEANING|DESCRIPTION" -->
 
-    
+<div class="container d-flex flex-column component-container justify-content-center align-items-center">
 
     <mat-card>
 
@@ -8,7 +8,7 @@
             <a class="d-flex" routerLink="/">
                 <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
             </a>
-            <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
+            <a i18n="FACEBOOK_LOGIN|Facebook Login" class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
         </mat-toolbar>
 
         <ngx-file-drop
@@ -33,21 +33,17 @@
   
           <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   
-              <div class="alert alert-danger" role="alert" *ngIf='error'>
-                  {{ errorMessage }}
-              </div>
-  
-              <div class="alert alert-success" role="alert" *ngIf='success'>
-                  {{ successMessage }}
+              <div i18n="SIGNUP_ERROR|Error message during signup" class="alert alert-danger" role="alert" *ngIf='error == "SIGNUP_ERROR"'>
+                  An error occured during signup.
               </div>
   
               <div class="d-flex">
                   <mat-form-field class="pr-2 flex-grow-1">
-                      <input matInput placeholder="Email" formControlName="email">
-                      <mat-error *ngIf="signupForm.controls.email.hasError('email')">
+                      <input matInput placeholder="Email" i18n-placeholder="EMAIL|Email" formControlName="email">
+                      <mat-error i18n="INVALID_EMAIL|Invalid email" *ngIf="signupForm.controls.email.hasError('email')">
                           The email entered is not valid
                       </mat-error>
-                      <mat-error *ngIf="signupForm.controls.email.hasError('required')">
+                      <mat-error i18n="EMAIL_REQUIRED|Email required" *ngIf="signupForm.controls.email.hasError('required')">
                           Please enter a email
                       </mat-error>
                       <mat-error *ngIf="signupForm.controls.email.hasError('emailTaken')">
@@ -56,8 +52,8 @@
                   </mat-form-field>
   
                   <mat-form-field class="pl-2 flex-grow-1">
-                      <input matInput placeholder="Display Name" formControlName="displayName">
-                      <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
+                      <input matInput placeholder="Display Name" i18n-placeholder="DISPLAY_NAME|Display name label" formControlName="displayName">
+                      <mat-hint i18n="DISPLAY_NAME_HINT|Hint for the display name" align="start">This is the name displayed in your posts. </mat-hint>
                   </mat-form-field>
               </div>
   
@@ -65,29 +61,27 @@
   
               <div class="d-flex">
                   <mat-form-field class="pr-2 flex-grow-1">
-                      <input matInput placeholder="First Name" formControlName="givenName">
+                      <input matInput i18n-placeholder="FIRST_NAME|First Name" placeholder="First Name" formControlName="givenName">
                   </mat-form-field>
                   <mat-form-field class="pl-2 flex-grow-1">
-                      <input matInput placeholder="Last Name" formControlName="familyName">
+                      <input matInput i18n-placeholder="LAST_NAME|Last Name" placeholder="Last Name" formControlName="familyName">
                   </mat-form-field>
               </div>
   
               <div class="d-flex">
                   <mat-form-field class="pr-2 flex-grow-1">
-                      <input type="password" matInput placeholder="Password" formControlName="password">
+                      <input type="password" i18n-placeholder="PASSWORD|Password" matInput placeholder="Password" formControlName="password">
                   </mat-form-field>
                   <mat-form-field class="pl-2 flex-grow-1">
-                      <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
-                      <mat-error *ngIf="signupForm.controls.confirmPassword.hasError('notEquivalent')">
+                      <input type="password" matInput i18n-placeholder="CONFIRM_PASSWORD|Confirm Password" placeholder="Confirm Password" formControlName="confirmPassword">
+                      <mat-error i18n="PASSWORDS_DONT_MATCH|Passwords dont match error" *ngIf="signupForm.controls.confirmPassword.hasError('notEquivalent')">
                           Passwords don't match
                       </mat-error>
                   </mat-form-field>
               </div>
-
-              
   
               <div class="d-flex w-100">
-                  <button class="ml-auto" type="submit" mat-stroked-button color="primary" [disabled]="!signupForm.valid">Register</button>
+                  <button i18n="REGISTER|Register" class="ml-auto" type="submit" mat-stroked-button color="primary" [disabled]="!signupForm.valid">Register</button>
               </div>
   
           </form>

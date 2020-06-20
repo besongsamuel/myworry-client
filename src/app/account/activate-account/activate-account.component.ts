@@ -13,10 +13,9 @@ export class ActivateAccountComponent implements OnInit {
   activationFailure: boolean =  false;
   activationSuccess: boolean =  false;
   activationEmailSent: boolean = false;
-  activationEmailNotSent: boolean = false;
   loading: boolean = false;
-  activationEmailNotSentMessage: string | null = null;
-  activationErrorMessage: string | null = null;
+  activationEmailNotSent: string | null = null;
+  activationError: string | null = null;
 
   resendActivationForm = new FormGroup(
   {
@@ -30,10 +29,9 @@ export class ActivateAccountComponent implements OnInit {
     this.activationFailure =  false;
     this.activationSuccess =  false;
     this.activationEmailSent = false;
-    this.activationEmailNotSent = false;
     this.loading = false;
-    this.activationEmailNotSentMessage  = null;
-    this.activationErrorMessage = null;
+    this.activationEmailNotSent  = null;
+    this.activationError = null;
   }
 
   ngOnInit(): void {
@@ -52,14 +50,7 @@ export class ActivateAccountComponent implements OnInit {
 
         let errorCode = err.error.error.message;
 
-        switch(errorCode){
-          case 'TOKEN_INVALID':
-            this.activationErrorMessage = 'The activation token is invalid.';
-            break;
-          case 'TOKEN_EXPIRED':
-            this.activationErrorMessage = 'The activation token has expired.';
-            break;
-        }
+        this.activationError = errorCode;
 
         this.activationFailure = true;
       });
@@ -88,15 +79,7 @@ export class ActivateAccountComponent implements OnInit {
       this.resetErrors();
       let errorCode = err.error.error.message;
 
-        switch(errorCode){
-          case 'EMAIL_ALREADY_VERIFIED':
-            this.activationEmailNotSentMessage = 'The email provided is already verified.';
-            break;
-          case 'EMAIL_NOT_FOUND':
-            this.activationEmailNotSentMessage = 'The email entered was not found.';
-            break;
-        }
-
+      this.activationEmailNotSent = errorCode;
       
       this.activationFailure = true;
       this.loading = false;

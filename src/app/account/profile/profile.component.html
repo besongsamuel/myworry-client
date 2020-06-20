@@ -1,3 +1,5 @@
+<!-- i18n="MEANING|DESCRIPTION" -->
+
 <div class="container my-4">
 
     <mat-tab-group>
@@ -5,12 +7,12 @@
             <div class="tab-pane active pt-3" id="edit">
                 <form *ngIf="profileForm && user" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
     
-                    <div class="alert alert-danger" role="alert" *ngIf='error'>
-                        {{ errorMessage }}
+                    <div class="alert alert-danger" role="alert" *ngIf='error' i18n="ERROR_UPDATING_PROFILE|Error message when updating profile" >
+                        An error occured while updating the user's profile
                     </div>
     
-                    <div class="alert alert-success" role="alert" *ngIf='success'>
-                        {{ successMessage }}
+                    <div class="alert alert-success" role="alert" *ngIf='success' i18n="SUCCESS_UPDATING_PROFILE|Success message when updating profile" >
+                        Account was succesfully updated
                     </div>
     
                     <div class="d-flex justify-content-center align-items-start my-3">
@@ -18,7 +20,6 @@
                         dropZoneLabel="Drop Profile Image Here"
                         accept="image/*"
                         directory="false"
-                        dropZoneLabel="Drop profile picture here"
                         dropZoneClassName="d-zone-area"
                         contentClassName="d-zone-content text-muted"
                         (onFileDrop)="fileDropped($event)"
@@ -43,7 +44,7 @@
                         <div class="d-flex mb-3">
                             <mat-form-field class="w-100">
                                 <input matInput placeholder="Display Name" formControlName="displayName">
-                                <mat-hint align="start">This is the name displayed in your posts. </mat-hint>
+                                <mat-hint align="start" i18n="DISPLAY_NAME_HING|Hint for the display name">This is the name displayed in your posts. </mat-hint>
                             </mat-form-field>
                         </div>
 
@@ -62,7 +63,7 @@
     
                         <mat-form-field class="w-100 my-2" >
                             <textarea matInput placeholder="About" formControlName="about"></textarea>
-                            <mat-hint align="start">Enter a short description about yourself.</mat-hint>
+                            <mat-hint align="start" i18n="USER_DESCRIPTION_HINT|Hint for the user's description">Enter a short description about yourself.</mat-hint>
                         </mat-form-field>
     
                         <mat-form-field class="w-100">
@@ -72,7 +73,7 @@
                         </mat-form-field>
     
                         <mat-form-field>
-                            <mat-label>Gender</mat-label>
+                            <mat-label i18n="GENDER|Gender">Gender</mat-label>
                             <mat-select formControlName="gender" name="gender">
                                 <mat-option *ngFor="let gender of genders | keyvalue" [value]="gender.value">
                                 {{gender.value}}
@@ -81,7 +82,7 @@
                         </mat-form-field>
     
                         <div class="form-group">
-                            <label for="tags">Interests</label>
+                            <label for="tags" i18n="INTERESTS|Interests">Interests</label>
                             <tag-input id="interests" maxItems="10" modelAsStrings="true" formControlName="interests">
                             </tag-input>
                         </div>
@@ -92,58 +93,58 @@
                         <mat-form-field class="flex-grow-1" *ngIf="profile.provider == 'myworry'" >
                             <input type="password" matInput placeholder="Old Password" formControlName="oldPassword">
                         </mat-form-field>
-                        <h4 class="text-info" *ngIf="profile.provider != 'myworry'">Create New Password</h4>
+                        <h4 class="text-info" *ngIf="profile.provider != 'myworry'" i18n="CREATE_NEW_PASSWORD|Create new password">Create New Password</h4>
                         <mat-form-field class="flex-grow-1">
-                            <input type="password" matInput placeholder="Password" formControlName="password">
+                            <input type="password" matInput i18n-placeholder="PASSWORD|Password" placeholder="Password" formControlName="password">
                         </mat-form-field>
                         <mat-form-field class="flex-grow-1">
-                            <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
-                            <mat-error *ngIf="profileForm.controls.confirmPassword.hasError('notEquivalent')">
+                            <input type="password" matInput i18n-placeholder="CONFIRM_PASSWORD|Confirm Password" placeholder="Confirm Password" formControlName="confirmPassword">
+                            <mat-error i18n="PASSWORDS_DONT_MATCH|Passwords don't match error message" *ngIf="profileForm.controls.confirmPassword.hasError('notEquivalent')">
                                 Passwords don't match
                             </mat-error>
                         </mat-form-field>
                     </div>
     
                     <div class="d-flex w-100">
-                        <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid">Update</button>
+                        <button class="ml-auto" type="submit" mat-raised-button color="primary" [disabled]="!profileForm.valid" i18n="UPDATE|Update">Update</button>
                     </div>
     
                 </form>
             </div>
         </mat-tab>
-        <mat-tab label="Your Worries"> 
+        <mat-tab i18n-label="YOUR_WORRIES|Your Worries" label="Your Worries"> 
             <div class="tab-pane" id="worries">
 
                <app-worry-table worriesCount='worriesCount' [worries]='worries' (pageChanged)='myWorriesPageChanged($event)'></app-worry-table>
     
             </div> 
         </mat-tab>
-        <mat-tab label="Shared Worries"> 
+        <mat-tab i18n-label="SHARED_WORRIES|Shared Worries" label="Shared Worries"> 
             <div class="tab-pane" id="shared-worries">
                <app-worry-table worriesCount='sharedWorriesCount' [worries]='sharedWorries' (pageChanged)='sharedWorriesPageChanged($event)'></app-worry-table>
             </div> 
         </mat-tab>
-        <mat-tab label="Recent Activities"> 
+        <mat-tab i18n-label="RECENT_ACTIVITIES|Recent Activities" label="Recent Activities"> 
             <div class="tab-pane">
                 <div class="row" *ngIf="user">
                     <div class="col-md-12">
                         
                         <mat-form-field class="mt-4">
-                            <input matInput (keyup)="applyTrailFilter($event.target.value)" placeholder="Filter">
+                            <input matInput (keyup)="applyTrailFilter($event.target.value)" i18n-placeholder="FILTER|Filter" placeholder="Filter">
                           </mat-form-field>
                           
                           <div class="mat-elevation-z8">
                             <table mat-table [dataSource]="trailDataSource" matSort>
                           
                             <ng-container matColumnDef="date">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="DATE|Date" >Date</th>
                                 <td mat-cell *matCellDef="let trail"> 
                                     <span class="mr-4">{{trail.date_created | date:'medium'}}</span>
                                 </td>
                             </ng-container>
     
                               <ng-container matColumnDef="trail">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Activity</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n="ACTIVITY|Activity">Activity</th>
                                 <td mat-cell *matCellDef="let trail"> 
                                     <strong>{{trail.userName}}</strong> {{trail.Action}}d {{trail.Entity}} <strong>`{{trail.EntityName}}`</strong>
                                 </td>

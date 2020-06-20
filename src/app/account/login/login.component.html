@@ -1,3 +1,5 @@
+<!-- i18n="MEANING|DESCRIPTION" -->
+
 <div class="w-100 h-100 d-flex align-items-center justify-content-center">
     
     <mat-card class="m-5">
@@ -6,37 +8,41 @@
             <a class="d-flex" routerLink="/">
                 <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
             </a>
-            <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
+            <a i18n="FACEBOOK_LOGIN|Facebook Login" class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook">Facebook Login</a>
         </mat-toolbar>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     
-            <div class="alert alert-danger" role="alert" *ngIf='error'>
-                {{ errorMessage }}
+            <div i18n="INVALID_EMAIL_OR_PASSWORD|Invalid email or password error message" class="alert alert-danger" role="alert" *ngIf='error == "INVALID_EMAIL_OR_PASSWORD"'>
+                Invalid email or password
+            </div>
+
+            <div i18n="LOGIN_FAILURE_UNKNOWN|Unknown login error" class="alert alert-danger" role="alert" *ngIf='error && error != "INVALID_EMAIL_OR_PASSWORD"'>
+                An error occured during login
             </div>
     
             <div class="alert alert-success d-flex justify-content-center" role="alert" *ngIf='newUserEmail'>
-               <div>Account <strong> {{newUserEmail}} </strong> was created successfully</div> 
+                <strong> {{newUserEmail}} </strong> <span i18n="ACCOUNT_SUCCESSFULLY CREATED|... account succesfully created">  account was created successfully</span> 
             </div>
     
             <mat-form-field class="w-100">
                 <input matInput placeholder="Email" formControlName="email">
-                <mat-error *ngIf="loginForm.controls.email.hasError('email')">
+                <mat-error i18n="INVALID_EMAIL|Invalid email during login" *ngIf="loginForm.controls.email.hasError('email')">
                   The email entered is not valid
                 </mat-error>
-                <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+                <mat-error i18n="EMAIL_REQUIRED|Email required during login" *ngIf="loginForm.controls.email.hasError('required')">
                   Please enter a email
                 </mat-error>
             </mat-form-field>
     
             <mat-form-field class="w-100">
                 <input type="password" matInput placeholder="Password" formControlName="password">
-                <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+                <mat-error i18n="PASSWORD_REQUIRED|Password required during login" *ngIf="loginForm.controls.password.hasError('required')">
                     Please enter a password
                   </mat-error>
             </mat-form-field>
     
             <div class="d-flex w-100">
-                <button class="ml-auto" type="submit" mat-raised-button color="accent" [disabled]="!loginForm.valid">Submit</button>
+                <button i18n="SUBMIT|Submit label" class="ml-auto" type="submit" mat-raised-button color="accent" [disabled]="!loginForm.valid">Submit</button>
             </div>
     
         </form>

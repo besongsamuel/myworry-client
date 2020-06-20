@@ -3,34 +3,40 @@
     <mat-spinner *ngIf="loading"></mat-spinner>
 
     <div class="w-100"  *ngIf="activationFailure">
-        <div class="alert alert-danger text-center w-100" *ngIf="activationErrorMessage">
-            {{activationErrorMessage}}
+        <div i18n="INVALID_ACTIVATION_TOKEN|activation token invalid message" class="alert alert-danger text-center w-100" *ngIf="activationError == 'TOKEN_INVALID'">
+            The activation token is invalid.
         </div>
-        <div class="alert alert-danger text-center w-100" *ngIf="activationEmailNotSentMessage">
-            {{activationEmailNotSentMessage}}
+        <div i18n="EXPIRED_ACTIVATION_TOKEN|activation token expired message" class="alert alert-danger text-center w-100" *ngIf="activationError == 'TOKEN_EXPIRED'">
+            The activation token has expired.
         </div>
+        <div i18n="EMAIL_ALREADY_VERIFIED|Email already verified error message" class="alert alert-danger text-center w-100" *ngIf="activationEmailNotSent == 'EMAIL_ALREADY_VERIFIED'">
+            The email provided is already verified.
+        </div> 
+        <div i18n="EMAIL_DOESNT_EXIST|Email doesn't exist error message" class="alert alert-danger text-center w-100" *ngIf="activationEmailNotSent == 'EMAIL_NOT_FOUND'">
+            The email entered was not found.
+        </div>        
         <div class="alert alert-success text-center w-100" *ngIf="activationEmailSent"> 
-            Activation email was successfully sent to {{resendActivationForm.value.email}}. 
+            <span i18n="ACTIVATION_SENT|Activation was successfully sent to ...">Activation email was successfully sent to </span>{{resendActivationForm.value.email}}. 
         </div>
-        <p>Resend activation email</p>
+        <p i18n="RESENT_ACTIVATION_EMAIL|Resend activation email">Resend activation email</p>
         <form class="w-100" [formGroup]="resendActivationForm" (ngSubmit)="onResendActivation()">
             <div class="d-flex align-items-start w-100">
                 <mat-form-field class="flex-grow-1">
-                    <mat-label>Enter your email</mat-label>
+                    <mat-label i18n="ENTER_YOUT_EMAIL|Enter your email label">Enter your email</mat-label>
                     <input matInput placeholder="email@example.com" formControlName="email" required>
-                    <mat-error *ngIf="resendActivationForm.controls.email.hasError('email')">The email entered is invalid</mat-error>
+                    <mat-error *ngIf="resendActivationForm.controls.email.hasError('email')" i18n="INVALID_EMAIL|Invalid email error message">The email entered is invalid</mat-error>
                   </mat-form-field>
-                  <button [disabled]="!resendActivationForm.valid" color="accent" mat-raised-button type="submit">Resend</button>
+                  <button [disabled]="!resendActivationForm.valid" color="accent" mat-raised-button type="submit" i18n="RESEND_LABEL|Resend button label">Resend</button>
             </div>
         </form>
     </div>
 
     <div class="d-flex flex-column" *ngIf="activationSuccess">
-        <div class="alert alert-success text-center w-100"  >
+        <div class="alert alert-success text-center w-100" i18n="ACTIVATION_SUCCESSFUL_MESSAGE|Message displayed when account is successfully activated">
             Your account was successfully activated. 
         </div>
         <div class="d-flex justify-content-center">
-            <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login">Log In</a>
+            <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign in">Sign In</a>
         </div>
     </div>
 

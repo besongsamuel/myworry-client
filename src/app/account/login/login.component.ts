@@ -20,8 +20,7 @@ export class LoginComponent implements OnInit {
   });
 
   environment : any = {};
-  error: boolean = false;
-  errorMessage: string = '';
+  error: string = null;
   newUserEmail: string = null;
 
   constructor(private authService: AuthService,
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
   {
     this.authService.login(this.loginForm.value).subscribe((response : any) =>
     {
-      this.error = false;
+      this.error = null;
 
       this.userService.getUser().subscribe((user: User) =>
       {
@@ -66,9 +65,7 @@ export class LoginComponent implements OnInit {
     },
     err =>
     {
-      this.error = true;
-      this.errorMessage = err.error.message;
-
+      this.error = err.error.message;
     });
   }
 

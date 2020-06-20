@@ -4,7 +4,7 @@
 
         <div class="container py-3">
 
-            <div class="text-info font-weight-bold my-2 text-center">trending tags</div>
+            <div i18n="TRENDING_TAGS|trending tags" class="text-info font-weight-bold my-2 text-center">trending tags</div>
             <div class="d-flex justify-content-center flex-wrap my-3">
                 
                 <mat-chip-list aria-label="Tags" class="mt-auto">
@@ -15,17 +15,17 @@
             <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
                 <div class="d-flex">
                     <input class="form-control mr-2" formControlName="q">
-                    <button color="primary" [disabled]="!searchForm.valid" mat-raised-button type="submit">Search</button>
+                    <button color="primary" [disabled]="!searchForm.valid" mat-raised-button i18n="SEARCH|Search" type="submit">Search</button>
                 </div>
             </form>
         
             <div class="d-flex justify-content-center mt-2 mb-5" >
                 <div class="d-flex flex-column align-items-center">
-                    <p>Worried about something? Voice it!</p>
+                    <p i18n="WORRY_MEMO|Worry memo">Worried about something? Voice it!</p>
                     <div class="d-flex w-100 align-items-center my-2" *ngIf="!authService.loggedIn">
-                        <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login">Log In</a> or <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/signup">Sign Up</a> to voice your worries. 
+                        <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign In">Sign In</a> <span i18n="OR|or">or</span> <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/signup" i18n="SIGN_UP|Sign Up">Sign Up</a> <span i18n="TO_VOICE_YOUR_WORRIES|..to voice your worries. ">to voice your worries. </span>
                     </div>
-                    <button *ngIf="authService.loggedIn" routerLink="/new/worry" color="accent" mat-raised-button >Post It</button>
+                    <button *ngIf="authService.loggedIn" routerLink="/new/worry" color="accent" mat-raised-button i18n="POST_IT|Post It">Post It</button>
                 </div>
             </div>
             

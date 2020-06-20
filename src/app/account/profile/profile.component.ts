@@ -68,9 +68,6 @@ export class ProfileComponent implements OnInit {
 
   auditTrails: AuditTrail[] = [];
 
-  errorMessage: string = "";
-  successMessage: string = "Account was successfully updated";
-
   displayedColumns: string[] = ['name', 'startDate', 'endDate', 'actions'];
   displayedTrailColumns: string[] = ['date', 'trail'];
   trailDataSource: MatTableDataSource<AuditTrail>;
@@ -196,7 +193,6 @@ export class ProfileComponent implements OnInit {
       {
         this.success = false;
         this.error = true;
-        this.errorMessage = err.error.error.errorMessage;
       });
 
     }

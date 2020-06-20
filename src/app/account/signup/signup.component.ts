@@ -23,10 +23,8 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   profileImagePath: string;
   public fileDroped: NgxFileDropEntry;
-  errorMessage: string;
-  successMessage: string;
-  error: boolean = false;
-  success: boolean = false;
+  error: string = null;
+  success: string = null;
   user: SignupUser = new SignupUser();
   environment;
 
@@ -61,6 +59,8 @@ onSubmit()
     this.userService.createUser(this.user).subscribe((user) =>
     {
       this.router.navigate(['/login', { email: user.email }]);
+    }, (err) => {
+      this.error = "SIGNUP_ERROR";
     });
   }
 }
