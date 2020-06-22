@@ -2,11 +2,11 @@
   <span>{{data.worry.name}}</span>
   <mat-icon class="ml-auto" aria-hidden="false" [mat-dialog-close]="null" aria-label="Close">close</mat-icon>
 </mat-toolbar><div mat-dialog-content>
-  <div class="w-100 alert alert-warning mt-2 mb-4" *ngIf="data.opinion">
-    <strong>Warning: </strong>Editing an opinion will remove all likes associated with it. 
+  <div i18n="EDIT_OPINION_WARNING|Editing opinion invalidates likes to it" class="w-100 alert alert-warning mt-2 mb-4" *ngIf="data.opinion">
+    Warning: Editing an opinion will remove all likes associated with it. 
   </div>
-  <div class="alert alert-danger text-center" *ngIf="error">
-    {{errorMessage}}
+  <div i18n="ERROR_EDITING_OPINION|An error occured while editing opinion" class="alert alert-danger text-center" *ngIf="error">
+    An error occured while editing opinion
   </div>
   <p class="text-center">{{data.worry.description}}</p>
   <form [formGroup]="createOpinionForm">
@@ -25,11 +25,11 @@
     </div>
 
     <mat-form-field class="w-100">
-        <textarea matInput placeholder="Your Opinion" formControlName="text"></textarea>
+        <textarea matInput i18n-placeholder="YOUR_OPINION|Your Opinion" placeholder="Your Opinion" formControlName="text"></textarea>
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions class="d-flex justify-content-end">
-  <button color="primary" mat-raised-button [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
-  <button color="accent" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" mat-raised-button>Submit</button>
+  <button color="primary" mat-raised-button [mat-dialog-close]="null" cdkFocusInitial i18n="CANCEL|Cancel">Cancel</button>
+  <button color="accent" [disabled]="!createOpinionForm.valid" type="submit" (click)="onSubmit()" i18n="UPDATE|Update" mat-raised-button>Update</button>
 </div>

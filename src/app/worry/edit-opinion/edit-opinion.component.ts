@@ -27,7 +27,6 @@ export class EditOpinionComponent  {
   for_val: number = FOR_VALUE;
   against_val: number = AGAINST_VALUE;
   error: boolean = false;
-  errorMessage: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<EditOpinionComponent>,
@@ -72,7 +71,7 @@ export class EditOpinionComponent  {
     err =>
     {
       this.error = true;
-      this.errorMessage = err.error.error.message;
+      console.error(err.error.error.message);
 
     })
   }

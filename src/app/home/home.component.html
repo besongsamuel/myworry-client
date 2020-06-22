@@ -18,14 +18,17 @@
                     <button color="primary" [disabled]="!searchForm.valid" mat-raised-button i18n="SEARCH|Search" type="submit">Search</button>
                 </div>
             </form>
+
+            <div class="d-flex flex-wrap justify-content-center my-5">
+                <app-mission-item color="#ffab00" icon='post_add' title='Create Worry' statement='Are you worried about something? Create a worry and enter between 2-4 opinions that interest you. ' ></app-mission-item>
+                <app-mission-item color="#2196f3" icon='people' title='Get Valued Opinions' statement='Wait while people give valued opinions on your worry based on the opinions that interest you. People can only give one opinion.' ></app-mission-item>
+                <app-mission-item color="#00bfa5" icon='poll' title='View Statistics' statement='Get statistics on what the masses are thinking. You can view statistics based on gender and age group.' ></app-mission-item>
+            </div>
         
             <div class="d-flex justify-content-center mt-2 mb-5" >
                 <div class="d-flex flex-column align-items-center">
                     <p i18n="WORRY_MEMO|Worry memo">Worried about something? Voice it!</p>
-                    <div class="d-flex w-100 align-items-center my-2" *ngIf="!authService.loggedIn">
-                        <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign In">Sign In</a> <span i18n="OR|or">or</span> <a class="d-inline mx-2" color="accent" mat-flat-button routerLink="/signup" i18n="SIGN_UP|Sign Up">Sign Up</a> <span i18n="TO_VOICE_YOUR_WORRIES|..to voice your worries. ">to voice your worries. </span>
-                    </div>
-                    <button *ngIf="authService.loggedIn" routerLink="/new/worry" color="accent" mat-raised-button i18n="POST_IT|Post It">Post It</button>
+                    <button (click)="createNewWorry()" color="accent" mat-raised-button i18n="POST_IT|Post It">Post It</button>
                 </div>
             </div>
             

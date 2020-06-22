@@ -50,7 +50,6 @@ export class EditWorryComponent implements OnInit {
   newWorryForm : FormGroup;
   error: boolean = false;
   success: boolean = false;
-  errorMessage: string = null;
   tags = [];
   worry: Worry = new Worry();
   imagePath: string;
@@ -161,7 +160,8 @@ export class EditWorryComponent implements OnInit {
     (err) =>
     {
       this.success = false;
-      this.errorMessage = err.error.error.message;
+      this.error = true;
+      console.error(err.error.error.message);
     });
 
   }

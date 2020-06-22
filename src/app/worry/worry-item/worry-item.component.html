@@ -18,11 +18,11 @@
     <mat-card-content style="height: 80px; margin-bottom: 10px;">
         <p class="worry-description">{{worry.description}}</p>
         <p class="card-subtitle mb-2 text-muted d-flex">
-            <span class="mr-auto">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{endDate | date:'mediumDate'}}</b></span>
+            <span class="mr-auto" i18n="OPEN_FROM|Open from">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{endDate | date:'mediumDate'}}</b></span>
         </p>
     </mat-card-content>
     <mat-card-actions>
-        <button [routerLink]="['/worry/', worry.id]" class="mr-2" mat-raised-button color="accent">View</button>
-        <button [routerLink]="['/edit/worry', worry.id]"  *ngIf="worry.user && userService.user && worry.user.id == userService.user.id" class="ml-2" mat-raised-button color="primary">Edit</button>
+        <button [routerLink]="['/worry/', worry.id]" class="mr-2" mat-raised-button color="accent" i18n="VIEW|View">View</button>
+        <button [routerLink]="['/edit/worry', worry.id]"  *ngIf="worry.user && userService.user && worry.user.id == userService.user.id" class="ml-2" mat-raised-button color="primary" i18n="EDIT|Edit">Edit</button>
     </mat-card-actions>
   </mat-card>

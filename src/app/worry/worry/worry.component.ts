@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
 import { switchMap, tap, catchError } from 'rxjs/operators';
@@ -20,6 +20,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACKBAR_DURATION, SnackBarComponent } from 'src/app/dialogs/snack-bar/snack-bar.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dialog.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-worry',
@@ -31,8 +33,7 @@ export class WorryComponent implements OnInit, OnDestroy {
   worry$: Observable<Worry>;
   worry: Worry;
   expired: boolean = false;
-  unauthorized = false;
-  unauthorizedMessage = '';
+  unauthorized: string = '';
 
   stats: any[] = [];
 
@@ -45,11 +46,12 @@ export class WorryComponent implements OnInit, OnDestroy {
   public startDate: string;
   public endDate: string;
 
-  constructor(private route: ActivatedRoute, private worryService: WorryService,
+  constructor(private route: ActivatedRoute, private router: Router, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
     private socket: Socket,
     private zone:NgZone, 
-    private _snackBar: MatSnackBar)
+    private _snackBar: MatSnackBar,
+    private authService: AuthService)
   {
 
   }
@@ -68,13 +70,12 @@ export class WorryComponent implements OnInit, OnDestroy {
         this.worryService.getWorry(params.get('id')).pipe(
           catchError((httpErrorResponse: HttpErrorResponse) => { 
 
-            this.unauthorized = true;
-            this.unauthorizedMessage = httpErrorResponse.error.error.message;
+            this.unauthorized = 'UNAUTHORIZED_ACCESS';
+            console.error(httpErrorResponse.error.error.message);
             throw httpErrorResponse;
           }),
           tap(async (worry) =>
         {
-          this.unauthorized = false;
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.userProfileImage = worry.user.userIdentity.profile.profileImage;
           this.worry = worry;
@@ -235,30 +236,37 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   addOpinion(type: number)
   {
-    const dialogRef = this.dialog.open(AddOpinionComponent, {
-      data: {worry: this.worry, initialValue: type}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-
-      if(result)
-      {
-        if(!this.worry.opinions)
+    if(this.userService.authService.loggedIn){
+      const dialogRef = this.dialog.open(AddOpinionComponent, {
+        data: {worry: this.worry, initialValue: type}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+  
+        if(result)
         {
-          this.worry.opinions = [];
+          if(!this.worry.opinions)
+          {
+            this.worry.opinions = [];
+          }
+  
+          let e: SocketEvent = { Action: Crud.CREATE, Entity: Entity.OPINION, Id: result.id, roomId: this.worry.id };
+          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+  
+          // get the created opinion with it's relations
+          this.worryService.getOpinion(result.id).subscribe((opinion) =>
+          {
+            this.worry.opinions.unshift(opinion);
+          });
+  
         }
+      });
+    }
+    else{
 
-        let e: SocketEvent = { Action: Crud.CREATE, Entity: Entity.OPINION, Id: result.id, roomId: this.worry.id };
-        this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
-
-        // get the created opinion with it's relations
-        this.worryService.getOpinion(result.id).subscribe((opinion) =>
-        {
-          this.worry.opinions.unshift(opinion);
-        });
-
-      }
-    });
+      this.authService.requestLogin(this.router.url);
+    }
   }
 
   onOpinionEdit(id: string)

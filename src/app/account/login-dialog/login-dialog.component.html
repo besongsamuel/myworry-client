@@ -1,14 +1,16 @@
 
-<div class="w-100 h-100 d-flex align-items-center justify-content-center">
-    
-    <mat-card class="m-5">
+<mat-toolbar color='primary' class="d-flex mb-3" >
+    <a class="d-flex" routerLink="/">
+        <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
+    </a>
+    <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook" i18n="FACEBOOK_LOGIN|Facebook Login">Facebook Login</a>
+</mat-toolbar>
 
-        <mat-toolbar color='primary' class="d-flex mb-3" >
-            <a class="d-flex" routerLink="/">
-                <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
-            </a>
-            <a class="ml-auto" color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook" i18n="FACEBOOK_LOGIN|Facebook Login">Facebook Login</a>
-        </mat-toolbar>
+<mat-dialog-content>
+    
+    
+
+        
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     
             <div i18n="INVALID_EMAIL_OR_PASSWORD|Invalid email or password error message" class="alert alert-danger" role="alert" *ngIf='error == "INVALID_EMAIL_OR_PASSWORD"'>
@@ -45,8 +47,8 @@
             </div>
     
         </form>
-    </mat-card>
-</div>
+    
+</mat-dialog-content>
 
 
 

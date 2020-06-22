@@ -12,11 +12,11 @@
       <mat-menu #menu="matMenu">
         <button [disabled]="worry.locked" (click)="editOpinionClicked(opinion)" mat-menu-item>
           <mat-icon>edit</mat-icon>
-          <span>Edit</span>
+          <span i18n="EDIT|Edit">Edit</span>
         </button>
         <button (click)="removeOpinionClicked(opinion)" mat-menu-item>
           <mat-icon>delete</mat-icon>
-          <span>Remove</span>
+          <span i18n="REMOVE|Remove">Remove</span>
         </button>
       </mat-menu>
     </div>

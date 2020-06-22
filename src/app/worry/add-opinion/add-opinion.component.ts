@@ -26,8 +26,7 @@ export class AddOpinionComponent  {
   createOpinionForm: FormGroup;
   for_val: number = FOR_VALUE;
   against_val: number = AGAINST_VALUE;
-  error: boolean = false;
-  errorMessage: string = '';
+  error: string = null;
   selectedOpinionLabel: string = '';
   fontColor: string = '';
 
@@ -77,9 +76,7 @@ export class AddOpinionComponent  {
     },
     err =>
     {
-      this.error = true;
-      this.errorMessage = err.error.error.message;
-
+      this.error = err.error.error.message;
     })
   }
 

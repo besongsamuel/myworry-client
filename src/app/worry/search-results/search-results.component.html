@@ -6,7 +6,7 @@
             <form class="mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
                 <div class="d-flex">
                     <input class="form-control mr-2" formControlName="q">
-                    <button color="primary" [disabled]="!searchForm.valid" mat-raised-button type="submit">Search</button>
+                    <button color="primary" [disabled]="!searchForm.valid" mat-raised-button type="submit" i18n="SEARCH|Search">Search</button>
                 </div>
             </form>
             
@@ -16,11 +16,11 @@
 
     <div class="m-4 mat-elevation-z8">
         
-        <div *ngIf="worries.length == 0" class="alert alert-info text-center">No results available</div>
+        <div *ngIf="worries.length == 0" class="alert alert-info text-center" i18n="NO_RESULTS_AVAILABLE|No search results available" >No results available</div>
         <table mat-table [dataSource]="worryDataSource" matSort class="w-100">
           
             <ng-container matColumnDef="worry">
-              <th mat-header-cell *matHeaderCellDef> Worries </th>
+              <th mat-header-cell *matHeaderCellDef i18n="WORRIES|Worries"> Worries </th>
                 <td mat-cell *matCellDef="let element"> 
                     <div class="w-100 d-flex p-3">
                         <div class="worry-image" >
@@ -33,7 +33,7 @@
                                 <mat-icon color="primary" *ngIf="!element.user.userIdentity.profile.profileImage" aria-hidden="false" style="font-size: 40px; width: 40px; height: 40px;" aria-label="Profile Image">face</mat-icon>
                                 <div class="d-flex flex-column ml-3">
                                     <div class="font-weight-bold" style="font-size: 18px;">{{element.name}}</div>
-                                    <div class="text-muted">Created on {{ element.date_created | date : 'mediumDate' }}</div>
+                                    <div class="text-muted"><span i18n="CREATED_ON|Created On">Created on </span>{{ element.date_created | date : 'mediumDate' }}</div>
                                 </div>
                             </div>
                             
@@ -45,11 +45,9 @@
                         </div>
 
                         <div class="d-flex ml-auto justify-content-end align-items-end m-2">
-                            <button [routerLink]="['/worry/', element.id]" mat-raised-button color="accent" >View</button>
+                            <button [routerLink]="['/worry/', element.id]" mat-raised-button color="accent" i18n="VIEW|View" >View</button>
                         </div>
-                        
                     </div>
-                    
                 </td>
             </ng-container>
           

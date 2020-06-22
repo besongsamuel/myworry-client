@@ -4,18 +4,18 @@
 
 
             <mat-toolbar class="card-header" color="primary">Edit worry</mat-toolbar>
-
+ 
             <div class="card-body">
 
-              <div class="alert alert-danger" role="alert" *ngIf='errorMessage'>
-                  {{ errorMessage }}
-              </div>
+              <div i18n="WORRY_UPDATE_ERROR|An error occured while creating your worry" class="alert alert-danger" role="alert" *ngIf='error'>
+                An error occured while updating your worry
+            </div>
 
-              <div class="alert alert-success" role="alert" *ngIf='success'>
-                  Your worry was successfully created.
-              </div>
+            <div i18n="WORRY_SUCCESSFULLY_UPDATED|Your worry was successfully updated" class="alert alert-success" role="alert" *ngIf='success'>
+                Your worry was successfully updated.
+            </div>
 
-              <div class="alert alert-warning my-2" *ngIf="editLimited">
+              <div i18n="WORRY_EDITION_LIMITED|Edition limited because worry has opinions already" class="alert alert-warning my-2" *ngIf="editLimited">
                 This worry has opinions associated with it. Edition will be limited.
               </div>
 
@@ -41,38 +41,38 @@
 
                   <mat-form-field class="w-100">
                       <input [disabled]="editLimited" matInput placeholder="Worry Title" formControlName="name">
-                      <mat-error *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
+                      <mat-error i18n="MIN_LEN_6_REQUIRED|A min length of 6 is required." *ngIf="newWorryForm.controls.name.hasError('minlength') && !newWorryForm.controls.name.hasError('required')">
                         A min length of 6 is required.
                       </mat-error>
-                      <mat-error *ngIf="newWorryForm.controls.name.hasError('required')">
-                        A worry title is <strong>required</strong>
+                      <mat-error i18n="WORRY_TITLE_REQUIRED|Title Required" *ngIf="newWorryForm.controls.name.hasError('required')">
+                        A worry title is required
                       </mat-error>
                   </mat-form-field>
 
                   <mat-form-field class="w-100" >
-                      <textarea [disabled]="editLimited" matInput placeholder="Description" formControlName="description"></textarea>
+                      <textarea i18n-placeholder="DESCRIPTION|Description" [disabled]="editLimited" matInput placeholder="Description" formControlName="description"></textarea>
                   </mat-form-field>
 
                   <div class="row form-group">
                     <div class="col">
                         <mat-form-field class="w-100">
-                            <input matInput placeholder="Label for first opinion button" formControlName="opinion1Label">
-                            <mat-error *ngIf="newWorryForm.controls.opinion1Label.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
+                            <input matInput i18n-placeholder="OPINION_1_PH|Label for first opinion button" placeholder="Label for first opinion button" formControlName="opinion1Label">
+                            <mat-error i18n="MIN_LEN_2_REQUIRED|A min length of 2 is required." *ngIf="newWorryForm.controls.opinion1Label.hasError('minlength') && !newWorryForm.controls.labelFor.hasError('required')">
                               A min length of 2 is required.
                             </mat-error>
-                            <mat-error *ngIf="newWorryForm.controls.opinion1Label.hasError('required')">
+                            <mat-error i18n="LABEL_OPINION_1_REQUIRED|A label for the first opinion is required." *ngIf="newWorryForm.controls.opinion1Label.hasError('required')">
                               A label for the first opinion is <strong>required</strong>
                             </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col">
                         <mat-form-field class="w-100">
-                            <input matInput placeholder="Label for second opinion button" formControlName="opinion2Label">
-                            <mat-error *ngIf="newWorryForm.controls.opinion2Label.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
+                            <input matInput i18n-placeholder="OPINION_2_PH|Label for second opinion button" placeholder="Label for second opinion button" formControlName="opinion2Label">
+                            <mat-error i18n="MIN_LEN_2_REQUIRED|A min length of 2 is required." *ngIf="newWorryForm.controls.opinion2Label.hasError('minlength') && !newWorryForm.controls.labelAgainst.hasError('required')">
                               A min length of 2 is required.
                             </mat-error>
-                            <mat-error *ngIf="newWorryForm.controls.opinion2Label.hasError('required')">
-                              A label for the second opinion is <strong>required</strong>
+                            <mat-error i18n="LABEL_OPINION_2_REQUIRED|A label for the second opinion is required." *ngIf="newWorryForm.controls.opinion2Label.hasError('required')">
+                              A label for the second opinion is required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -81,12 +81,12 @@
                 <div class="row form-group">
                   <div class="col">
                       <mat-form-field class="w-100">
-                          <input matInput placeholder="Label for third opinion button" formControlName="opinion3Label">
+                          <input matInput i18n-placeholder="OPINION_3_PH|Label for third opinion button" placeholder="Label for third opinion button" formControlName="opinion3Label">
                       </mat-form-field>
                   </div>
                   <div class="col">
                       <mat-form-field class="w-100">
-                          <input matInput placeholder="Label for fourth opinion button" formControlName="opinion4Label">
+                          <input matInput i18n-placeholder="OPINION_4_PH|Label for fourth opinion button" placeholder="Label for fourth opinion button" formControlName="opinion4Label">
                       </mat-form-field>
                   </div>
                 </div>
@@ -94,14 +94,14 @@
                   <div class="row form-group">
                       <div class="col">
                           <mat-form-field class="w-100">
-                              <input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" formControlName="startDate">
+                              <input matInput [matDatepicker]="startDatePicker" i18n-placeholder="START_DATE|Start Date" placeholder="Start Date" formControlName="startDate">
                               <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                               <mat-datepicker #startDatePicker></mat-datepicker>
                             </mat-form-field>
                       </div>
                       <div class="col">
                           <mat-form-field class="w-100" >
-                              <input matInput [matDatepicker]="endDatePicker" placeholder="End Date" formControlName="endDate">
+                              <input matInput [matDatepicker]="endDatePicker" i18n-placeholder="END_DATE|End Date" placeholder="End Date" formControlName="endDate">
                               <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                               <mat-datepicker #endDatePicker></mat-datepicker>
                             </mat-form-field>
@@ -109,17 +109,17 @@
                   </div>
 
                   <div class="form-group">
-                      <label for="tags">Tags</label>
+                      <label for="tags" i18n="TAGS|Tags">Tags</label>
                       <tag-input modelAsStrings="true" (onAdd)="onTagAdded($event)" id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
                         <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
                       </tag-input>
                   </div>
 
                   <div class="form-group">
-                    <mat-slide-toggle formControlName="isPrivate">Private</mat-slide-toggle>
+                    <mat-slide-toggle i18n="PRIVATE|Private" formControlName="isPrivate">Private</mat-slide-toggle>
                   </div>
 
-                  <button type="submit" mat-raised-button color="primary" class="float-right" [disabled]="!newWorryForm.valid">Submit</button>
+                  <button type="submit" mat-raised-button color="primary" class="float-right" [disabled]="!newWorryForm.valid" i18n="UPDATE|Update">Update</button>
               </form>
             </div>
 

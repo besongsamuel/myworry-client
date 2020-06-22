@@ -19,8 +19,24 @@ export class AppComponent {
 
   environment : any = {}
 
+  public locale: string = '';
+
   constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router){
     this.environment = environment;
+
+    this.locale = window.sessionStorage.getItem('locale');
+
+    if(!this.locale){
+      this.locale = 'en-US';
+      window.sessionStorage.setItem('locale', 'en-US');
+
+    }
+
+  }
+
+  setLocale(locale: string){
+    window.sessionStorage.setItem('locale', locale);
+    window.location.reload();
   }
 
   logout()

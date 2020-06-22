@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Share with</h1>
+<h1 mat-dialog-title i18n="SHARE_WITH|Share with">Share with</h1>
 <div mat-dialog-content>
 
     <div class="w-100 d-flex justify-content-center my-3" *ngIf='loading'>
@@ -21,7 +21,7 @@
                 </mat-autocomplete>
               </mat-form-field>
         </div>
-        <button class="ml-2" mat-raised-button color="primary" (click)="add()">Add</button>
+        <button class="ml-2" mat-raised-button color="primary" (click)="add()" i18n="ADD|Add">Add</button>
     </div>
 
     <div class="selected-users">
@@ -37,6 +37,6 @@
 </div>
 <div mat-dialog-actions class="d-flex justify-content-end">
   
-  <button mat-raised-button color="warn" [mat-dialog-close]="null" cdkFocusInitial>Cancel</button>
-  <button mat-raised-button color="primary" (click)="okClicked()" [disabled]="selectedUsers.length == 0">Share</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="null" cdkFocusInitial i18n="CANCEL|Cancel">Cancel</button>
+  <button mat-raised-button color="primary" (click)="okClicked()" [disabled]="selectedUsers.length == 0" i18n="SHARE|Share">Share</button>
 </div>

@@ -49,7 +49,6 @@ export class AddWorryComponent implements OnInit {
   newWorryForm : FormGroup;
   error: boolean = false;
   success: boolean = false;
-  errorMessage: string = null;
   tags = [];
   imagePath: string;
   public fileDroped: NgxFileDropEntry;
@@ -111,7 +110,7 @@ export class AddWorryComponent implements OnInit {
     (err) =>
     {
       this.success = false;
-      this.errorMessage = err.error.error.message;
+      console.error(err.error.error.message);
     });
 
   }

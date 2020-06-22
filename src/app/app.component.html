@@ -11,7 +11,9 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto align-items-center">
+
+          
           <li class="nav-item" *ngIf="!authService.loggedIn">
             <a color="primary" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign In">Sign In</a>
           </li>
@@ -21,11 +23,22 @@
           <li class="nav-item" *ngIf="!authService.loggedIn">
             <a color="primary" mat-flat-button routerLink="/signup" i18n="SIGN_UP|Sign up text">Sign Up</a>
           </li>
-          <li class="nav-item" *ngIf="authService.loggedIn" i18n="LOGOUT|Logout text">
-            <a color="primary" mat-flat-button [routerLink]="" (click)='logout()'>Logout</a>
+          <li class="nav-item" *ngIf="authService.loggedIn">
+            <a color="primary" mat-flat-button [routerLink]="" i18n="LOGOUT|Logout text" (click)='logout()'>Logout</a>
           </li>
           <li class="nav-item" *ngIf="authService.loggedIn && userService.user">
             <a color="primary" mat-flat-button routerLink="/account/profile">{{userService.user.email}}</a>
+          </li>
+
+          <li class="nav-item mr-1">
+            <a [routerLink]="" (click)='setLocale("en-US")'>
+              <img width="20" [ngClass]="{'black-white': locale != 'en-US'}" height="20" src="assets/usa.png" > 
+            </a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="" (click)='setLocale("fr")'>
+              <img width="20" [ngClass]="{'black-white': locale != 'fr'}" height="20" src="assets/fr.png" > 
+            </a>
           </li>
       </ul>
 

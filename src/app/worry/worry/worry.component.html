@@ -11,7 +11,7 @@
             <mat-icon mat-card-avatar color="primary" *ngIf="!userProfileImage" aria-hidden="false" style="font-size: 40px; width: 40px; height: 40px;" aria-label="Profile Image">face</mat-icon>
 
             <mat-card-title>{{worry.name}}</mat-card-title>
-            <mat-card-subtitle>Created on {{worry.date_created | date}} by <b>{{worry.user.displayName}}</b></mat-card-subtitle>
+            <mat-card-subtitle><span i18n="CREATED_ON|Created on">Created on </span>{{worry.date_created | date}} <span i18n="BY|by">by</span> <b>{{worry.user.displayName}}</b></mat-card-subtitle>
             <div class="ml-auto" *ngIf="userService.user && worry.user.id == userService.user.id">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
@@ -19,11 +19,11 @@
               <mat-menu #menu="matMenu">
                 <button routerLink="/edit/worry/{{worry.id}}" mat-menu-item>
                   <mat-icon>edit</mat-icon>
-                  <span>Edit</span>
+                  <span i18n="EDIT|Edit">Edit</span>
                 </button>
                 <button (click)="share()" mat-menu-item>
                   <mat-icon>share</mat-icon>
-                  <span>Share with</span>
+                  <span i18n="SHARE_WITH|Share with">Share with</span>
                 </button>
                 <button (click)="toggleLock()" mat-menu-item>
                   <mat-icon *ngIf="!worry.locked">lock</mat-icon>
@@ -49,11 +49,11 @@
             </div>
 
             <div class="d-flex justify-content-center my-2">
-              <a mat-button (click)="viewStats()">View Statistics</a>
+              <a mat-button (click)="viewStats()" i18n="VIEW_STAtiSTICS|View Statistics">View Statistics</a>
             </div>
 
             <div class="d-flex mt-2 justify-content-center" *ngIf="!expired">
-              <p>Available from {{startDate | date}} - {{endDate | date}}</p>
+              <p><span i18n="AVAILABLE_FROM|Available from">Available from </span>{{startDate | date}} - {{endDate | date}}</p>
             </div>
 
             <mat-chip-list aria-label="Tags">
@@ -61,11 +61,11 @@
             </mat-chip-list>
 
             <div class="mt-3 text-center text-danger" *ngIf="expired">
-              <p><strong>This item has expired</strong></p>
+              <p><strong i18n="WORRY_EXPIRED|This worry has expired">This item has expired</strong></p>
             </div>
 
             <div class="mt-3 text-center text-danger" *ngIf="worry.locked">
-              <p><strong>This item is locked</strong></p>
+              <p><strong i18n="WORRY_LOCKED|This worry is locked">This item is locked</strong></p>
             </div>
 
           </mat-card-content>
@@ -88,5 +88,5 @@
 </div>
 
 <div class="d-flex justify-content-center my-5" *ngIf="unauthorized">
-  <div class="alert alert-danger">{{unauthorizedMessage}}</div>
+  <div class="alert alert-danger" i18n="UNAUTHORIZED_WORRY_ACCESS|You are not authorazied to access this worry">You are not authorazied to access this worry</div>
 </div>

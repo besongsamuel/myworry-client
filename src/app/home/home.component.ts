@@ -24,11 +24,20 @@ export class HomeComponent implements OnInit {
 
   trendingWorries: Worry[] = [];
 
-  trendingTags: string[] = [];
+  trendingTags: any[] = [];
 
   constructor(private worryService: WorryService, public authService: AuthService, private router: Router,) { }
 
   ngOnInit() {
+
+    let redirectUrl = window.sessionStorage.getItem('redirectUrl');
+    if(redirectUrl){
+
+      window.sessionStorage.removeItem('redirectUrl');
+
+      this.router.navigate([redirectUrl]);
+
+    }
 
     let pageEvent: PageEvent = new PageEvent();
     pageEvent.length = 6;
@@ -36,22 +45,61 @@ export class HomeComponent implements OnInit {
 
     this.worryService.getTrending().subscribe((worries: Worry[]) => {
 
-      this.trendingTags = _.flatten(worries.map(x => x.tags));
+      if(worries.length > 6)
+      {
+        this.worries = worries.slice(0, 6);
+        worries.map(x =>
+        {
+          if(!x.image)
+          {
+            x.image = DEFAULT_IMAGE;
+          }
+          return x;
+        });
+      }
+      else
+      {
+        this.worryService.getWorries(null, pageEvent).subscribe((otherWorries: Worry[]) =>
+        {
+          this.worries = this.worries.concat(otherWorries);
+
+          // Remove duplicates
+          this.worries = this.worries.reduce((acc, cv) => {
+
+            if(!acc.find(x => x.id == cv.id) && acc.length < 6){
+              acc.push(cv);
+            }
+
+            return acc;
+          }, []);
+
+          this.worries = this.worries.map(x =>
+          {
+            if(!x.image)
+            {
+              x.image = DEFAULT_IMAGE;
+            }
+            return x;
+          });
+        });
+      }
+
+      this.trendingTags = [...new Set(_.flatten(worries.map(x => x.tags)))];
 
     });
+    
+  }
 
-    this.worryService.getWorries(null, pageEvent).subscribe((worries: Worry[]) =>
-    {
-      this.worries = worries;
-      worries.map(x =>
-      {
-        if(!x.image)
-        {
-          x.image = DEFAULT_IMAGE;
-        }
-        return x;
-      });
-    })
+  createNewWorry(){
+
+    if(this.authService.loggedIn){
+      this.router.navigate(["/new/worry"]);
+    }
+    else{
+      this.authService.requestLogin("/new/worry");
+    }
+
+    
   }
 
   gotoTag(event){

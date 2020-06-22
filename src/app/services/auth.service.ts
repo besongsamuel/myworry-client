@@ -6,6 +6,8 @@ import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute } from '@angular/router';
+import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Injectable({
@@ -29,7 +31,7 @@ export class AuthService {
 
   public redirectUrl: string = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute)
+  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog)
   {
     if(!this.isTokenExpired())
     {
@@ -40,6 +42,8 @@ export class AuthService {
     {
       this.loggedIn = false;
     }
+
+    this.redirectUrl = window.sessionStorage.getItem('redirectUrl');
   }
 
   login(credentials: LoginCredentials)
@@ -54,6 +58,20 @@ export class AuthService {
         this.loggedIn = true;
       })
     );
+  }
+
+  requestLogin(redirectUrl: string){
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      data: redirectUrl
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+
+      if(result)
+      {
+        window.location.reload();  
+      }
+    });
   }
 
   facebookLogin()
