@@ -21,10 +21,6 @@
                 An error occured during login
             </div>
     
-            <div class="alert alert-success d-flex justify-content-center" role="alert" *ngIf='newUserEmail'>
-                <strong> {{newUserEmail}} </strong> <span i18n="ACCOUNT_SUCCESSFULLY CREATED|... account succesfully created">  account was created successfully</span> 
-            </div>
-    
             <mat-form-field class="w-100">
                 <input matInput placeholder="Email" formControlName="email">
                 <mat-error i18n="INVALID_EMAIL|Invalid email during login" *ngIf="loginForm.controls.email.hasError('email')">
