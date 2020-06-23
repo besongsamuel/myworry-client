@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService as SocialAuthService, SocialUser } from "angularx-social-login";
 import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
+import { SNACKBAR_DURATION, SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -13,7 +15,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   
   title = 'myworry-client';
 
@@ -21,7 +23,7 @@ export class AppComponent {
 
   public locale: string = '';
 
-  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router){
+  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private _snackBar: MatSnackBar){
     this.environment = environment;
 
     this.locale = window.sessionStorage.getItem('locale');
@@ -32,6 +34,30 @@ export class AppComponent {
 
     }
 
+  }
+  ngOnInit(): void {
+
+    let redirectUrl = window.sessionStorage.getItem('redirectUrl');
+
+    if(redirectUrl){
+
+      window.sessionStorage.removeItem('redirectUrl');
+
+      this.router.navigate([redirectUrl]);
+
+    }
+  }
+
+  resendActivationEmail(){
+    this.userService.sendActivationEmail(this.userService.user.email).subscribe((result) => {
+      if(result){
+        this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: "Email Sent", error: false } })
+
+      }
+    }, (err) => {
+      this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: err.error.error.message, error: true } })
+
+    });
   }
 
   setLocale(locale: string){

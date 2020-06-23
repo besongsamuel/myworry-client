@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class UserService {
 
   public user: User;
 
-  constructor(private http: HttpClient, public authService: AuthService, private route: ActivatedRoute)
+  constructor(private http: HttpClient, public authService: AuthService, private route: ActivatedRoute, private router: Router)
   {
     if(!authService.isTokenExpired())
     {
@@ -38,6 +38,10 @@ export class UserService {
         this.getUser().subscribe((user : User) =>
         {
           this.user = user;
+
+          if(!this.isProfileComplete()){
+            this.router.navigate(['/account/profile']);
+          }
         });
 
         if(params['provider']){
@@ -49,6 +53,16 @@ export class UserService {
   });
 
     
+  }
+
+  isProfileComplete(){
+    if(this.user){
+
+      if(!this.user.userIdentity.profile.gender || !this.user.userIdentity.profile.dob){
+        return false;
+      }
+    }
+    return true;
   }
 
   refreshUser() : Observable<User>{

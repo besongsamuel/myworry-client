@@ -30,15 +30,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-    let redirectUrl = window.sessionStorage.getItem('redirectUrl');
-    if(redirectUrl){
-
-      window.sessionStorage.removeItem('redirectUrl');
-
-      this.router.navigate([redirectUrl]);
-
-    }
-
     let pageEvent: PageEvent = new PageEvent();
     pageEvent.length = 6;
     pageEvent.pageIndex = 0;
