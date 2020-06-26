@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   ApiUrl: 'https://localhost:3000/',
-  SocketUrl: 'https://localhost:3001/'
+  SocketUrl: 'https://localhost:3001/',
+  domain: 'https://localhost:4200',
 };
 
 /*

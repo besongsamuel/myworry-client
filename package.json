@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "extract-i18n": "ng xi18n --output-path src/i18n && xliffmerge --profile xliffmerge.json en-US fr"
+    "extract-i18n": "ng xi18n --output-path src/i18n && xliffmerge --profile xliffmerge.json en fr"
   },
   "private": true,
   "dependencies": {

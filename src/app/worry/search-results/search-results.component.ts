@@ -39,7 +39,6 @@ export class SearchResultsComponent implements OnInit {
   pageEvent: PageEvent = new PageEvent();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private worryService: WorryService, private route: ActivatedRoute, private router: Router) { }
 
@@ -61,7 +60,6 @@ export class SearchResultsComponent implements OnInit {
 
       this.worryDataSource = new MatTableDataSource(this.worries);
       this.worryDataSource.paginator = this.paginator;
-      this.worryDataSource.sort = this.sort;
     });
 
   }

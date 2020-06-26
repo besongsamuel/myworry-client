@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
   }
 
   gotoTag(event){
-    this.router.navigate(['search/results'], { queryParams: { q: event.target.textContent } });
+    this.router.navigate(['search/results'], { queryParams: { q: event.currentTarget.textContent } });
   }
 
   onSubmit()

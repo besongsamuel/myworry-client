@@ -28,9 +28,23 @@ export class AppComponent implements OnInit {
 
     this.locale = window.sessionStorage.getItem('locale');
 
+
     if(!this.locale){
+
+      let browserLang = navigator.language;
+
+      if(browserLang.startsWith('fr')){
+
+        this.locale = 'fr';
+      }
+      else{
+        this.locale = 'en-US';
+      }
+
+      window.sessionStorage.setItem('locale', this.locale);
+
+      /** TODO: RESOLVE LANGUAGE CHANGE */
       this.locale = 'en-US';
-      window.sessionStorage.setItem('locale', 'en-US');
 
     }
 
@@ -62,7 +76,17 @@ export class AppComponent implements OnInit {
 
   setLocale(locale: string){
     window.sessionStorage.setItem('locale', locale);
-    window.location.reload();
+
+    this.router.url;
+    
+    //if(locale == 'fr'){
+    //  window.location.href = `${environment.domain.replace('www', 'fr')}${this.router.url}`;
+    //}
+    //else{
+    //  window.location.href = `${environment.domain}${this.router.url}`;
+    //}
+
+    this.locale = locale;
   }
 
   logout()

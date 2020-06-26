@@ -211,30 +211,18 @@
       </trans-unit>
       <trans-unit id="c806cbde8e705d0e9164c8130f3a6121d16d7c92" datatype="html">
         <source>Password</source><target state="final">Password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/signup/signup.component.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Password</note>
         <note priority="1" from="meaning">PASSWORD</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/signup/signup.component.html</context><context context-type="linenumber">71</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">98</context></context-group></trans-unit>
       <trans-unit id="d60bc6acbd81d66dda9e2f249952c21524e82e5c" datatype="html">
         <source>Confirm Password</source><target state="final">Confirm Password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/signup/signup.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">100</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Confirm Password</note>
         <note priority="1" from="meaning">CONFIRM_PASSWORD</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/signup/signup.component.html</context><context context-type="linenumber">74</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">101</context></context-group></trans-unit>
       <trans-unit id="d81917eaead7f94edbb7b4739244b2e6c4e5a09c" datatype="html">
         <source>
                           Passwords don't match
@@ -282,140 +270,98 @@
         </context-group>
         <note priority="1" from="description">Success message when updating profile</note>
         <note priority="1" from="meaning">SUCCESS_UPDATING_PROFILE</note>
+      </trans-unit><trans-unit id="DROP_PROFILE_IMAGE_HERE" datatype="html">
+        <source>Drop Profile Image Here</source><target state="new">Drop Profile Image Here</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="bb7cc5067e010365cae355845033f9fd70f3f5e6" datatype="html">
         <source>This is the name displayed in your posts. </source><target state="final">This is the name displayed in your posts. </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
+        
         <note priority="1" from="description">Hint for the display name</note>
         <note priority="1" from="meaning">DISPLAY_NAME_HING</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
       <trans-unit id="e0253122ae48665da47076e0dbde86ae46c68aef" datatype="html">
         <source>Enter a short description about yourself.</source><target state="final">Enter a short description about yourself.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
+        
         <note priority="1" from="description">Hint for the user's description</note>
         <note priority="1" from="meaning">USER_DESCRIPTION_HINT</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">66</context></context-group></trans-unit>
       <trans-unit id="25413b0a4515eea5c1cddb9392f2a783b52fc3db" datatype="html">
         <source>Gender</source><target state="final">Gender</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
+        
         <note priority="1" from="description">Gender</note>
         <note priority="1" from="meaning">GENDER</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">76</context></context-group></trans-unit>
       <trans-unit id="897f169df73074eb327ae01d5ff4635d6682102f" datatype="html">
         <source>Interests</source><target state="final">Interests</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
+        
         <note priority="1" from="description">Interests</note>
         <note priority="1" from="meaning">INTERESTS</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">85</context></context-group></trans-unit>
       <trans-unit id="319b74aa5b64c1b347cec5a9a43a8ab4e79f5347" datatype="html">
         <source>Create New Password</source><target state="final">Create New Password</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">95</context>
-        </context-group>
+        
         <note priority="1" from="description">Create new password</note>
         <note priority="1" from="meaning">CREATE_NEW_PASSWORD</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">96</context></context-group></trans-unit>
       <trans-unit id="a551382a81e6673a5a82642a86df2069c4154b3a" datatype="html">
         <source>
                                 Passwords don't match
                             </source><target state="final">
                                 Passwords don't match
                             </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">101</context>
-        </context-group>
+        
         <note priority="1" from="description">Passwords don't match error message</note>
         <note priority="1" from="meaning">PASSWORDS_DONT_MATCH</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit>
       <trans-unit id="7169bd26656f69de0ca932943fecb6703142cf5e" datatype="html">
         <source>Update</source><target state="final">Update</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-opinion/edit-opinion.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
+        
+        
+        
         <note priority="1" from="description">Update</note>
         <note priority="1" from="meaning">UPDATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">109</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">123</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-opinion/edit-opinion.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="e026622bc5c7fac30ad97a90e8bab113da65d039" datatype="html">
         <source>Your Worries</source><target state="final">Your Worries</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">114</context>
-        </context-group>
+        
         <note priority="1" from="description">Your Worries</note>
         <note priority="1" from="meaning">YOUR_WORRIES</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">115</context></context-group></trans-unit>
       <trans-unit id="22bdf22604fb437bdc64abe92608f8cfd3d4ff65" datatype="html">
         <source>Shared Worries</source><target state="final">Shared Worries</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
+        
         <note priority="1" from="description">Shared Worries</note>
         <note priority="1" from="meaning">SHARED_WORRIES</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">122</context></context-group></trans-unit>
       <trans-unit id="8b2eb607d167591f48422ba4beeeaadf43bb6705" datatype="html">
         <source>Filter</source><target state="final">Filter</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">132</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/worry-table/worry-table.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Filter</note>
         <note priority="1" from="meaning">FILTER</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">133</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/account/worry-table/worry-table.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
       <trans-unit id="a262d51488dbb2030643a44cdcb19f1fd599e783" datatype="html">
         <source>Date</source><target state="final">Date</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
+        
         <note priority="1" from="description">Date</note>
         <note priority="1" from="meaning">DATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">140</context></context-group></trans-unit>
       <trans-unit id="610f4589d8e26977a5ee04b99913f99b20587a4a" datatype="html">
         <source>Activity</source><target state="final">Activity</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">146</context>
-        </context-group>
+        
         <note priority="1" from="description">Activity</note>
         <note priority="1" from="meaning">ACTIVITY</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">147</context></context-group></trans-unit>
       <trans-unit id="ac8e410de1c27ab9d06aa67c8539bc950618774e" datatype="html">
         <source>Recent Activities</source><target state="final">Recent Activities</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/account/profile/profile.component.html</context>
-          <context context-type="linenumber">126</context>
-        </context-group>
+        
         <note priority="1" from="description">Recent Activities</note>
         <note priority="1" from="meaning">RECENT_ACTIVITIES</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/account/profile/profile.component.html</context><context context-type="linenumber">127</context></context-group></trans-unit>
       <trans-unit id="cf10006924e86059e7ac1d4f8e1fecce840a7d8f" datatype="html">
         <source>  account was created successfully</source><target state="final">  account was created successfully</target>
         <context-group purpose="location">
@@ -449,13 +395,31 @@
       </trans-unit><trans-unit id="MISSION_CREATEWORRY_TITLE" datatype="html">
         <source>Create Worry</source><target state="new">Create Worry</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="MISSION_GETOPINIONS_TITLE" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="MISSION_CREATEWORRY_STATEMENT" datatype="html">
+        <source>Are you worried about something? Create a worry and enter between 2-4 opinions that interest you. </source><target state="new">Are you worried about something? Create a worry and enter between 2-4 opinions that interest you. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit><trans-unit id="MISSION_GETOPINIONS_TITLE" datatype="html">
         <source>Get Valued Opinions</source><target state="new">Get Valued Opinions</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="MISSION_VIEWSTATS_TITLE" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="MISSION_GETOPINIONS_STATEMENT" datatype="html">
+        <source>Wait while people give valued opinions on your worry based on the opinions that interest you. People can only give one opinion.</source><target state="new">Wait while people give valued opinions on your worry based on the opinions that interest you. People can only give one opinion.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit><trans-unit id="MISSION_VIEWSTATS_TITLE" datatype="html">
         <source>View Statistics</source><target state="new">View Statistics</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/home/home.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit><trans-unit id="MISSION_VIEWSTATS_STATEMENT" datatype="html">
+        <source>Get statistics on what the masses are thinking. You can view statistics based on gender and age group.</source><target state="new">Get statistics on what the masses are thinking. You can view statistics based on gender and age group.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
       
       
       
@@ -509,6 +473,16 @@
         </context-group>
         <note priority="1" from="description">Edition limited because worry has opinions already</note>
         <note priority="1" from="meaning">WORRY_EDITION_LIMITED</note>
+      </trans-unit><trans-unit id="DROP_IMAGE_HERE" datatype="html">
+        <source>Drop Image Here</source><target state="new">Drop Image Here</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="92f56eafe720f5434d2eb439f5f500790d9dc5d5" datatype="html">
         <source>
@@ -516,194 +490,116 @@
                       </source><target state="final">
                         A min length of 6 is required.
                       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">A min length of 6 is required.</note>
         <note priority="1" from="meaning">MIN_LEN_6_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">45</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit>
       <trans-unit id="60552f3451bf7cfc6af4bc38b22ef2bf81b2003a" datatype="html">
         <source>
                         A worry title is required
                       </source><target state="final">
                         A worry title is required
                       </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Title Required</note>
         <note priority="1" from="meaning">WORRY_TITLE_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">47</context></context-group></trans-unit>
       <trans-unit id="07b66e6689483fb51cd04c1a817124f80c00a838" datatype="html">
         <source>Description</source><target state="final">Description</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Description</note>
         <note priority="1" from="meaning">DESCRIPTION</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">54</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit>
       <trans-unit id="810a3b4f6ed7ec8c2633ae0704b3d1a7f1c9f210" datatype="html">
         <source>Label for first opinion button</source><target state="final">Label for first opinion button</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Label for first opinion button</note>
         <note priority="1" from="meaning">OPINION_1_PH</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">60</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit>
       <trans-unit id="706429013bde705e3982416ac1c39cdf89930440" datatype="html">
         <source>
                               A min length of 2 is required.
                             </source><target state="final">
                               A min length of 2 is required.
                             </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">A min length of 2 is required.</note>
         <note priority="1" from="meaning">MIN_LEN_2_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">72</context></context-group></trans-unit>
       <trans-unit id="bae0cc9070c4882a44db396835612b61d461c19b" datatype="html">
         <source>
                               A label for the first opinion is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
                             </source><target state="final">
                               A label for the first opinion is <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>required<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/>
                             </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
+        
         <note priority="1" from="description">A label for the first opinion is required.</note>
         <note priority="1" from="meaning">LABEL_OPINION_1_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit>
       <trans-unit id="3c19e4b154120574f0cebe7b7cfa778c3fb5e497" datatype="html">
         <source>Label for second opinion button</source><target state="final">Label for second opinion button</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Label for second opinion button</note>
         <note priority="1" from="meaning">OPINION_2_PH</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">71</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">70</context></context-group></trans-unit>
       <trans-unit id="4b6991a4e71b5aa49e6485df1eb16c6e3a0a9651" datatype="html">
         <source>
                               A label for the second opinion is required
                             </source><target state="final">
                               A label for the second opinion is required
                             </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
+        
         <note priority="1" from="description">A label for the second opinion is required.</note>
         <note priority="1" from="meaning">LABEL_OPINION_2_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">75</context></context-group></trans-unit>
       <trans-unit id="747366c45a48d7c677fa5a1874d7547591df9071" datatype="html">
         <source>Label for third opinion button</source><target state="final">Label for third opinion button</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Label for third opinion button</note>
         <note priority="1" from="meaning">OPINION_3_PH</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">85</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">84</context></context-group></trans-unit>
       <trans-unit id="fc2cacc569c8614feb32a88c11e2123df1a9ebdf" datatype="html">
         <source>Label for fourth opinion button</source><target state="final">Label for fourth opinion button</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">89</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Label for fourth opinion button</note>
         <note priority="1" from="meaning">OPINION_4_PH</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">90</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">89</context></context-group></trans-unit>
       <trans-unit id="0b66b43b969925db16efce4850b60b9d453d52ca" datatype="html">
         <source>Start Date</source><target state="final">Start Date</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Start Date</note>
         <note priority="1" from="meaning">START_DATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">98</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">97</context></context-group></trans-unit>
       <trans-unit id="ee94c6b67ba40718469f8bc83fd0b5a100319375" datatype="html">
         <source>End Date</source><target state="final">End Date</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">104</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">End Date</note>
         <note priority="1" from="meaning">END_DATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">105</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">104</context></context-group></trans-unit>
       <trans-unit id="ea3225e45ef26ea4a7b16c44df9758736501cb95" datatype="html">
         <source>Tags</source><target state="final">Tags</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">111</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Tags</note>
         <note priority="1" from="meaning">TAGS</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">113</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">112</context></context-group></trans-unit>
       <trans-unit id="fdbad5d5b32ab381b79b022e5cb15ae311fcd6ae" datatype="html">
         <source>Private</source><target state="final">Private</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context>
-          <context context-type="linenumber">119</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">Private</note>
         <note priority="1" from="meaning">PRIVATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/edit-worry/edit-worry.component.html</context><context context-type="linenumber">120</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">119</context></context-group></trans-unit>
       <trans-unit id="92b521478a08b143e1db5b3bbe3a03297adc21c9" datatype="html">
         <source>Create worry</source><target state="final">Create worry</target>
         <context-group purpose="location">
@@ -741,65 +637,47 @@
       </trans-unit>
       <trans-unit id="f87f26fd9e691c4e20d4399ef8b3820c4a7fa704" datatype="html">
         <source>Title</source><target state="final">Title</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
+        
         <note priority="1" from="description">Title</note>
         <note priority="1" from="meaning">TITLE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit>
       <trans-unit id="4112f6a2fa2d9126bba07bc45d6f947047a21cba" datatype="html">
         <source>
                                 A min length of 2 is required.
                               </source><target state="final">
                                 A min length of 2 is required.
                               </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
+        
+        
         <note priority="1" from="description">A min length of 2 is required.</note>
         <note priority="1" from="meaning">MIN_LEN_2_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">60</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">71</context></context-group></trans-unit>
       <trans-unit id="f7d5a6baf39c70b482f1bf173afe2e2f92c18aa7" datatype="html">
         <source>
                                 A label for the first opinion is required
                               </source><target state="final">
                                 A label for the first opinion is required
                               </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
+        
         <note priority="1" from="description">A label for the first opinion is required.</note>
         <note priority="1" from="meaning">LABEL_OPINION_1_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">63</context></context-group></trans-unit>
       <trans-unit id="8f12652bde59f974a0e32d95d954edf5abe3cfc1" datatype="html">
         <source>
                                 A label for the second opinion is required
                               </source><target state="final">
                                 A label for the second opinion is required
                               </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
+        
         <note priority="1" from="description">A label for the second opinion is required.</note>
         <note priority="1" from="meaning">LABEL_OPINION_2_REQUIRED</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">74</context></context-group></trans-unit>
       <trans-unit id="7c4a684a51179753039f7debc4680411491fbd47" datatype="html">
         <source>Create</source><target state="final">Create</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
+        
         <note priority="1" from="description">Create</note>
         <note priority="1" from="meaning">CREATE</note>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/worry/add-worry/add-worry.component.html</context><context context-type="linenumber">122</context></context-group></trans-unit>
       <trans-unit id="eaf5c0f00a1f0c619a8bb31404c686f65647dd71" datatype="html">
         <source>Warning: </source><target state="final">Warning: </target>
         <context-group purpose="location">

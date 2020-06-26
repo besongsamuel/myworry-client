@@ -17,7 +17,7 @@
     <div class="m-4 mat-elevation-z8">
         
         <div *ngIf="worries.length == 0" class="alert alert-info text-center" i18n="NO_RESULTS_AVAILABLE|No search results available" >No results available</div>
-        <table mat-table [dataSource]="worryDataSource" matSort class="w-100">
+        <table mat-table [dataSource]="worryDataSource" class="w-100">
           
             <ng-container matColumnDef="worry">
               <th mat-header-cell *matHeaderCellDef i18n="WORRIES|Worries"> Worries </th>

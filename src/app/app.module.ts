@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,12 +24,9 @@ import { environment } from 'src/environments/environment';
 import { MatChipsModule } from '@angular/material/chips';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
-import localeFr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
 import { LoginDialogComponent } from './account/login-dialog/login-dialog.component';
 import { WorryStatsDialogComponent } from './worry/worry-stats-dialog/worry-stats-dialog.component';
 import { MissionItemComponent } from './mission-item/mission-item.component';
-registerLocaleData(localeFr);
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -82,9 +79,7 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
   providers: [httpInterceptorProviders, AuthService, {
     provide: AuthServiceConfig,
     useFactory: provideConfig
-  },
-  { provide: LOCALE_ID, useValue: localID }],
-  
+  }],
   bootstrap: [AppComponent],
   entryComponents: [AddOpinionComponent, EditOpinionComponent, SnackBarComponent, LoginDialogComponent, WorryStatsDialogComponent, ConfirmationDialogComponent]
 })
