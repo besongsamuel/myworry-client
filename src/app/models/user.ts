@@ -13,6 +13,8 @@ export class User {
 
     userIdentity: UserIdentity;
 
+    userSubscription: any;
+
     worries: Worry[];
 
     roleId: string;

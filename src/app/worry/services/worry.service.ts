@@ -14,6 +14,7 @@ import { User } from 'src/app/models/user';
 @Injectable()
 export class WorryService {
   
+  
 
   httpOptions = {
     headers: new HttpHeaders({

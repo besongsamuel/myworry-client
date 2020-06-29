@@ -28,6 +28,9 @@ import { LoginDialogComponent } from './account/login-dialog/login-dialog.compon
 import { WorryStatsDialogComponent } from './worry/worry-stats-dialog/worry-stats-dialog.component';
 import { MissionItemComponent } from './mission-item/mission-item.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -71,12 +74,14 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     ReactiveFormsModule,
     HttpClientModule,
     SocialLoginModule,
+    MatTooltipModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonModule,
     MatChipsModule,
     MatDialogModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [httpInterceptorProviders, AuthService, {
     provide: AuthServiceConfig,

@@ -7,6 +7,7 @@ import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
 import { SNACKBAR_DURATION, SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SwPush } from '@angular/service-worker';
 
 
 
@@ -23,7 +24,10 @@ export class AppComponent implements OnInit {
 
   public locale: string = '';
 
-  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private _snackBar: MatSnackBar){
+  readonly VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
+
+  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private _snackBar: MatSnackBar,
+    private swPush: SwPush){
     this.environment = environment;
 
     this.locale = window.sessionStorage.getItem('locale');
@@ -87,6 +91,21 @@ export class AppComponent implements OnInit {
     //}
 
     this.locale = locale;
+  }
+
+  subscribeToNotifications(){
+
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then((sub) => {
+      this.userService.addPushSubscriber(sub).subscribe(sub => {
+        this.userService.user.userSubscription = sub;
+      })
+    }).catch(err => console.error("Could not subscribe to notification", err));
+  }
+
+  unsubscribeToNotifications(){
+
   }
 
   logout()

@@ -22,6 +22,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-worry',
@@ -29,6 +30,7 @@ import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.
   styleUrls: ['./worry.component.scss']
 })
 export class WorryComponent implements OnInit, OnDestroy {
+
 
   worry$: Observable<Worry>;
   worry: Worry;
@@ -51,7 +53,8 @@ export class WorryComponent implements OnInit, OnDestroy {
     private socket: Socket,
     private zone:NgZone, 
     private _snackBar: MatSnackBar,
-    private authService: AuthService)
+    private authService: AuthService,
+    private swPush: SwPush)
   {
 
   }
@@ -268,6 +271,8 @@ export class WorryComponent implements OnInit, OnDestroy {
       this.authService.requestLogin(this.router.url);
     }
   }
+
+  
 
   onOpinionEdit(id: string)
   {

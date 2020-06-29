@@ -29,6 +29,18 @@
           <li class="nav-item" *ngIf="authService.loggedIn && userService.user">
             <a color="primary" mat-flat-button routerLink="/account/profile">{{userService.user.email}}</a>
           </li>
+          <li matTooltip="Turn on notifications"
+          i18n-matTooltip="@@TURN_ON_NOTIFICATIONS"
+          matTooltipPosition="below"
+          matTooltipHideDelay="100000" *ngIf="authService.loggedIn && userService.user && !userService.user.userSubscription" class="nav-item d-flex align-items-center text-white" (click)="subscribeToNotifications()">
+              <mat-icon  style="cursor: pointer;">notifications</mat-icon>
+          </li>
+          <li matTooltip="Turn off notifications"
+          i18n-matTooltip="@@TURN_OFF_NOTIFICATIONS"
+          matTooltipPosition="below"
+          matTooltipHideDelay="100000" *ngIf="authService.loggedIn && userService.user && userService.user.userSubscription" class="nav-item d-flex align-items-center text-white" (click)="unsubscribeToNotifications()">
+            <mat-icon style="cursor: pointer;" >notifications_off</mat-icon>
+          </li>
 
           <li class="nav-item mr-1">
             <a [routerLink]="" (click)='setLocale("en-US")'>

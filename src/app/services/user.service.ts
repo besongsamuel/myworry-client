@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService {
+  
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -95,6 +96,14 @@ export class UserService {
   createUser(user: SignupUser) : Observable<User>
   {
     return this.http.post<User>(`${environment.ApiUrl}users`, user, this.httpOptions);
+  }
+
+  addPushSubscriber(sub: PushSubscription) : Observable<object> {
+    
+    return this.http.post<object>(`${environment.ApiUrl}subscriptions`, {
+      subscription: sub
+    }, this.httpOptions);
+    
   }
 
   patchUserIdentity(userIdentityProfile: any) : Observable<User>
