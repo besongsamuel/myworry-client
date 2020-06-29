@@ -24,6 +24,7 @@ import { ActivateAccountComponent } from './activate-account/activate-account.co
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 
 @NgModule({
   declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent, ActivateAccountComponent, LoginDialogComponent],
@@ -37,6 +38,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
+    WorryWidgetsModule,
     MatProgressSpinnerModule,
     MatCardModule,
     MatDatepickerModule,

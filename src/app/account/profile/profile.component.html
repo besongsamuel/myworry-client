@@ -26,6 +26,10 @@
                         multiple="false"
                         *ngIf="!profileImagePath">
                     </ngx-file-drop>
+
+                    <div *ngIf="!profileImagePath" class="w-100 d-flex justify-content-center">
+                        <app-image-select-button (onImageSelected)="imageSelected($event)" i18n-label="@@SELECT_PROFILE_IMAGE" label="Select Profile Image"></app-image-select-button>
+                      </div>
     
                     <div class="w-100 d-flex justify-content-center align-items-start" *ngIf="profileImagePath">
                         <img class="profileImage p-1 border" [src]="profileImagePath">

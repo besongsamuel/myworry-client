@@ -27,6 +27,7 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { LoginDialogComponent } from './account/login-dialog/login-dialog.component';
 import { WorryStatsDialogComponent } from './worry/worry-stats-dialog/worry-stats-dialog.component';
 import { MissionItemComponent } from './mission-item/mission-item.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 let socialLoginConfig = new AuthServiceConfig([
   {
@@ -60,7 +61,7 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     ConfirmationDialogComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
-    MissionItemComponent,
+    MissionItemComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +72,7 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     HttpClientModule,
     SocialLoginModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatButtonModule,
     MatChipsModule,
     MatDialogModule,

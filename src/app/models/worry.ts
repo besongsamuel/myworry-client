@@ -13,6 +13,8 @@ export class Worry {
 
     isPrivate: boolean;
 
+    isAnonymous: boolean;
+
     name: string = '';
 
     opinions: Opinion[];

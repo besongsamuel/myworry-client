@@ -26,19 +26,25 @@ export class HomeComponent implements OnInit {
 
   trendingTags: any[] = [];
 
+  loading: boolean = false;
+
+  pageEvent: PageEvent = new PageEvent();
+
+  disableLoadMore: boolean = false;
+
   constructor(private worryService: WorryService, public authService: AuthService, private router: Router,) { }
 
   ngOnInit() {
 
-    let pageEvent: PageEvent = new PageEvent();
-    pageEvent.length = 6;
-    pageEvent.pageIndex = 0;
+    this.pageEvent.pageSize = 6;
+    this.pageEvent.pageIndex = 0;
 
     this.worryService.getTrending().subscribe((worries: Worry[]) => {
 
+      this.trendingWorries = worries;
       if(worries.length > 6)
       {
-        this.worries = worries.slice(0, 6);
+        this.worries = worries.slice(0, this.pageEvent.pageSize);
         worries.map(x =>
         {
           if(!x.image)
@@ -50,7 +56,8 @@ export class HomeComponent implements OnInit {
       }
       else
       {
-        this.worryService.getWorries(null, pageEvent).subscribe((otherWorries: Worry[]) =>
+        this.worries = worries;
+        this.worryService.getWorries(null, this.pageEvent).subscribe((otherWorries: Worry[]) =>
         {
           this.worries = this.worries.concat(otherWorries);
 
@@ -75,7 +82,7 @@ export class HomeComponent implements OnInit {
         });
       }
 
-      this.trendingTags = [...new Set(_.flatten(worries.map(x => x.tags)))];
+      this.trendingTags = [...new Set(_.flatten(worries.map(x => x.tags)))].slice(0, 20);
 
     });
     
@@ -95,6 +102,49 @@ export class HomeComponent implements OnInit {
 
   gotoTag(event){
     this.router.navigate(['search/results'], { queryParams: { q: event.currentTarget.textContent } });
+  }
+
+  gotoNextSection(event){
+    event.preventDefault();
+    $('html, body').animate({ scrollTop: $($(event.currentTarget).attr('href')).offset().top}, 500, 'linear');
+  }
+
+  loadMore(){
+
+    this.loading = true;
+
+    this.pageEvent.pageIndex += 1;
+
+    this.worryService.getWorries(null, this.pageEvent).subscribe((otherWorries: Worry[]) =>
+    {
+
+      if(otherWorries.length < this.pageEvent.pageSize){
+        this.disableLoadMore = true;
+      }
+      this.loading = false;
+      
+      this.worries = this.worries.concat(otherWorries);
+
+      // Remove duplicates
+      this.worries = this.worries.reduce((acc, cv) => {
+
+        if(!acc.find(x => x.id == cv.id)){
+          acc.push(cv);
+        }
+
+        return acc;
+      }, []);
+
+      this.worries = this.worries.map(x =>
+      {
+        if(!x.image)
+        {
+          x.image = DEFAULT_IMAGE;
+        }
+        return x;
+      });
+    });
+
   }
 
   onSubmit()

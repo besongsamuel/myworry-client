@@ -41,6 +41,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { WorryStatsDialogComponent } from './worry-stats-dialog/worry-stats-dialog.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SearchResultsComponent } from './search-results/search-results.component'
+import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 
 @NgModule({
   declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent],
@@ -56,6 +57,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     CommonModule,
     RouterModule,
     NgxFileDropModule,
+    WorryWidgetsModule,
     TagInputModule,
     FormsModule,
     ReactiveFormsModule,

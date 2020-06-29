@@ -46,10 +46,10 @@
 </nav>
 
 <div class="w-100" style="min-height: calc(100vh - 124px);">
-    <div class="alert alert-warning d-flex justify-content-center" *ngIf="userService.user && userService.user.emailVerified && !userService.isProfileComplete()">
+    <div class="alert alert-warning d-flex justify-content-center mb-0" *ngIf="userService.user && userService.user.emailVerified && !userService.isProfileComplete()">
       <span i18n="@@PLEASE_UPDATE_PROFILE">Please complete your profile.</span> <a class="ml-1" routerLink="/account/profile" i18n="@@MY_PROFILE">My Profile</a>
     </div>
-    <div class="alert alert-warning d-flex justify-content-center" *ngIf="userService.user && !userService.user.emailVerified">
+    <div class="alert alert-warning d-flex justify-content-center mb-0" *ngIf="userService.user && !userService.user.emailVerified">
       <span i18n="@@PLEASE_VERIFY_EMAIL">Please verify your email address.</span> <a class="ml-1" [routerLink]="" (click)='resendActivationEmail()' i18n="@@RESENT_ACTIVATION_EMAIL">Resend activation email</a>
     </div>
     <router-outlet></router-outlet>

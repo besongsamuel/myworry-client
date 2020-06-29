@@ -1,0 +1,116 @@
+.overlay{
+    background: rgb(33,150,243);
+    background: linear-gradient(180deg, rgba(33,150,243,1) 0%, rgba(255,193,7,0.7833508403361344) 100%);
+}
+
+.search-input{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.search-button{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    width: 100px;
+}
+
+.use-case-title{
+    font-size: large;
+}
+
+.use-case-content{
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.use-cases{
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .left{
+        background-color: #429BBD;
+        min-width: 400px;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: row;
+    }
+
+    .right{
+        background-color: #FFC000;
+        min-width: 400px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: row;
+
+    }
+
+
+}
+
+.search-section {
+    background-image: linear-gradient(180deg, rgba(33,150,243,1) 0%, rgba(255,193,7,0.7833508403361344) 100%), url('../../assets/home-background.png');
+    width: 100%;
+    background-size: cover;
+    color: white;
+    height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15%;
+}
+
+
+  #home-section a span {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: sdb07 2s infinite;
+    animation: sdb07 2s infinite;
+    opacity: 0;
+    box-sizing: border-box;
+  }
+  #home-section a span:nth-of-type(1) {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+  }
+  #home-section a span:nth-of-type(2) {
+    bottom: 64px;
+    -webkit-animation-delay: .15s;
+    animation-delay: .15s;
+  }
+  #home-section a span:nth-of-type(3) {
+    bottom: 48px;
+    -webkit-animation-delay: .3s;
+    animation-delay: .3s;
+  }
+  @-webkit-keyframes sdb07 {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes sdb07 {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }

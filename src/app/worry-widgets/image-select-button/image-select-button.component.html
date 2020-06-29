@@ -1,0 +1,6 @@
+<input style="display: none" accept="image/*" type="file" (change)="onFileSelect($event)" #hiddenfileinput>
+
+<button (click)="hiddenfileinput.click()" mat-raised-button color="accent">
+    <mat-icon class="text-white" aria-hidden="false" aria-label="Select Image">image</mat-icon>
+    {{label}}
+</button>

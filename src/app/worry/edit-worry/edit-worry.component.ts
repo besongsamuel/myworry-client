@@ -80,7 +80,8 @@ export class EditWorryComponent implements OnInit {
       opinion4Label: [worry.opinion4Label],
       startDate: moment(worry.startDate),
       endDate: moment(worry.endDate),
-      isPrivate: [worry.isPrivate]
+      isPrivate: [worry.isPrivate],
+      isAnonymous: [worry.isAnonymous]
     });
 
     if(this.editLimited)
@@ -146,7 +147,7 @@ export class EditWorryComponent implements OnInit {
 
     if(this.editLimited)
     {
-      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate', 'isPrivate']));
+      saveRequest$ = this.worryService.patchWorry(_.pick(this.worry, ['id', 'image', 'tags', 'startDate', 'endDate', 'isPrivate', 'isAnonymous']));
     }
     else
     {
@@ -185,6 +186,17 @@ export class EditWorryComponent implements OnInit {
       });
     }
     
+  }
+
+  imageSelected(files: File[]){
+
+    if(files.length > 0){
+      this.worryService.uploadImage(files[0], 'worry').subscribe((response) =>
+      {
+        this.newWorryForm.get("image").setValue(response.imageName);
+        this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
+      });
+    }
   }
 
   fileDropped(files: NgxFileDropEntry[])

@@ -135,6 +135,17 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  imageSelected(files: File[]){
+
+    if(files.length > 0){
+      this.worryService.uploadImage(files[0], 'profile').subscribe((response) =>
+        {
+          this.profileForm.get('profile').get('profileImage').setValue(response.imageName);
+          this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
+        });
+    }
+  }
+
   fileDropped(files: NgxFileDropEntry[])
   {
     this.fileDroped = files[0];

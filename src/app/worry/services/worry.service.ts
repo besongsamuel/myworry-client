@@ -146,7 +146,7 @@ export class WorryService {
 
       if(pageEvent)
       {
-        worryFilter["limit"] = pageEvent.length;
+        worryFilter["limit"] = pageEvent.pageSize;
         worryFilter["offset"] = (pageEvent.pageIndex) * pageEvent.pageSize;
       }
 

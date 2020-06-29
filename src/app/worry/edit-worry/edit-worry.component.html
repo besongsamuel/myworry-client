@@ -31,6 +31,10 @@
                         *ngIf="!imagePath">
                 </ngx-file-drop>
 
+                <div *ngIf="!imagePath" class="w-100 d-flex justify-content-center">
+                  <app-image-select-button (onImageSelected)="imageSelected($event)" i18n-label="@@SELECT_IMAGE" label="Select Image"></app-image-select-button>
+                </div>
+
                 <div class="w-100 d-flex justify-content-center my-2" *ngIf="imagePath">
                   <img class="worryImage border p-1" [src]="imagePath">
                   <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
@@ -118,6 +122,12 @@
 
                   <div class="form-group">
                     <mat-slide-toggle i18n="PRIVATE|Private" formControlName="isPrivate">Private</mat-slide-toggle>
+                    <div class="hint" i18n="@@PRIVATE_WORRY_HINT">A private worry can only be viewed with people you share it with. </div>
+                  </div>
+
+                  <div class="form-group">
+                    <mat-slide-toggle formControlName="isAnonymous" i18n="@@ANONYMOUS">Anonymous</mat-slide-toggle>
+                    <div class="hint" i18n="@@ANONYMOUS_WORRY_HINT">When a worry is anonymous, no one can see who created it.</div>
                   </div>
 
                   <button type="submit" mat-raised-button color="primary" class="float-right" [disabled]="!newWorryForm.valid" i18n="UPDATE|Update">Update</button>

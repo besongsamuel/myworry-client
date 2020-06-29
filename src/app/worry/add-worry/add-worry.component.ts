@@ -65,10 +65,11 @@ export class AddWorryComponent implements OnInit {
 
       this.newWorryForm = this.fb.group({
         name: ["", [Validators.required, Validators.minLength(6)]],
-        description: "",
-        isPrivate: false,
+        description: [""],
+        isPrivate: [false],
+        isAnonymous: [false],
         locked: false,
-        image: "",
+        image: [""],
         opinion1Label: ["Yes", [Validators.required, Validators.minLength(2)]],
         opinion2Label: ["No", [Validators.required, Validators.minLength(2)]],
         opinion3Label: [""],
@@ -132,6 +133,17 @@ export class AddWorryComponent implements OnInit {
       });
     }
     
+  }
+
+  imageSelected(files: File[]){
+
+    if(files.length > 0){
+      this.worryService.uploadImage(files[0], 'worry').subscribe((response) =>
+      {
+        this.newWorryForm.get("image").setValue(response.imageName);
+        this.imagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
+      });
+    }
   }
 
   fileDropped(files: NgxFileDropEntry[])
