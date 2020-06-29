@@ -93,6 +93,7 @@ export class AppComponent implements OnInit {
   {
     this.userService.logout();
     this.router.navigate(['']);
+    window.location.reload();
   }
 
   signInWithGoogle(): void {
