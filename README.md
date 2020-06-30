@@ -1,4 +1,4 @@
-# Myworry Client
+# MyWorry Client
 
 MyMorry Client is the Front End application for the MyWorry Project. It is powered on the backend my the MyWorry Server. It is built using Angular 9 using the Material Design. 
 
