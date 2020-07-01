@@ -13,7 +13,7 @@ export class User {
 
     userIdentity: UserIdentity;
 
-    userSubscription: any;
+    userSubscriptions: any[];
 
     worries: Worry[];
 

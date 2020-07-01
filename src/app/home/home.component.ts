@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
 
   trendingWorries: Worry[] = [];
 
+  excess: Worry[] = [];
+
   trendingTags: any[] = [];
 
   loading: boolean = false;
@@ -42,9 +44,8 @@ export class HomeComponent implements OnInit {
     this.worryService.getTrending().subscribe((worries: Worry[]) => {
 
       this.trendingWorries = worries;
-      if(worries.length > 6)
+      if(worries.length > this.pageEvent.pageSize)
       {
-        this.worries = worries.slice(0, this.pageEvent.pageSize);
         worries.map(x =>
         {
           if(!x.image)
@@ -53,25 +54,28 @@ export class HomeComponent implements OnInit {
           }
           return x;
         });
+
+        this.excess = worries.slice(this.pageEvent.pageSize);
+        this.worries = worries.slice(0, this.pageEvent.pageSize);
       }
       else
       {
         this.worries = worries;
         this.worryService.getWorries(null, this.pageEvent).subscribe((otherWorries: Worry[]) =>
         {
-          this.worries = this.worries.concat(otherWorries);
+          let worries = this.worries.concat(otherWorries);
 
           // Remove duplicates
-          this.worries = this.worries.reduce((acc, cv) => {
+          worries = worries.reduce((acc, cv) => {
 
-            if(!acc.find(x => x.id == cv.id) && acc.length < 6){
+            if(!acc.find(x => x.id == cv.id)){
               acc.push(cv);
             }
 
             return acc;
           }, []);
 
-          this.worries = this.worries.map(x =>
+          worries = worries.map(x =>
           {
             if(!x.image)
             {
@@ -79,6 +83,11 @@ export class HomeComponent implements OnInit {
             }
             return x;
           });
+
+          this.excess = worries.slice(this.pageEvent.pageSize);
+          this.worries = worries.slice(0, this.pageEvent.pageSize);
+          this.pageEvent.pageIndex += 1;
+
         });
       }
 
@@ -113,7 +122,10 @@ export class HomeComponent implements OnInit {
 
     this.loading = true;
 
-    this.pageEvent.pageIndex += 1;
+    if(this.excess.length > 0){
+      this.worries = this.worries.concat(...this.excess);
+      this.excess = [];
+    }
 
     this.worryService.getWorries(null, this.pageEvent).subscribe((otherWorries: Worry[]) =>
     {
@@ -143,6 +155,8 @@ export class HomeComponent implements OnInit {
         }
         return x;
       });
+
+      this.pageEvent.pageIndex += 1;
     });
 
   }

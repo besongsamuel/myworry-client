@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { LoginCredentials } from '../login-credentials';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { throwError, Observable, Subject } from 'rxjs';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from '../models/user';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthService {
     })
   };
 
-
+  public user: User;
 
   public token: string;
 
@@ -31,19 +32,32 @@ export class AuthService {
 
   public redirectUrl: string = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, public dialog: MatDialog)
-  {
-    if(!this.isTokenExpired())
-    {
-      this.token = this.getToken();
-      this.loggedIn = true;
-    }
-    else
-    {
-      this.loggedIn = false;
-    }
+  public login$ = new Subject();
 
-    this.redirectUrl = window.sessionStorage.getItem('redirectUrl');
+  constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute, private router: Router)
+  {
+    
+  }
+
+  getUser() : Observable<User>
+  {
+    return this.http.get<User>(`${environment.ApiUrl}users/me`, this.httpOptions);
+  }
+
+  attemptLogin(){
+
+      if(!this.isTokenExpired())
+      {
+        this.token = this.getToken();
+        this.getUser().subscribe((user : User) =>
+        {
+          this.user = user;
+          this.loggedIn = true;
+          this.login$.next(user);
+          
+        });
+      }
+      
   }
 
   login(credentials: LoginCredentials)
@@ -53,9 +67,8 @@ export class AuthService {
       catchError(this.handleError),
       tap((x: any) =>
       {
-        sessionStorage.setItem('token', x.token);
-        this.token = x.token;
-        this.loggedIn = true;
+        this.setToken(x.token);
+        this.attemptLogin();
       })
     );
   }
@@ -65,18 +78,12 @@ export class AuthService {
       data: redirectUrl
     });
   
-    dialogRef.afterClosed().subscribe(result => {
-
-      if(result)
-      {
-        window.location.reload();  
-      }
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
-  facebookLogin()
+  facebookLogin(redirectUrl?: string)
   {
-    return this.http.get(`${environment.ApiUrl}auth/thirdparty/facebook`, this.httpOptions).pipe(
+    return this.http.get(`${environment.ApiUrl}auth/thirdparty/facebook${redirectUrl ? `?redirecturl=${redirectUrl}` : ''}`, this.httpOptions).pipe(
       catchError(this.handleError),
       tap((x: any) =>
       {
@@ -108,7 +115,6 @@ export class AuthService {
     if(!this.isTokenExpired())
     {
       this.token = token;
-      this.loggedIn = true;
     }
 
   }

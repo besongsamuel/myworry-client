@@ -23,6 +23,7 @@ import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dia
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
 import { SwPush } from '@angular/service-worker';
+import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 
 @Component({
   selector: 'app-worry',
@@ -82,6 +83,9 @@ export class WorryComponent implements OnInit, OnDestroy {
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.userProfileImage = worry.user.userIdentity.profile.profileImage;
           this.worry = worry;
+          if(!worry.image){
+            worry.image = DEFAULT_IMAGE;
+          }
           this.startDate = moment(this.worry.startDate, 'YYYY-MM-dd hh:mm:dd').format();
           this.endDate = moment(this.worry.endDate, 'YYYY-MM-dd hh:mm:dd').format();
           this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();

@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SwPush } from '@angular/service-worker';
 
 @Injectable({
   providedIn: 'root'
@@ -23,37 +24,52 @@ export class UserService {
 
   public user: User;
 
-  constructor(private http: HttpClient, public authService: AuthService, private route: ActivatedRoute, private router: Router)
+  readonly VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
+
+  constructor(private http: HttpClient, 
+    public authService: AuthService, 
+    private swPush: SwPush)
   {
-    if(!authService.isTokenExpired())
+
+    this.authService.login$.subscribe((user: User) => {
+
+      this.user = user;
+      this.attemptToSubscribeNotifications();
+
+    }, () => {
+      console.warn(`User is not logged in!`);
+    });
+
+    this.swPush.notificationClicks.subscribe( notpayload =>
     {
-      this.getUser().subscribe((user : User) =>
-      {
-        this.user = user;
-      });
-    }
-
-    this.route.queryParams.subscribe(params => {
-      if(params['token']){
-        this.authService.setToken(params['token'])
-        this.getUser().subscribe((user : User) =>
-        {
-          this.user = user;
-
-          if(!this.isProfileComplete()){
-            this.router.navigate(['/account/profile']);
-          }
-        });
-
-        if(params['provider']){
-          this.authService.setProvider(params['provider']);
-        }
+      if(notpayload.action == "explore"){
+        console.log(
+          'Action: ' + notpayload.action +
+          'Notification data: ' + notpayload.notification.data +
+          'Notification data.url: ' + notpayload.notification.data.url+
+          'Notification data.body: ' + notpayload.notification.body
+        );
+        window.open(notpayload.notification.data.url, "_blank");
       }
+    });
+  }
 
-      
-  });
+  attemptToSubscribeNotifications(){
+    this.swPush.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then((sub) => {
+      this.addPushSubscriber(sub).subscribe((sub : any) => {
 
-    
+        if(!this.user.userSubscriptions){
+          this.user.userSubscriptions = [];
+        }
+
+        this.user.userSubscriptions = this.user.userSubscriptions.filter(x => x.id != sub.id);
+
+        this.user.userSubscriptions.push(sub);
+
+      })
+    }).catch(err => console.error("Could not subscribe to notification", err));
   }
 
   isProfileComplete(){

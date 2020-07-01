@@ -81,7 +81,7 @@ export class EditWorryComponent implements OnInit {
       startDate: moment(worry.startDate),
       endDate: moment(worry.endDate),
       isPrivate: [worry.isPrivate],
-      isAnonymous: [worry.isAnonymous]
+      isAnonymous: [worry.isAnonymous == null ? false : worry.isAnonymous]
     });
 
     if(this.editLimited)

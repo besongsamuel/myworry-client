@@ -1,7 +1,7 @@
 import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService as SocialAuthService, SocialUser } from "angularx-social-login";
 import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
@@ -24,14 +24,12 @@ export class AppComponent implements OnInit {
 
   public locale: string = '';
 
-  readonly VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
 
-  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private _snackBar: MatSnackBar,
-    private swPush: SwPush){
+  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private route: ActivatedRoute, private _snackBar: MatSnackBar){
+
     this.environment = environment;
 
     this.locale = window.sessionStorage.getItem('locale');
-
 
     if(!this.locale){
 
@@ -55,15 +53,29 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    let redirectUrl = window.sessionStorage.getItem('redirectUrl');
+    this.authService.attemptLogin();
 
-    if(redirectUrl){
+    this.authService.login$.subscribe(() => {
 
-      window.sessionStorage.removeItem('redirectUrl');
+      let redirectUrl = sessionStorage.getItem('redirectUrl');
 
-      this.router.navigate([redirectUrl]);
+        if(redirectUrl){
+          sessionStorage.removeItem('redirectUrl');
+          this.router.navigate([redirectUrl]);
+        }
+        else {
+          this.router.navigate(['/']);
+        }
+    });
 
-    }
+    this.route.queryParams.subscribe(params => {
+
+      if(params['token']){
+        this.authService.setToken(params['token']);
+        this.authService.attemptLogin();
+      }
+    });
+
   }
 
   resendActivationEmail(){
@@ -93,26 +105,10 @@ export class AppComponent implements OnInit {
     this.locale = locale;
   }
 
-  subscribeToNotifications(){
-
-    this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then((sub) => {
-      this.userService.addPushSubscriber(sub).subscribe(sub => {
-        this.userService.user.userSubscription = sub;
-      })
-    }).catch(err => console.error("Could not subscribe to notification", err));
-  }
-
-  unsubscribeToNotifications(){
-
-  }
-
   logout()
   {
     this.userService.logout();
     this.router.navigate(['']);
-    window.location.reload();
   }
 
   signInWithGoogle(): void {

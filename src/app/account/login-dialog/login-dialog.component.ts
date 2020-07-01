@@ -41,21 +41,13 @@ export class LoginDialogComponent implements OnInit {
 
   onSubmit()
   {
-
     this.dialogRef.close(this.loginForm.value);
 
-    this.authService.login(this.loginForm.value).subscribe((response : any) =>
+    this.authService.login(this.loginForm.value).subscribe((user : User) =>
     {
       this.error = null;
-
-      this.userService.getUser().subscribe((user: User) =>
-      {
-        this.userService.user = user;
-
-        this.dialogRef.close(true);
-
-      }, () => {});
-
+      this.userService.user = user;
+      this.dialogRef.close(true);
     },
     err =>
     {
