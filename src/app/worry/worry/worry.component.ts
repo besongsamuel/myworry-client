@@ -86,10 +86,10 @@ export class WorryComponent implements OnInit, OnDestroy {
           if(!worry.image){
             worry.image = DEFAULT_IMAGE;
           }
-          this.startDate = moment(this.worry.startDate, 'YYYY-MM-dd hh:mm:dd').format();
-          this.endDate = moment(this.worry.endDate, 'YYYY-MM-dd hh:mm:dd').format();
+          this.startDate = moment(this.worry.startDate, 'YYYY-MM-DD hh:mm:ss').format();
+          this.endDate = moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss').format();
           this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
-          this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-dd hh:mm:dd'));
+          this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss'));
           this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
           this.generateStatistics(worry);
         })))
@@ -150,7 +150,10 @@ export class WorryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.socket.emit(SocketEventType.LEAVE_ROOM, this.worry.id);
+    if(this.worry){
+      this.socket.emit(SocketEventType.LEAVE_ROOM, this.worry.id);
+    }
+    
   }
 
   handleLikeEvent(event: SocketEvent)

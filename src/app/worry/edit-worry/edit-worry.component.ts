@@ -151,7 +151,7 @@ export class EditWorryComponent implements OnInit {
     }
     else
     {
-      saveRequest$ = this.worryService.createWorry(_.omit(this.worry, ['user']));
+      saveRequest$ = this.worryService.patchWorry(_.omit(this.worry, ['user']));
     }
 
     saveRequest$.subscribe((newWorry: Worry) =>

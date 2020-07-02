@@ -38,8 +38,8 @@ export class WorryItemComponent implements OnInit {
 
     this.userProfileImage = this.worry.user.userIdentity.profile.profileImage;
 
-    this.startDate = moment(this.worry.startDate, 'YYYY-MM-dd hh:mm:dd').format();
-    this.endDate = moment(this.worry.endDate, 'YYYY-MM-dd hh:mm:dd').format();
+    this.startDate = moment(this.worry.startDate, 'YYYY-MM-DD hh:mm:ss').format();
+    this.endDate = moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss').format();
     
   }
 
