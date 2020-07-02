@@ -12,11 +12,11 @@
 
             <mat-card-title>{{worry.name}}</mat-card-title>
             <mat-card-subtitle><span i18n="CREATED_ON|Created on">Created on </span>{{worry.date_created | date}} <span i18n="BY|by">by</span> <b class="ml-1">{{worry.user.userIdentity.profile.displayName}}</b></mat-card-subtitle>
-            <div class="ml-auto" *ngIf="userService.user && worry.user.id == userService.user.id">
-              <button aria-label="Subscribe">
-                <mat-icon>notifications</mat-icon>
-              </button>
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            
+            <div class="ml-auto">
+              <button matTooltip="Subscribe to notifications" i18n-matTooltip="@@SUBSCRIBE_WORRY_NOTIFICATIONS" color="accent" *ngIf="!subscribedTo" mat-icon-button href (click)="enableNotifications()"><mat-icon>notifications</mat-icon></button>
+              <button matTooltip="Unsubscribe from notifications" i18n-matTooltip="@@UNSUBSCRIBE_WORRY_NOTIFICATIONS" color="warn" *ngIf="subscribedTo" mat-icon-button href (click)="disableNotifications()"><mat-icon>notifications_off</mat-icon></button>
+              <button  *ngIf="userService.user && worry.user.id == userService.user.id" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">

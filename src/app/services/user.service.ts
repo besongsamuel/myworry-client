@@ -9,6 +9,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwPush } from '@angular/service-worker';
 
+export const VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +26,6 @@ export class UserService {
 
   public user: User;
 
-  readonly VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
 
   constructor(private http: HttpClient, 
     public authService: AuthService, 
@@ -56,7 +57,7 @@ export class UserService {
 
   attemptToSubscribeNotifications(){
     this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
+      serverPublicKey: VAPID_PUBLIC_KEY
     }).then((sub) => {
       this.addPushSubscriber(sub).subscribe((sub : any) => {
 

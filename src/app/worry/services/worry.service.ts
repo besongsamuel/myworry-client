@@ -10,12 +10,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { WorryTag } from '../worry-tag';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
+import { WorrySubscription } from 'src/app/worry-subscription';
 
 @Injectable()
 export class WorryService {
   
-  
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -78,6 +77,14 @@ export class WorryService {
   }
 
   constructor(private http: HttpClient) { }
+
+  subscribeToWorry(subscription: WorrySubscription) : Observable<WorrySubscription> {
+    return this.http.post<any>(`${environment.ApiUrl}worry-subscriptions/`, subscription, this.httpOptions);
+  }
+
+  unsubscribeFromWorry(id: string) : Observable<void> {
+    return this.http.delete<void>(`${environment.ApiUrl}worry-subscriptions/${id}`);
+  }
 
   getSharedWorries(pageEvent: PageEvent) : Observable<Worry[]> {
 
