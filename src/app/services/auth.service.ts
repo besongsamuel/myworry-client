@@ -53,6 +53,9 @@ export class AuthService {
         {
           this.user = user;
           this.loggedIn = true;
+          const decoded = jwt_decode(this.token);
+          user.email = decoded.email;
+          user.userIdentity = decoded.userIdentity;
           this.login$.next(user);
           
         });
