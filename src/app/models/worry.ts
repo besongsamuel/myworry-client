@@ -2,6 +2,7 @@ import { Opinion } from './opinion';
 import * as moment from 'moment';
 import { User } from './user';
 import { WorryShare } from './worry-share';
+import { WorrySubscription } from '../worry-subscription';
 
 export class Worry {
 
@@ -12,6 +13,8 @@ export class Worry {
     user: User;
 
     isPrivate: boolean;
+
+    subscriptions: WorrySubscription[];
 
     isAnonymous: boolean;
 

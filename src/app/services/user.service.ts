@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User, SignupUser } from '../models/user';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwPush } from '@angular/service-worker';
+
+export const VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,6 @@ export class UserService {
 
   public user: User;
 
-  readonly VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
 
   constructor(private http: HttpClient, 
     public authService: AuthService, 
@@ -56,7 +57,7 @@ export class UserService {
 
   attemptToSubscribeNotifications(){
     this.swPush.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
+      serverPublicKey: VAPID_PUBLIC_KEY
     }).then((sub) => {
       this.addPushSubscriber(sub).subscribe((sub : any) => {
 
@@ -135,8 +136,22 @@ export class UserService {
     return this.http.get<User[]>(`${environment.ApiUrl}users?name=${filter}`, this.httpOptions);
   }
 
-  emailTaken(email: string) : Observable<any> {
-    return this.http.get(`${environment.ApiUrl}users/exists?filter[where][email]=${email}`, this.httpOptions);
+  taken(property: string, value: string) : Observable<any> {
+
+    if(value){
+      
+  
+      let filter = `[where][${property}][regexp]=/^${value}$/i`
+  
+      return this.http.get(`${environment.ApiUrl}users/exists?filter${filter}`, this.httpOptions);
+    }
+    else{
+      of({
+        taken: false
+      })
+    }
+
+    
   }
 
   getAuditTrails(userId: string, pageEvent: PageEvent): Observable<AuditTrail[]>

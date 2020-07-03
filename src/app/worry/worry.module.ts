@@ -42,6 +42,8 @@ import { WorryStatsDialogComponent } from './worry-stats-dialog/worry-stats-dial
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SearchResultsComponent } from './search-results/search-results.component'
 import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent],
@@ -68,6 +70,7 @@ import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
     MatFormFieldModule,
     MatNativeDateModule,
     MatTableModule,
+    MatTooltipModule,
     MatTabsModule,
     MatDatepickerModule,
     MatMomentDateModule,

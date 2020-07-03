@@ -7,7 +7,7 @@ import { WorryService } from 'src/app/worry/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOpinionComponent } from 'src/app/worry/add-opinion/add-opinion.component';
-import { UserService } from 'src/app/services/user.service';
+import { UserService, VAPID_PUBLIC_KEY } from 'src/app/services/user.service';
 import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
@@ -24,6 +24,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
 import { SwPush } from '@angular/service-worker';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
+import { WorrySubscription } from 'src/app/worry-subscription';
 
 @Component({
   selector: 'app-worry',
@@ -48,6 +49,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   public startDate: string;
   public endDate: string;
+  public subscribedTo: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
@@ -58,6 +60,38 @@ export class WorryComponent implements OnInit, OnDestroy {
     private swPush: SwPush)
   {
 
+  }
+
+  disableNotifications(){
+
+    this.swPush.subscription.subscribe((sub) => {
+
+      if(sub){
+        this.worryService.unsubscribeFromWorry(sub.endpoint).subscribe(() => {
+          this.subscribedTo = false;
+        });
+      }
+      else{
+        this.subscribedTo = false;
+      }
+    });
+  }
+
+  enableNotifications(){
+    this.swPush.requestSubscription({
+      serverPublicKey: VAPID_PUBLIC_KEY
+    }).then((sub) => {
+      this.worryService.subscribeToWorry({ worryId: this.worry.id, subscription: sub }).subscribe(() => {
+        this.subscribedTo = true;
+      }, (err : any) => {
+        console.error("Could not subscribe to notification", err);
+        this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: 'A server error occured while saving subscription.', error: true } });
+      });
+    }).catch((err) => {
+      console.error("Could not subscribe to notification", err);
+      this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: 'Please enable notifications from browser settings.', error: true } });
+
+    });   
   }
 
   getUserProfileImage()
@@ -78,8 +112,21 @@ export class WorryComponent implements OnInit, OnDestroy {
             console.error(httpErrorResponse.error.error.message);
             throw httpErrorResponse;
           }),
-          tap(async (worry) =>
+          tap(async (worry : Worry) =>
         {
+
+          this.swPush.subscription.subscribe((sub) => {
+
+            if(sub){
+              if(worry.subscriptions.find((s: WorrySubscription) => s.subscription.endpoint == sub.endpoint)){
+                this.subscribedTo = true;
+              }
+            }
+            else{
+              this.subscribedTo = false;
+            }
+          });
+
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.userProfileImage = worry.user.userIdentity.profile.profileImage;
           this.worry = worry;
@@ -95,6 +142,8 @@ export class WorryComponent implements OnInit, OnDestroy {
         })))
 
     );
+
+    
 
     this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
 

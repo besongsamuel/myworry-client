@@ -7,7 +7,6 @@ import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
 import { SNACKBAR_DURATION, SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwPush } from '@angular/service-worker';
 
 
 
@@ -62,9 +61,6 @@ export class AppComponent implements OnInit {
         if(redirectUrl){
           sessionStorage.removeItem('redirectUrl');
           this.router.navigate([redirectUrl]);
-        }
-        else {
-          this.router.navigate(['/']);
         }
     });
 

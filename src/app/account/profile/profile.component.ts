@@ -22,6 +22,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
+import { ValidateDisplayNameNotTaken } from 'src/app/validators/async-displayname-not-taken.validator';
 
 export const MY_FORMATS = {
   parse: {
@@ -84,8 +85,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userService.getUser().subscribe(async (user: User) =>
-    {
+    this.authService.login$.subscribe(async (user : User) => {
       this.user = user as User;
 
       this.worriesCount = (await this.userService.getCount(user.id, 'worries').toPromise()).count;
@@ -109,8 +109,8 @@ export class ProfileComponent implements OnInit {
         id: [user.id],
         password: [''],
         oldPassword: [''],
+        displayName: [user.displayName, Validators.min(3)],
         profile: this.fb.group({
-          displayName: [this.profile.displayName, Validators.min(3)],
           name: this.fb.group({
             givenName: [this.profile.name.givenName, Validators.required],
             middleName: [this.profile.name.middleName],
@@ -126,12 +126,13 @@ export class ProfileComponent implements OnInit {
         confirmPassword: ['']
       },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
 
+      this.profileForm.controls['displayName'].setAsyncValidators(ValidateDisplayNameNotTaken.createValidator(this.userService));
+
       this.worryService.getOpinions(user.id).subscribe((opinions: Opinion[]) =>
       {
         this.opinions = opinions;
 
       });
-
     });
   }
 
@@ -198,12 +199,14 @@ export class ProfileComponent implements OnInit {
       {
         this.success = true;
         this.error = false;
-        this.userService.refreshUser().subscribe((u:User )=> this.user = u)
+        this.userService.refreshUser().subscribe((u:User )=> this.user = u);
+        window.scroll(0,0);
       },
       (err) =>
       {
         this.success = false;
         this.error = true;
+        window.scroll(0,0);
       });
 
     }

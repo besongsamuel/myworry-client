@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginCredentials } from '../login-credentials';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { throwError, Observable, Subject } from 'rxjs';
+import { throwError, Observable, Subject, ReplaySubject } from 'rxjs';
 import { catchError, tap, switchMap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class AuthService {
 
   public redirectUrl: string = null;
 
-  public login$ = new Subject();
+  public login$ = new ReplaySubject();
 
   constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute, private router: Router)
   {
@@ -70,6 +70,7 @@ export class AuthService {
       catchError(this.handleError),
       tap((x: any) =>
       {
+        sessionStorage.setItem('redirectUrl', '/');
         this.setToken(x.token);
         this.attemptLogin();
       })
