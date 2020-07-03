@@ -60,7 +60,7 @@ onSubmit()
 
     this.userService.createUser(this.user).subscribe((user) =>
     {
-      this.router.navigate(['/login', { email: user.email }]);
+      this.router.navigate(['/login', { email: this.user.email }]);
     }, (err) => {
       this.error = "SIGNUP_ERROR";
     });
