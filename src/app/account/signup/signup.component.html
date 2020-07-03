@@ -1,6 +1,6 @@
 <div class="container d-flex flex-column component-container justify-content-center align-items-center">
 
-    <mat-card>
+    <mat-card class="w-100">
 
         <mat-toolbar color='primary' class="d-flex mb-3" >
             <a class="d-flex" routerLink="/">
@@ -21,9 +21,13 @@
             *ngIf="!profileImagePath">
             
           </ngx-file-drop>
+
+          <div *ngIf="!profileImagePath" class="w-100 d-flex justify-content-center my-3">
+            <app-image-select-button (onImageSelected)="imageSelected($event)" i18n-label="@@SELECT_PROFILE_IMAGE" label="Select Profile Image"></app-image-select-button>
+          </div>
   
           <div class="w-100 d-flex justify-content-center" *ngIf="profileImagePath">
-              <img class="profileImage p-1" [src]="profileImagePath">
+              <img class="profileImage p-1" width="120" height="120" [src]="profileImagePath">
               <button type="button" mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
                 <mat-icon>cancel</mat-icon>
               </button>
@@ -35,7 +39,7 @@
                   An error occured during signup.
               </div>
   
-              <div class="d-flex">
+              <div class="d-flex my-3">
                   <mat-form-field class="pr-2 flex-grow-1">
                       <input matInput placeholder="Email" i18n-placeholder="EMAIL|Email" formControlName="email">
                       <mat-error i18n="INVALID_EMAIL|Invalid email" *ngIf="signupForm.controls.email.hasError('email')">
@@ -44,7 +48,7 @@
                       <mat-error i18n="EMAIL_REQUIRED|Email required" *ngIf="signupForm.controls.email.hasError('required')">
                           Please enter a email
                       </mat-error>
-                      <mat-error *ngIf="signupForm.controls.email.hasError('emailTaken')">
+                      <mat-error i18n="@@EMAIL_ALREADY_TAKEN" *ngIf="signupForm.controls.email.hasError('taken')">
                           The email entered is already taken
                       </mat-error>
                   </mat-form-field>
@@ -52,12 +56,13 @@
                   <mat-form-field class="pl-2 flex-grow-1">
                       <input matInput placeholder="Display Name" i18n-placeholder="DISPLAY_NAME|Display name label" formControlName="displayName">
                       <mat-hint i18n="DISPLAY_NAME_HINT|Hint for the display name" align="start">This is the name displayed in your posts. </mat-hint>
+                      <mat-error i18n="@@DISPLAYNAME_ALREADY_TAKEN" *ngIf="signupForm.controls.displayName.hasError('taken')">
+                        This display name is already taken
+                    </mat-error>
                   </mat-form-field>
               </div>
   
-  
-  
-              <div class="d-flex">
+              <div class="d-flex my-3">
                   <mat-form-field class="pr-2 flex-grow-1">
                       <input matInput i18n-placeholder="FIRST_NAME|First Name" placeholder="First Name" formControlName="givenName">
                   </mat-form-field>
@@ -66,7 +71,7 @@
                   </mat-form-field>
               </div>
   
-              <div class="d-flex">
+              <div class="d-flex my-3">
                   <mat-form-field class="pr-2 flex-grow-1">
                       <input type="password" i18n-placeholder="PASSWORD|Password" matInput placeholder="Password" formControlName="password">
                   </mat-form-field>

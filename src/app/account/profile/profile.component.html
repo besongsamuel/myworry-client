@@ -32,7 +32,7 @@
                       </div>
     
                     <div class="w-100 d-flex justify-content-center align-items-start" *ngIf="profileImagePath">
-                        <img class="profileImage p-1 border" [src]="profileImagePath">
+                        <img width="200" height="200" class="profileImage p-1 border" [src]="profileImagePath">
                         <button mat-icon-button aria-label="Remove" color="warn" (click)="removeImage()">
                             <mat-icon>cancel</mat-icon>
                         </button>
@@ -44,13 +44,17 @@
                         {{user.email}}
                     </div>
 
+                    <div class="d-flex w-100 mb-3">
+                        <mat-form-field class="w-100">
+                            <input matInput placeholder="Display Name" formControlName="displayName">
+                            <mat-hint align="start" i18n="DISPLAY_NAME_HING|Hint for the display name">This is the name displayed in your posts. </mat-hint>
+                            <mat-error i18n="@@DISPLAYNAME_ALREADY_TAKEN" *ngIf="profileForm.controls.displayName.hasError('taken')">
+                                This display name is already taken
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
                     <div class="d-flex flex-column" formGroupName="profile" >
-                        <div class="d-flex mb-3">
-                            <mat-form-field class="w-100">
-                                <input matInput placeholder="Display Name" formControlName="displayName">
-                                <mat-hint align="start" i18n="DISPLAY_NAME_HING|Hint for the display name">This is the name displayed in your posts. </mat-hint>
-                            </mat-form-field>
-                        </div>
 
                         <div class="d-flex" formGroupName="name">
 

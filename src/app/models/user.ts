@@ -11,6 +11,8 @@ export class User {
 
     emailVerified?: boolean;
 
+    displayName: string = '';
+
     userIdentity: UserIdentity;
 
     userSubscriptions: any[];

@@ -14,6 +14,7 @@ import { SearchResultsComponent } from './worry/search-results/search-results.co
 import { ActivateAccountComponent } from './account/activate-account/activate-account.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { LoginGuard } from './guard/login.guard';
 
 
 const routes: Routes = [
@@ -27,7 +28,7 @@ const routes: Routes = [
     path: 'terms-of-service', component: TermsOfServiceComponent
   },
   {
-    path: 'login', component: LoginComponent
+    path: 'login', component: LoginComponent, canActivate: [LoginGuard]
   },
   {
     path: 'signup', component: SignupComponent

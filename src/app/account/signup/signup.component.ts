@@ -10,6 +10,7 @@ import { User, SignupUser } from 'src/app/models/user';
 import { Profile } from 'src/app/models/profile';
 import { HelperService } from 'src/app/services/helper.service';
 import { WorryService } from 'src/app/worry/services/worry.service';
+import { ValidateDisplayNameNotTaken } from 'src/app/validators/async-displayname-not-taken.validator';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class SignupComponent implements OnInit {
     },{validator: this.checkIfMatchingPasswords('password', 'confirmPassword')});
 
     this.signupForm.controls['email'].setAsyncValidators(ValidateEmailNotTaken.createValidator(this.userService));
+    this.signupForm.controls['displayName'].setAsyncValidators(ValidateDisplayNameNotTaken.createValidator(this.userService));
 
   }
 
@@ -74,8 +76,23 @@ removeImage()
     {
       this.user.image = "";
       this.profileImagePath =  "";
+    }, (err) => {
+      console.error('Could not remove image, ', err);
+      this.user.image = "";
+      this.profileImagePath =  "";
     });
   }
+
+  imageSelected(files: File[]){
+
+    if(files.length > 0){
+      this.worryService.uploadImage(files[0], 'profile').subscribe((response) =>
+        {
+          this.user.image = response.imageName;
+          this.profileImagePath =  `${environment.ApiUrl}uploads/images/tmp/${response.imageName}`;
+        });
+    }
+  } 
 
 fileDropped(files: NgxFileDropEntry[])
 {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User, SignupUser } from '../models/user';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
@@ -136,8 +136,22 @@ export class UserService {
     return this.http.get<User[]>(`${environment.ApiUrl}users?name=${filter}`, this.httpOptions);
   }
 
-  emailTaken(email: string) : Observable<any> {
-    return this.http.get(`${environment.ApiUrl}users/exists?filter[where][email]=${email}`, this.httpOptions);
+  taken(property: string, value: string) : Observable<any> {
+
+    if(value){
+      
+  
+      let filter = `[where][${property}][regexp]=/^${value}$/i`
+  
+      return this.http.get(`${environment.ApiUrl}users/exists?filter${filter}`, this.httpOptions);
+    }
+    else{
+      of({
+        taken: false
+      })
+    }
+
+    
   }
 
   getAuditTrails(userId: string, pageEvent: PageEvent): Observable<AuditTrail[]>
