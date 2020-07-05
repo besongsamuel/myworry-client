@@ -43,6 +43,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { SearchResultsComponent } from './search-results/search-results.component'
 import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
 
 
 @NgModule({
@@ -73,6 +75,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTooltipModule,
     MatTabsModule,
     MatDatepickerModule,
+    PickerModule,
     MatMomentDateModule,
     MatMenuModule,
     MatSnackBarModule,
