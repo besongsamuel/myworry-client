@@ -56,10 +56,20 @@ export class WorryComponent implements OnInit, OnDestroy {
     private socket: Socket,
     private zone:NgZone, 
     private _snackBar: MatSnackBar,
-    private authService: AuthService,
+    public authService: AuthService,
     private swPush: SwPush)
   {
 
+  }
+
+  gotoLogin(){
+    sessionStorage.setItem('redirectUrl', this.router.url);
+    this.router.navigate(['/login']);
+  }
+
+  gotoSignup(){
+    sessionStorage.setItem('redirectUrl', this.router.url);
+    this.router.navigate(['/signup']);
   }
 
   disableNotifications(){
