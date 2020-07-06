@@ -44,11 +44,21 @@
               {{worry.description}}
             </p>
 
-            <div class="d-flex justify-content-center flex-wrap">
+            <div class="d-flex justify-content-center flex-wrap" *ngIf="authService.loggedIn">
                 <button [disabled]="expired || worry.locked" class="mx-2 opinion1-button-background mb-2" (click)="addOpinion(1)" mat-raised-button>{{worry.opinion1Label}}</button>
                 <button [disabled]="expired || worry.locked" class="mx-2 opinion2-button-background mb-2" (click)="addOpinion(2)" mat-raised-button>{{worry.opinion2Label}}</button>
                 <button [disabled]="expired || worry.locked" *ngIf="worry.opinion3Label" class="mx-2 opinion3-button-background mb-2" (click)="addOpinion(3)" mat-raised-button>{{worry.opinion3Label}}</button>
                 <button [disabled]="expired || worry.locked" *ngIf="worry.opinion4Label" class="mx-2 opinion4-button-background mb-2" (click)="addOpinion(4)" mat-raised-button>{{worry.opinion4Label}}</button>
+            </div>
+
+            <div class="d-flex flex-column align-items-center mt-3" *ngIf="!authService.loggedIn">
+              <div class="d-flex justify-content-center align-items-center">
+                  <button (click)="gotoLogin()" class="mr-2" color="accent" mat-raised-button i18n="@@LOGIN">Login</button> or 
+                  <button (click)="gotoSignup()" class="ml-2" color="accent" mat-raised-button i18n="@@SIGNUP">Sign Up</button>                        </div>
+              <div class="d-flex mt-2 justify-content-center">
+                  to share your opinion on this worry
+              </div>
+              
             </div>
 
             <div class="d-flex justify-content-center my-2">

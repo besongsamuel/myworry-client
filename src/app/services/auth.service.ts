@@ -70,7 +70,6 @@ export class AuthService {
       catchError(this.handleError),
       tap((x: any) =>
       {
-        sessionStorage.setItem('redirectUrl', '/');
         this.setToken(x.token);
         this.attemptLogin();
       })

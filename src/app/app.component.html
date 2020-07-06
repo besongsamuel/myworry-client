@@ -15,7 +15,7 @@
 
           
           <li class="nav-item" *ngIf="!authService.loggedIn">
-            <a color="primary" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign In">Sign In</a>
+            <a color="accent" mat-raised-button routerLink="/login" i18n="SIGN_IN|Sign In">Login</a>
           </li>
           <li class="nav-item" *ngIf="!authService.loggedIn">
             <a color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook" i18n="FACEBOOK_LOGIN|Facebook Login">Facebook Login</a>

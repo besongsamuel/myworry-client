@@ -30,7 +30,7 @@
 
     <button
       class="ml-auto"
-      [disabled]="worry.locked"
+      [disabled]="worry.locked || !authService.loggedIn"
       mat-icon-button [color]="likedByUser ? 'accent' : ''"
       (click)="toggleLike()"
     >
