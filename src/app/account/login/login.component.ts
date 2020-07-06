@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../models/user';
-import { UserService } from 'src/app/services/user.service';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -22,9 +20,9 @@ export class LoginComponent implements OnInit {
   environment : any = {};
   error: string = null;
   newUserEmail: string = null;
+  previousURL: string;
 
   constructor(private authService: AuthService,
-    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { 
 
@@ -38,7 +36,7 @@ export class LoginComponent implements OnInit {
     {
        this.newUserEmail = params.get('email');
     });
-
+    
   }
 
   onSubmit()

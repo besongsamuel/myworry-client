@@ -35,7 +35,7 @@ export class OpinionComponent implements OnInit {
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
     public dialog: MatDialog, 
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
