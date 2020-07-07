@@ -71,9 +71,9 @@ export class AddWorryOpinionComponent implements OnInit {
         if(!this.userOpinion){
           this.userOpinion = "";
         }
-    
-        this.userOpinion += emoji;
-        
+
+        this.insertAtCursor(this.commentElement.nativeElement, emoji);
+            
         this.commentElement.nativeElement.focus();
       }
     });
@@ -81,6 +81,22 @@ export class AddWorryOpinionComponent implements OnInit {
 
     this.selectEmoticon = !this.selectEmoticon;
   }
+
+  insertAtCursor(myField, myValue) {
+
+    if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        myField.value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+        myField.selectionStart = startPos + myValue.length;
+        myField.selectionEnd = startPos + myValue.length;
+    } else {
+        myField.value += myValue;
+    }
+}
+
  
 
   opinionSelectionChanged(event){

@@ -1,4 +1,12 @@
-<mat-card class="my-3 addOpinionContainer mat-elevation-z8">
+<mat-toolbar color='primary' class="addOpinionContainer d-flex mt-3" >
+  <a class="d-flex" routerLink="/">
+      <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
+  </a>
+  <div class="text-white ml-3" i18n="@@POST_YOUR_OPINION">Post your opinion</div>
+
+</mat-toolbar>
+
+<mat-card class="mb-3  mat-elevation-z8">
     <div class="d-flex align-items-start">
       <div class="mr-3">
         <img mat-card-avatar *ngIf="authService.loggedIn && authService.user.userIdentity.profile.profileImage" [src]="authService.user.userIdentity.profile.profileImage">
@@ -50,13 +58,13 @@
             <button mat-raised-button color="accent" i18n="@@SUBMIT" (click)="submitOpinion()">Submit</button>
           </div>
 
-          <div i18n="WORRY_LOCKED_ERR|Worry is locked error message" class="alert alert-danger text-center w-100" *ngIf="addOpinionError == 'WORRY_LOCKED'">
+          <div i18n="WORRY_LOCKED_ERR|Worry is locked error message" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'WORRY_LOCKED'">
             You can't add opinions to a worry that is locked. 
           </div>
-          <div i18n="OPINION_INVALID_USER|You are not allowed to create an opinion on someones behalf" class="alert alert-danger text-center w-100" *ngIf="addOpinionError == 'INVALID_USER'">
+          <div i18n="OPINION_INVALID_USER|You are not allowed to create an opinion on someones behalf" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'INVALID_USER'">
             You are not allowed to create an opinion on someones behalf
           </div>
-          <div i18n="MAX_OPINIONS_REACHED|Max opinions reached" class="alert alert-danger text-center w-100" *ngIf="addOpinionError == 'MAX_OPINIONS_REACHED'">
+          <div i18n="MAX_OPINIONS_REACHED|Max opinions reached" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'MAX_OPINIONS_REACHED'">
             You can no longer add opinions to this worry. 
           </div>
 

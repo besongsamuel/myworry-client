@@ -24,6 +24,7 @@ import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.
 import { SwPush } from '@angular/service-worker';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { WorrySubscription } from 'src/app/worry-subscription';
+import { HEADER_OFFSET } from 'src/app/app.component';
 
 @Component({
   selector: 'app-worry',
@@ -132,7 +133,7 @@ export class WorryComponent implements OnInit, OnDestroy {
           this.swPush.subscription.subscribe((sub) => {
 
             if(sub){
-              if(worry.subscriptions.find((s: WorrySubscription) => s.subscription.endpoint == sub.endpoint)){
+              if(worry.subscriptions && worry.subscriptions.find((s: WorrySubscription) => s.subscription.endpoint == sub.endpoint)){
                 this.subscribedTo = true;
               }
             }
@@ -323,11 +324,9 @@ export class WorryComponent implements OnInit, OnDestroy {
 
       this.selectedOpinion = type;
 
-      //this.opinionSelectionChanged({ value: type });
-
       setTimeout(() => {
         $([document.documentElement, document.body]).animate({
-          scrollTop: $(".addOpinionContainer").offset().top - 20
+          scrollTop: $(".addOpinionContainer").offset().top - HEADER_OFFSET
         }, 500);
       }, 10);
 
@@ -345,7 +344,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       $([document.documentElement, document.body]).animate({
-        scrollTop: $(".addOpinionContainer").offset().top - 20
+        scrollTop: $(".addOpinionContainer").offset().top  - HEADER_OFFSET
       }, 500);
     }, 10);
     

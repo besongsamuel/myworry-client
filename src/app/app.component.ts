@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { SNACKBAR_DURATION, SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
+export const HEADER_OFFSET = 60;
 
 @Component({
   selector: 'app-root',
