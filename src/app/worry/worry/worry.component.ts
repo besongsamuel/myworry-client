@@ -6,7 +6,6 @@ import { switchMap, tap, catchError } from 'rxjs/operators';
 import { WorryService } from 'src/app/worry/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
-import { AddOpinionComponent } from 'src/app/worry/add-opinion/add-opinion.component';
 import { UserService, VAPID_PUBLIC_KEY } from 'src/app/services/user.service';
 import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
@@ -50,6 +49,10 @@ export class WorryComponent implements OnInit, OnDestroy {
   public startDate: string;
   public endDate: string;
   public subscribedTo: boolean = false;
+
+  selectedOpinion: any;
+  addingOpinion: boolean = false;
+  editingOpinion?: Opinion;
 
   constructor(private route: ActivatedRoute, private router: Router, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
@@ -104,6 +107,8 @@ export class WorryComponent implements OnInit, OnDestroy {
     });   
   }
 
+  
+
   getUserProfileImage()
   {
     return this.userService.getProfileImage(this.worry.user);
@@ -124,7 +129,6 @@ export class WorryComponent implements OnInit, OnDestroy {
           }),
           tap(async (worry : Worry) =>
         {
-
           this.swPush.subscription.subscribe((sub) => {
 
             if(sub){
@@ -303,68 +307,48 @@ export class WorryComponent implements OnInit, OnDestroy {
     });
   }
 
+  cancelAddOpinion(){
+
+    this.addingOpinion = false;
+    this.selectedOpinion = null;
+    this.editingOpinion = null;
+  }
+
   addOpinion(type: number)
   {
 
     if(this.userService.authService.loggedIn){
-      const dialogRef = this.dialog.open(AddOpinionComponent, {
-        data: {worry: this.worry, initialValue: type}
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-  
-        if(result)
-        {
-          if(!this.worry.opinions)
-          {
-            this.worry.opinions = [];
-          }
-  
-          let e: SocketEvent = { Action: Crud.CREATE, Entity: Entity.OPINION, Id: result.id, roomId: this.worry.id };
-          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
-  
-          // get the created opinion with it's relations
-          this.worryService.getOpinion(result.id).subscribe((opinion) =>
-          {
-            this.worry.opinions.unshift(opinion);
-          });
-  
-        }
-      });
-    }
-    else{
 
-      this.authService.requestLogin(this.router.url);
+      this.addingOpinion = true;
+
+      this.selectedOpinion = type;
+
+      //this.opinionSelectionChanged({ value: type });
+
+      setTimeout(() => {
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $(".addOpinionContainer").offset().top - 20
+        }, 500);
+      }, 10);
+
+      return;
     }
   }
-
-  
 
   onOpinionEdit(id: string)
   {
     let opinion: Opinion = this.worry.opinions.find(x => x.id == id);
 
-    const dialogRef = this.dialog.open(AddOpinionComponent, {
-      data: {worry: this.worry, initialValue: opinion.type, opinion: opinion}
-    });
+    this.editingOpinion = opinion;
 
-    dialogRef.afterClosed().subscribe(newOpinion => {
+    this.selectedOpinion = opinion.type;
 
-      if(newOpinion)
-      {
-
-        // get the created opinion with it's relations
-        this.worryService.getOpinion(newOpinion.id).subscribe((opinion) =>
-        {
-          this.worry.opinions = this.worry.opinions.filter(x => x.id != opinion.id);
-          this.worry.opinions.unshift(opinion);
-
-          let e: SocketEvent = { Action: Crud.REPLACE, Entity: Entity.OPINION, Id: newOpinion.id, roomId: this.worry.id };
-          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
-        });
-
-      }
-    });
+    setTimeout(() => {
+      $([document.documentElement, document.body]).animate({
+        scrollTop: $(".addOpinionContainer").offset().top - 20
+      }, 500);
+    }, 10);
+    
   }
 
   share(){

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditOpinionComponent as EditOpinionComponent } from './edit-opinion.component';
+import { AddWorryOpinionComponent } from './add-worry-opinion.component';
 
-describe('NewOpinionDialogComponent', () => {
-  let component: EditOpinionComponent;
-  let fixture: ComponentFixture<EditOpinionComponent>;
+describe('AddWorryOpinionComponent', () => {
+  let component: AddWorryOpinionComponent;
+  let fixture: ComponentFixture<AddWorryOpinionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditOpinionComponent ]
+      declarations: [ AddWorryOpinionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditOpinionComponent);
+    fixture = TestBed.createComponent(AddWorryOpinionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

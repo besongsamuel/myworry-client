@@ -5,8 +5,6 @@ import { AddWorryComponent } from './add-worry/add-worry.component';
 import { WorryComponent } from './worry/worry.component';
 import { WorryItemComponent } from './worry-item/worry-item.component';
 import { OpinionComponent } from './opinion/opinion.component';
-import { AddOpinionComponent } from './add-opinion/add-opinion.component';
-import { EditOpinionComponent } from './edit-opinion/edit-opinion.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -44,19 +42,19 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { AddWorryOpinionComponent } from './add-worry-opinion/add-worry-opinion.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 
 @NgModule({
-  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, AddOpinionComponent, EditOpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent],
+  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent, AddWorryOpinionComponent],
   exports: [
     EditWorryComponent,
     AddWorryComponent,
     WorryComponent,
     WorryItemComponent,
-    OpinionComponent,
-    AddOpinionComponent,
-    EditOpinionComponent],
+    OpinionComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -68,6 +66,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    MatDividerModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatNativeDateModule,
