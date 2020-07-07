@@ -113,7 +113,6 @@ export class AddWorryOpinionComponent implements OnInit {
       opinion.id = this.opinion.id;
     }
 
-
     this.worryService.createOrEditOpinion(opinion).subscribe((newOpinion) =>
     {
       if(!this.worry.opinions)
@@ -129,14 +128,19 @@ export class AddWorryOpinionComponent implements OnInit {
         {
           let index = this.worry.opinions.findIndex(x => x.id == this.opinion.id);
           this.worry.opinions[index] = opinion;
+
+          let e: SocketEvent = { Action: Crud.UPDATE, Entity: Entity.OPINION, Id: newOpinion.id, roomId: this.worry.id };
+          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         }
         else
         {
           this.worry.opinions.unshift(opinion);
-          this.onOpinionAdded.emit(opinion);
+          
           let e: SocketEvent = { Action: Crud.CREATE, Entity: Entity.OPINION, Id: newOpinion.id, roomId: this.worry.id };
           this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         }
+
+        this.onOpinionAdded.emit(opinion);
 
       });
 
