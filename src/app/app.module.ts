@@ -13,10 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { AuthService } from './services/auth.service';
 import { FileInputComponent } from './custom-inputs/file-input.component';
-import { AddOpinionComponent } from './worry/add-opinion/add-opinion.component'
 import { SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
-import { EditOpinionComponent } from './worry/edit-opinion/edit-opinion.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -88,6 +86,6 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     useFactory: provideConfig
   }],
   bootstrap: [AppComponent],
-  entryComponents: [AddOpinionComponent, EditOpinionComponent, SnackBarComponent, LoginDialogComponent, WorryStatsDialogComponent, ConfirmationDialogComponent]
+  entryComponents: [SnackBarComponent, LoginDialogComponent, WorryStatsDialogComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }

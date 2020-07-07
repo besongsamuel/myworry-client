@@ -249,7 +249,7 @@ export class WorryService {
     return this.http.patch<Worry>(`${environment.ApiUrl}worries/${worry.id}`, worry, this.httpOptions);
   }
 
-  createOrEditOpinion(opinion: Opinion) : Observable<Opinion>
+  createOrEditOpinion(opinion: Partial<Opinion>) : Observable<Opinion>
   {
     if(opinion.id)
     {

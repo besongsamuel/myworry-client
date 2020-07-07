@@ -86,8 +86,13 @@
       </div>
 
       <div class="container opinions w-100">
-        <div [class.pl-5]="opinion.type == 1 || opinion.type == 3" [class.pr-5]="opinion.type == 2 || opinion.type == 4" *ngFor="let opinion of worry.opinions">
-          <app-opinion (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
+
+        <app-add-worry-opinion (onOpinionAdded)="cancelAddOpinion()" (onClose)="cancelAddOpinion()" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='addingOpinion && !editingOpinion'></app-add-worry-opinion>
+
+        <h3 class="my-4 text-center text-muted" i18n="@@OPINIONS">Opinions</h3>
+        <div *ngFor="let opinion of worry.opinions">
+          <app-add-worry-opinion [opinion]="editingOpinion" (onOpinionAdded)="cancelAddOpinion()" (onClose)="cancelAddOpinion()" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='editingOpinion && editingOpinion.id == opinion.id'></app-add-worry-opinion>
+          <app-opinion *ngIf="!editingOpinion || editingOpinion.id != opinion.id" (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
         </div>
       </div>
 

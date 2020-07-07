@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddOpinionComponent as AddOpinionComponent } from './add-opinion.component';
+import { EmojiDialogComponent } from './emoji-dialog.component';
 
-describe('NewOpinionDialogComponent', () => {
-  let component: AddOpinionComponent;
-  let fixture: ComponentFixture<AddOpinionComponent>;
+describe('EmojiDialogComponent', () => {
+  let component: EmojiDialogComponent;
+  let fixture: ComponentFixture<EmojiDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddOpinionComponent ]
+      declarations: [ EmojiDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddOpinionComponent);
+    fixture = TestBed.createComponent(EmojiDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

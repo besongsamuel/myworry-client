@@ -2,6 +2,8 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:300,400");
+@import '~@ctrl/ngx-emoji-mart/picker';
+
 
 html, body, app-home { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -32,10 +34,15 @@ $opinion4Color: #ffab00;
 .opinion3-button-background { background-color: $opinion3Color !important; color: #FFFFFF !important; }
 .opinion4-button-background { background-color: $opinion4Color !important; color: #FFFFFF !important; }
 
-.opinion1-border { border-right: 3px solid $opinion1Color ; }
-.opinion2-border { border-left: 3px solid $opinion2Color ; }
-.opinion3-border { border-right: 3px solid $opinion3Color ; }
-.opinion4-border { border-left: 3px solid $opinion4Color ; }
+.opinion1-border { border-left: 6px solid $opinion1Color ; }
+.opinion2-border { border-left: 6px solid $opinion2Color ; }
+.opinion3-border { border-left: 6px solid $opinion3Color ; }
+.opinion4-border { border-left: 6px solid $opinion4Color ; }
+
+.opinion1-border-bottom { border-bottom: 4px solid $opinion1Color ; }
+.opinion2-border-bottom  { border-bottom: 4px solid $opinion2Color ; }
+.opinion3-border-bottom  { border-bottom: 4px solid $opinion3Color ; }
+.opinion4-border-bottom  { border-bottom: 4px solid $opinion4Color ; }
 
 
 .profileImage

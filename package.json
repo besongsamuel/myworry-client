@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~9.0.4",
     "@angular/router": "~9.0.4",
     "@angular/service-worker": "~9.0.4",
+    "@ctrl/ngx-emoji-mart": "^4.0.0",
     "@jefiozie/ngx-aws-deploy": "^1.2.1",
     "angularx-social-login": "^2.2.1",
     "apexcharts": "^3.19.2",
