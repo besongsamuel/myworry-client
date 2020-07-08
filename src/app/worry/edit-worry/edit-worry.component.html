@@ -1,7 +1,14 @@
+
+
 <div class="w-100 d-flex justify-content-center">
     <div class="col-lg-6 col-sm-12 col-md-6">
-        <div class="m-5 card border-secondary" *ngIf="newWorryForm">
 
+        <div  class="alert alert-success my-3" role="alert" *ngIf='deleteSuccess == "DELETE_SUCCESS"'>
+          <span i18n="@@DELETE_SUCCESSFUL" class="mr-1">Your worry was successfully deleted.</span>
+          <a routerLink="/" class="ml-auto mr-2" color='accent' mat-button i18n="@@GO_HOME">Go Home</a>
+        </div>
+
+        <div class="m-5 card border-secondary" *ngIf="newWorryForm && !deleteSuccess">
 
             <mat-toolbar class="card-header" color="primary">Edit worry</mat-toolbar>
  
@@ -135,15 +142,10 @@
                     <button type="submit" mat-raised-button color="primary" [disabled]="!newWorryForm.valid" i18n="UPDATE|Update">Update</button>
                   </div>
 
-                  <button routerLink="/" *ngIf="deleteSuccess" class="float-right" type="button" mat-raised-button i18n="@@CANCEL">Cancel</button>
 
                   <div class="w-100 my-2">
                     <div i18n="@@UNAUTHORIZED_DELETE" class="alert alert-danger" role="alert" *ngIf='deleteError == "UNAUTHORIZED_DELETE"'>
                       An error occured while updating your worry
-                    </div>
-        
-                    <div i18n="@@DELETE_SUCCESSFUL" class="alert alert-success" role="alert" *ngIf='deleteSuccess == "DELETE_SUCCESS"'>
-                        Your worry was successfully deleted.
                     </div>
                   </div>
 
