@@ -16,6 +16,8 @@ import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
 import { WorryTag } from '../worry-tag';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 const moment =  _moment;
 
@@ -49,6 +51,8 @@ export class EditWorryComponent implements OnInit {
 
   newWorryForm : FormGroup;
   error: boolean = false;
+  deleteError?: string;
+  deleteSuccess?: string;
   success: boolean = false;
   tags = [];
   worry: Worry = new Worry();
@@ -61,7 +65,8 @@ export class EditWorryComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private worryService: WorryService)
+    private worryService: WorryService,
+    public dialog: MatDialog)
   {
 
   }
@@ -216,6 +221,30 @@ export class EditWorryComponent implements OnInit {
         });
       });
     }
+  }
+
+  removeWorryClicked()
+  {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '450px',
+      data: {
+        message: 'Are you sure you want to delete this worry?',
+        title: 'Delete Worry',
+        type: ConfirmationIconType.WARNING
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if(result)
+      {
+        this.worryService.deleteWorry(this.worry.id).subscribe(() => {
+          this.deleteSuccess = 'DELETE_SUCCESS';
+        }, (err) => {
+          this.deleteError = err.error.error.message;
+        });
+      }
+    });
   }
 
 }
