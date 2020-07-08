@@ -28,6 +28,7 @@ import { MissionItemComponent } from './mission-item/mission-item.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { FooterComponent } from './footer/footer.component';
 
 
 let socialLoginConfig = new AuthServiceConfig([
@@ -62,7 +63,8 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     ConfirmationDialogComponent,
     PrivacyPolicyComponent,
     TermsOfServiceComponent,
-    MissionItemComponent
+    MissionItemComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

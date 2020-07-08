@@ -1,0 +1,77 @@
+<footer class="primary mt-5 text-white-50">
+    <div class="content-background w-100 p-4">
+
+        <div class="container justify-content-center d-flex flex-wrap">
+            <div class="footer-column d-flex flex-column">
+                <div class="footer-title" i18n="@@ABOUT_US">ABOUT US</div>
+                <div class="footer-text d-flex flex-column">
+                    <div i18n="@@MISSION_STATEMENT_LONG">
+                        At MyWorry, our goal and mission is to create an 
+                        easy to use platform where you can post your worries 
+                        and get private or public valuable opinions which 
+                        can help you solve a problem. 
+                    </div>
+                    <div class="d-flex mt-2 align-items-center">
+                        <mat-icon color="accent" class="mr-2">email</mat-icon>
+                        <div i18n="@@EMAIL_US_AT">Email us at info@myworry.ca</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-column d-flex flex-column">
+                <div class="footer-title" i18n="@@USEFUL_LINKS_HEADER">USEFUL LINKS</div>
+                <div class="footer-text d-flex flex-column">
+                    <div class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/contact" i18n="@@CONTACT_US">Contact Us</a>
+                    </div>
+                    <div class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/privacy-policy" i18n="@@PRIVACY_POLICY">Privacy Policy</a>
+                    </div>
+                    <div class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/terms-of-service" i18n="@@TERMS_OF_SERVICE">Terms of service</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-column d-flex flex-column">
+                <div class="footer-title" i18n="@@PAGES_HEADER">PAGES</div>
+                <div class="footer-text d-flex flex-column">
+                    <div *ngIf="!authService.loggedIn" class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/login" i18n="@@LOGIN">Login</a>
+                    </div>
+                    <div *ngIf="!authService.loggedIn" class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/signup" i18n="@@SIGNUP">Sign up</a>
+                    </div>
+                    <div *ngIf="authService.loggedIn" class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/new/worry" i18n="@@ADD_WORRY">Add Worry</a>
+                    </div>
+                    <div class="d-flex mb-2 align-items-center">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a routerLink="/search/results?q=" i18n="@@SEARCH_WORRIES">Search Worries</a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-column d-flex flex-column">
+                <div class="footer-title" i18n="@@TRENDING_TAGS_HEADER">TRENDING TAGS</div>
+                <div class="footer-text d-flex flex-column">
+                    <div class="d-flex mb-2 align-items-center" *ngFor="let tag of trendingTags">
+                        <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
+                        <a [routerLink]="" (click)="gotoTag(tag)">{{tag}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="copyright d-flex justify-content-center align-items-center p-4">
+        <mat-icon>copyright</mat-icon>
+        <small i18n="@@ALL_RIHGTS_RESERVED"> {{currentYear}} MyWorry Inc. All Rights Reserved. </small>
+    </div>
+</footer>
