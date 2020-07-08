@@ -1,0 +1,44 @@
+.footer-title{
+    color: #444444;
+    margin-bottom: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.copyright{
+    color: #444444;
+    background-color: #CDCBCB;
+}
+
+mat-icon{
+    height: 15px;
+    width: 15px;
+    font-size: 15px;
+}
+
+.footer-column{
+    width: 250px;
+    padding: 0px 20px;
+    margin: 10px 0px;
+
+    a{
+        color: #444444 !important;
+    }
+
+    mat-icon{
+        height: 15px;
+        width: 15px;
+        font-size: 15px;
+    }
+}
+
+
+.footer-text{
+    color: black;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.content-background{
+    background-color: #DDDDDD;
+}
