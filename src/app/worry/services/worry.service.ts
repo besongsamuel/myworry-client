@@ -211,6 +211,11 @@ export class WorryService {
     return this.http.delete<any>(`${environment.ApiUrl}opinions/${id}`, this.httpOptions);
   }
 
+  deleteWorry(id: string) : Observable<void>
+  {
+    return this.http.delete<any>(`${environment.ApiUrl}worries/${id}`, this.httpOptions);
+  }
+
   getOpinionLike(id: string) : Observable<OpinionLike>
   {
     return this.http.get<OpinionLike>(`${environment.ApiUrl}opinion-likes/${id}`, this.httpOptions);
