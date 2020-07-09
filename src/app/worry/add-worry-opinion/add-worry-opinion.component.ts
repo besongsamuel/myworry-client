@@ -38,6 +38,8 @@ export class AddWorryOpinionComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.opinionBorder = `opinion${this.selectedOpinion}-border`;
+
     this.opinions = [];
 
     for(var i = 1; i < 5; i++){
@@ -58,6 +60,11 @@ export class AddWorryOpinionComponent implements OnInit {
     this.opinionSelectionChanged({
       value: this.selectedOpinion
     });
+  }
+
+  opinionTextChanged(event){
+    event.target.style.height = "40px";
+    event.target.style.height = (event.target.scrollHeight)+"px";
   }
 
   selectEmoji(){
@@ -100,6 +107,8 @@ export class AddWorryOpinionComponent implements OnInit {
  
 
   opinionSelectionChanged(event){
+
+    this.opinionBorder = `opinion${this.selectedOpinion}-border`;
 
     for(var i = 1; i < 5; i++){
 

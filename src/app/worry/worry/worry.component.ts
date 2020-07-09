@@ -306,11 +306,20 @@ export class WorryComponent implements OnInit, OnDestroy {
     });
   }
 
-  cancelAddOpinion(){
+  cancelAddOpinion(added){
 
     this.addingOpinion = false;
     this.selectedOpinion = null;
     this.editingOpinion = null;
+
+    if(added){
+      setTimeout(() => {
+        $([document.documentElement, document.body]).animate({
+          scrollTop: HEADER_OFFSET
+        }, 100);
+      }, 10);
+    }
+    
   }
 
   addOpinion(type: number)

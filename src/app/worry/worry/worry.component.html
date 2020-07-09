@@ -62,7 +62,7 @@
             </div>
 
             <div class="d-flex justify-content-center my-2">
-              <a mat-button (click)="viewStats()" i18n="VIEW_STAtiSTICS|View Statistics">View Statistics</a>
+              <a mat-button routerLink="" color="accent" (click)="viewStats()" i18n="VIEW_STAtiSTICS|View Statistics">View Statistics</a>
             </div>
 
             <div class="d-flex mt-2 justify-content-center" *ngIf="!expired">
@@ -87,13 +87,14 @@
 
       <div class="container opinions w-100">
 
-        <app-add-worry-opinion (onOpinionAdded)="cancelAddOpinion()" (onClose)="cancelAddOpinion()" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='addingOpinion && !editingOpinion'></app-add-worry-opinion>
 
         <h3 class="my-4 text-center text-muted" i18n="@@OPINIONS">Opinions</h3>
         <div *ngFor="let opinion of worry.opinions">
-          <app-add-worry-opinion [opinion]="editingOpinion" (onOpinionAdded)="cancelAddOpinion()" (onClose)="cancelAddOpinion()" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='editingOpinion && editingOpinion.id == opinion.id'></app-add-worry-opinion>
+          <app-add-worry-opinion [opinion]="editingOpinion" (onOpinionAdded)="cancelAddOpinion(true)" (onClose)="cancelAddOpinion(false)" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='editingOpinion && editingOpinion.id == opinion.id'></app-add-worry-opinion>
           <app-opinion *ngIf="!editingOpinion || editingOpinion.id != opinion.id" (editOpinion)="onOpinionEdit($event)" (removeOpinion)="onOpinionRemoved($event)" [opinion]="opinion" [worry]="worry"></app-opinion>
         </div>
+        <app-add-worry-opinion (onOpinionAdded)="cancelAddOpinion(true)" (onClose)="cancelAddOpinion(false)" [selectedOpinion]='selectedOpinion' [worry]='worry' *ngIf='addingOpinion && !editingOpinion'></app-add-worry-opinion>
+
       </div>
 
     </div>

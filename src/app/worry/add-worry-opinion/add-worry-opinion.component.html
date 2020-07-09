@@ -1,77 +1,39 @@
-<mat-toolbar color='primary' class="addOpinionContainer d-flex mt-3" >
-  <a class="d-flex" routerLink="/">
-      <img src="assets/myworryLogo_blue_yellow_small.png" height="30" width="40">
-  </a>
-  <div class="text-white ml-3" i18n="@@POST_YOUR_OPINION">Post your opinion</div>
-
-</mat-toolbar>
-
-<mat-card class="mb-3  mat-elevation-z8">
-    <div class="d-flex align-items-start">
-      <div class="mr-3">
-        <img mat-card-avatar *ngIf="authService.loggedIn && authService.user.userIdentity.profile.profileImage" [src]="authService.user.userIdentity.profile.profileImage">
-        <mat-icon mat-card-avatar color="primary" *ngIf="!authService.loggedIn || !authService.user.userIdentity.profile.profileImage" aria-hidden="false" style="font-size: 40px; width: 40px; height: 40px;" aria-label="Profile Image">face</mat-icon>
-      </div>
-      <div class="w-100">
-
-        <div>
-          <div style="height: 40px;" class="d-flex align-items-center mb-2 font-weight-bold">{{authService.user.displayName}}</div>
-          <mat-divider></mat-divider>
-          <div class="pt-2" style="font-size: 14px;">
-            <div class="font-weight-bold">{{worry.name}}</div>
-            <p class="text-muted text-italic">
-              {{worry.description}}
-            </p>
-          </div>
-          
-        </div>
-
-        <form class="w-100">
-
-          <div class="d-flex w-100 flex-column">
-            <mat-form-field class="select-opinion w-100">
-              <mat-label i18n="@@SELECTED_OPINION">Selected Opinion</mat-label>
-              <mat-select (selectionChange)="opinionSelectionChanged($event)" [(ngModel)]="selectedOpinion" name="opinion">
-                <mat-option *ngFor="let opinion of opinions" [value]="opinion.value">
-                  {{opinion.display}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <div [ngClass]='opinionBorder' class="w-100">
-
-            </div>
-          </div>
-
-          <div class="d-flex my-2 ">
-              <button (click)="selectEmoji()" mat-icon-button color="accent">
-                <mat-icon style="color: #fbd043;">emoji_emotions</mat-icon>
-              </button>
-          </div>
-
-          <mat-form-field class="w-100">
-            <textarea #comment [(ngModel)]="userOpinion" matInput name="comment" placeholder="Comment" i18n-placeholder="@@COMMENT"></textarea>
-          </mat-form-field>
-
-
-          <div class="d-flex w-100 justify-content-end">
-            <button mat-raised-button class="mr-2" i18n="@@CANCEL" (click)="cancel()">Cancel</button>
-            <button mat-raised-button color="accent" i18n="@@SUBMIT" (click)="submitOpinion()">Submit</button>
-          </div>
-
-          <div i18n="WORRY_LOCKED_ERR|Worry is locked error message" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'WORRY_LOCKED'">
-            You can't add opinions to a worry that is locked. 
-          </div>
-          <div i18n="OPINION_INVALID_USER|You are not allowed to create an opinion on someones behalf" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'INVALID_USER'">
-            You are not allowed to create an opinion on someones behalf
-          </div>
-          <div i18n="MAX_OPINIONS_REACHED|Max opinions reached" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'MAX_OPINIONS_REACHED'">
-            You can no longer add opinions to this worry. 
-          </div>
-
-          
-        </form>
-      </div>
+<div class="my-2 addOpinionContainer d-flex">
+    <div>
+      <img [ngClass]="opinionBorder" mat-card-avatar *ngIf="authService.loggedIn && authService.user.userIdentity.profile.profileImage" [src]="authService.user.userIdentity.profile.profileImage">
+      <mat-icon [ngClass]="opinionBorder" mat-card-avatar color="primary" *ngIf="!authService.loggedIn || !authService.user.userIdentity.profile.profileImage" aria-hidden="false" style="font-size: 40px; width: 40px; height: 40px;" aria-label="Profile Image">face</mat-icon>
+  </div>
+  <div class="ml-2 d-flex card flex-grow-1 flex-column p-2">
+    <div class="d-flex w-100">
+        <div style="font-size: 14px;" class="d-flex align-items-center mb-2 font-weight-bold">{{authService.user.displayName}}</div>
+        <button class="ml-auto" (click)="selectEmoji()" mat-icon-button color="accent">
+          <mat-icon style="color: #fbd043;">emoji_emotions</mat-icon>
+        </button>
     </div>
-  </mat-card>
+    <mat-divider></mat-divider>
+    <mat-form-field style="font-size: 12px;" class="select-opinion w-100">
+      <mat-select (selectionChange)="opinionSelectionChanged($event)" [(ngModel)]="selectedOpinion" name="opinion">
+        <mat-option *ngFor="let opinion of opinions" [value]="opinion.value">
+          {{opinion.display}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <textarea #comment [(ngModel)]="userOpinion" placeholder="Comment on your opinion" (input)="opinionTextChanged($event)" style="height: 40px; font-size: 12px;" class="form-control border-0 flex-grow-1 ml-1"></textarea>
+    <div i18n="WORRY_LOCKED_ERR|Worry is locked error message" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'WORRY_LOCKED'">
+      You can't add opinions to a worry that is locked. 
+    </div>
+    <div i18n="OPINION_INVALID_USER|You are not allowed to create an opinion on someones behalf" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'INVALID_USER'">
+      You are not allowed to create an opinion on someones behalf
+    </div>
+    <div i18n="MAX_OPINIONS_REACHED|Max opinions reached" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'MAX_OPINIONS_REACHED'">
+      You can no longer add opinions to this worry. 
+    </div>
+  </div>
+</div>
+<div class="d-flex w-100 justify-content-end my-1">
+  <button mat-raised-button class="mr-2" i18n="@@CANCEL" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="accent" i18n="@@SUBMIT" (click)="submitOpinion()">Submit</button>
+</div>
+
 
  
