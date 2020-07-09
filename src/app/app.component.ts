@@ -1,7 +1,7 @@
 import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { AuthService as SocialAuthService, SocialUser } from "angularx-social-login";
 import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 
   public locale: string = '';
 
+  fromUrl: string;
 
   constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private route: ActivatedRoute, private _snackBar: MatSnackBar){
 
@@ -68,8 +69,33 @@ export class AppComponent implements OnInit {
 
       if(params['token']){
         this.authService.setToken(params['token']);
+        let fromUrl = sessionStorage.getItem('lastKnownLocation');
+        if(fromUrl){
+          sessionStorage.removeItem('lastKnownLocation');
+          sessionStorage.setItem('redirectUrl', fromUrl);
+        }
         this.authService.attemptLogin();
       }
+    });
+
+    this.router.events.subscribe((e) => {
+
+      if(e instanceof NavigationStart){
+
+        this.fromUrl = this.router.url;
+      }
+
+      if(e instanceof NavigationEnd){
+
+        if(e.url == '/login' && this.fromUrl){
+          sessionStorage.setItem('redirectUrl', this.fromUrl);
+        }
+        
+        sessionStorage.setItem('lastKnownLocation', e.url );
+
+
+      }
+
     });
 
   }

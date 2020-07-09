@@ -67,12 +67,10 @@ export class WorryComponent implements OnInit, OnDestroy {
   }
 
   gotoLogin(){
-    sessionStorage.setItem('redirectUrl', this.router.url);
     this.router.navigate(['/login']);
   }
 
   gotoSignup(){
-    sessionStorage.setItem('redirectUrl', this.router.url);
     this.router.navigate(['/signup']);
   }
 
