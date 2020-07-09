@@ -45,6 +45,8 @@ export class OpinionComponent implements OnInit {
     this.userProfileImage = this.opinion.user.userIdentity.profile.profileImage;
   }
 
+  reply(){}
+
   toggleLike()
   {
 

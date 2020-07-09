@@ -34,10 +34,10 @@ $opinion4Color: #ffab00;
 .opinion3-button-background { background-color: $opinion3Color !important; color: #FFFFFF !important; }
 .opinion4-button-background { background-color: $opinion4Color !important; color: #FFFFFF !important; }
 
-.opinion1-border { border-left: 6px solid $opinion1Color ; }
-.opinion2-border { border-left: 6px solid $opinion2Color ; }
-.opinion3-border { border-left: 6px solid $opinion3Color ; }
-.opinion4-border { border-left: 6px solid $opinion4Color ; }
+.opinion1-border { border: 2px solid $opinion1Color ; }
+.opinion2-border { border: 2px solid $opinion2Color ; }
+.opinion3-border { border: 2px solid $opinion3Color ; }
+.opinion4-border { border: 2px solid $opinion4Color ; }
 
 .opinion1-border-bottom { border-bottom: 4px solid $opinion1Color ; }
 .opinion2-border-bottom  { border-bottom: 4px solid $opinion2Color ; }
