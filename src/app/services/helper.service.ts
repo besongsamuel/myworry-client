@@ -31,4 +31,21 @@ export class HelperService {
       }
     }
   }
+
+  insertAtCursor(myField, myValue) {
+
+    let value = "";
+    if (myField.selectionStart || myField.selectionStart == '0') {
+        var startPos = myField.selectionStart;
+        var endPos = myField.selectionEnd;
+        value = myField.value.substring(0, startPos)
+            + myValue
+            + myField.value.substring(endPos, myField.value.length);
+        myField.selectionStart = startPos + myValue.length;
+        myField.selectionEnd = startPos + myValue.length;
+        $(myField).html(value);
+    } else {
+      $(myField).html($(myField).html() + myValue);
+    }
+}
 }

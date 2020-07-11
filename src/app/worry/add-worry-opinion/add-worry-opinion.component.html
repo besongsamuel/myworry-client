@@ -6,9 +6,6 @@
   <div class="ml-2 d-flex card flex-grow-1 flex-column p-2">
     <div class="d-flex w-100">
         <div style="font-size: 14px;" class="d-flex align-items-center mb-2 font-weight-bold">{{authService.user.displayName}}</div>
-        <button class="ml-auto" (click)="selectEmoji()" mat-icon-button color="accent">
-          <mat-icon style="color: #fbd043;">emoji_emotions</mat-icon>
-        </button>
     </div>
     <mat-divider></mat-divider>
     <mat-form-field style="font-size: 12px;" class="select-opinion w-100">
@@ -18,7 +15,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <textarea #comment [(ngModel)]="userOpinion" placeholder="Comment on your opinion" (input)="opinionTextChanged($event)" style="height: 40px; font-size: 12px;" class="form-control border-0 flex-grow-1 ml-1"></textarea>
+    <textarea placeholder="Comment on your opinion" style="height: 40px; font-size: 12px;" class="opinion-reply-area form-control border-0 flex-grow-1 ml-1"></textarea>
     <div i18n="WORRY_LOCKED_ERR|Worry is locked error message" class="mt-3 alert alert-danger text-center w-100" *ngIf="addOpinionError == 'WORRY_LOCKED'">
       You can't add opinions to a worry that is locked. 
     </div>

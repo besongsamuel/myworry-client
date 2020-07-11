@@ -1,0 +1,25 @@
+<div class="my-2 d-flex">
+    <div>
+      <img mat-card-avatar *ngIf="authService.loggedIn && authService.user.userIdentity.profile.profileImage" [src]="authService.user.userIdentity.profile.profileImage">
+      <mat-icon mat-card-avatar color="primary" *ngIf="!authService.user.userIdentity.profile.profileImage" aria-hidden="false" style="font-size: 40px; width: 40px; height: 40px;" aria-label="Profile Image">face</mat-icon>
+    </div>
+
+  <div class="ml-2 d-flex card flex-grow-1 flex-column p-2">
+    <div class="d-flex w-100">
+        <div style="font-size: 14px;" class="d-flex align-items-center mb-2"><span class="mr-1 text-info" i18n="@@REPLYING_TO">Replying to </span><span class="font-weight-bold">{{opinion.user.displayName}}</span></div>
+    </div>
+    <mat-divider></mat-divider>
+    <textarea  placeholder="Reply to opinion" style="height: 40px; font-size: 12px;" class="reply-area form-control border-0 flex-grow-1 ml-1"></textarea>
+    <div i18n="@@ERROR_ADDING_REPLY" class="mt-3 alert alert-danger text-center w-100" *ngIf="addReplyError">
+      An error occured while trying to add your reply. <span class="ml-1">{{addReplyError}}</span> 
+    </div>
+    
+  </div>
+</div>
+<div class="d-flex w-100 justify-content-end my-1">
+  <a mat-button [routerLink]="" class="mr-2" i18n="@@CANCEL" (click)="cancel()">Cancel</a>
+  <a mat-button [routerLink]="" color="accent" i18n="@@SUBMIT" (click)="submitReply()">Submit</a>
+</div>
+
+
+ 

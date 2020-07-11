@@ -13,6 +13,7 @@ import { WorryService } from '../services/worry.service';
 import { Profile } from 'src/app/models/profile';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Reply } from 'src/app/models/reply';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class OpinionComponent implements OnInit {
   public userProfile: Profile;
   opinionBorder : string = '';
   public userProfileImage: string = "";
+  public reply?: Reply;
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
@@ -45,7 +47,22 @@ export class OpinionComponent implements OnInit {
     this.userProfileImage = this.opinion.user.userIdentity.profile.profileImage;
   }
 
-  reply(){}
+  replyAdded(reply){
+    this.reply = null;
+  }
+
+  replyClosed(){
+    this.reply = null;
+  }
+
+  addReply(){
+    this.reply = new Reply({ 
+      text: "", 
+      opinionId: this.opinion.id,
+      type: 0,
+      userId: this.authService.user.id
+     })
+  }
 
   toggleLike()
   {
@@ -90,6 +107,14 @@ export class OpinionComponent implements OnInit {
   editOpinionClicked(opinion)
   {
     this.editOpinion.emit(opinion.id);
+  }
+
+  onReplyRemoved(id){
+
+  }
+
+  onReplyEdit(id){
+    
   }
 
   removeOpinionClicked(opinion: Opinion)

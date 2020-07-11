@@ -38,10 +38,25 @@
     </div>
   </div>
 
-  <div class="d-flex justify-content-end w-100">
-    <a routerLink="" mat-button (click)="reply()">Reply</a>
+  <div class="d-flex justify-content-end w-100" >
+    <a [routerLink]="" mat-button (click)="addReply()" *ngIf="authService.loggedIn && authService.user.id != opinion.user.id && !reply">Reply</a>
+    <a [routerLink]="" mat-button (click)="addReply()" *ngIf="opinion.replies && opinion.replies.length > 0">Replies ({{opinion.replies.length}})</a>
   </div>
 
 </div>
+
+<div class="pl-5">
+  <app-add-edit-reply (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" *ngIf="reply" [reply]="reply" [opinion]="opinion" ></app-add-edit-reply>
+</div>
+
+<div class="pl-5" *ngFor="let reply of opinion.replies">
+  <app-reply (removeReply)="onReplyRemoved" (editReply)="onReplyEdit" [worry]="worry" [reply]="reply"></app-reply>
+  <!-- Add replies to this reply as well -->
+  <app-reply (removeReply)="onReplyRemoved" (editReply)="onReplyEdit" [worry]="worry" [reply]="r" *ngFor="let r of reply.replies" ></app-reply>
+
+</div>
+
+
+
 
 
