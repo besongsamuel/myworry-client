@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Opinion } from '../models/opinion';
+import { Reply } from '../models/reply';
 
 @Injectable({
   providedIn: 'root'
@@ -32,20 +34,23 @@ export class HelperService {
     }
   }
 
-  insertAtCursor(myField, myValue) {
+  getOpnionReplies(opinion: Opinion): Reply[]{
 
-    let value = "";
-    if (myField.selectionStart || myField.selectionStart == '0') {
-        var startPos = myField.selectionStart;
-        var endPos = myField.selectionEnd;
-        value = myField.value.substring(0, startPos)
-            + myValue
-            + myField.value.substring(endPos, myField.value.length);
-        myField.selectionStart = startPos + myValue.length;
-        myField.selectionEnd = startPos + myValue.length;
-        $(myField).html(value);
-    } else {
-      $(myField).html($(myField).html() + myValue);
+
+    if(!opinion.replies){
+      return [];
     }
-}
+
+    return opinion.replies.filter(x => !x.replyId);
+  }
+
+  getUserReplies(opinion: Opinion, reply: Reply): Reply[]{
+
+    if(!opinion.replies){
+      return [];
+    }
+    
+    return opinion.replies.filter(x => x.replyId == reply.id);
+  }
+  
 }

@@ -51,6 +51,23 @@ export class WorryService {
             },
             {
               "relation": "opinionLikes"
+            },
+            {
+              "relation": "replies",
+              "scope": {
+                "include": [
+                  {
+                    "relation": "user",
+                    "scope":{
+                      "include": [
+                        {
+                          "relation": "userIdentity",
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -195,6 +212,9 @@ export class WorryService {
           },
           {
             "relation": "opinionLikes"
+          },
+          {
+            "relation": "replies"
           }
         ],
         "where": { "userId": userId }
@@ -210,6 +230,11 @@ export class WorryService {
   deleteOpinion(id: string) : Observable<void>
   {
     return this.http.delete<any>(`${environment.ApiUrl}opinions/${id}`, this.httpOptions);
+  }
+
+  deleteReply(id: string) : Observable<void>
+  {
+    return this.http.delete<any>(`${environment.ApiUrl}replies/${id}`, this.httpOptions);
   }
 
   deleteWorry(id: string) : Observable<void>
@@ -270,13 +295,17 @@ export class WorryService {
 
   createOrEditReply(reply: Partial<Reply>) : Observable<Reply>
   {
+    reply.date_created = new Date();
+
+    reply.date_modified = new Date();
+
     if(reply.id)
     {
-      return this.http.put<Reply>(`${environment.ApiUrl}opinions/${reply.id}`, reply, this.httpOptions);
+      return this.http.put<Reply>(`${environment.ApiUrl}replies/${reply.id}`, reply, this.httpOptions);
     }
     else
     {
-      return this.http.post<Reply>(`${environment.ApiUrl}opinions`, reply, this.httpOptions);
+      return this.http.post<Reply>(`${environment.ApiUrl}replies`, reply, this.httpOptions);
     }
   }
 

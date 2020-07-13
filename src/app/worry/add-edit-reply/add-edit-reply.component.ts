@@ -3,7 +3,6 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { Opinion } from 'src/app/models/opinion';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { HelperService } from 'src/app/services/helper.service';
 import { WorryService } from '../services/worry.service';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
@@ -11,6 +10,8 @@ import { Entity } from 'src/app/models/entity.enum';
 import { Socket } from 'ngx-socket-io';
 import { AuthService } from 'src/app/services/auth.service';
 import { Reply } from 'src/app/models/reply';
+import { User } from 'src/app/models/user';
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-add-edit-reply',
@@ -24,13 +25,23 @@ export class AddEditReplyComponent implements OnInit {
 
   @Output() onReplyAdded = new EventEmitter();
 
+  /**
+   * The opinion being repliedt
+   */
   @Input() opinion: Opinion;
+
+  /**
+   * The reply being repliedt
+   */
+  @Input() parentReply: Reply;
 
   @Input() reply: Reply;
 
   replyElement: any;
 
   addReplyError?: string;
+
+  owner: User;
 
   constructor(public userService: UserService,
   public dialog: MatDialog, 
@@ -39,6 +50,15 @@ export class AddEditReplyComponent implements OnInit {
   private worryService: WorryService) { }
 
   ngOnInit(): void {
+
+
+    if(this.opinion){
+      this.owner = this.opinion.user;
+    }
+
+    if(this.parentReply){
+      this.owner = this.parentReply.user;
+    }
 
     if(!this.reply){
       this.reply = new Reply({ text: '', opinionId: this.opinion.id});
@@ -59,13 +79,14 @@ export class AddEditReplyComponent implements OnInit {
 
     this.reply.text = this.replyElement.data("emojioneArea").getText();
 
-    this.worryService.createOrEditReply(this.reply).subscribe((newReply: Reply) =>
+    this.worryService.createOrEditReply(_.omit(this.reply, 'user')).subscribe((newReply: Reply) =>
     {
+
       if(!this.opinion.replies)
       {
         this.opinion.replies = [];
       }
-        
+
       if(this.reply.id)
       {
         let index = this.opinion.replies.findIndex(x => x.id == this.reply.id);

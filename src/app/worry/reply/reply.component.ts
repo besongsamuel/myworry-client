@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Reply } from 'src/app/models/reply';
+import { Opinion } from 'src/app/models/opinion';
 
 
 @Component({
@@ -20,20 +21,19 @@ import { Reply } from 'src/app/models/reply';
 export class ReplyComponent implements OnInit {
 
   @Input() reply: Reply;
+  @Input() parent: Reply;
+  @Input() opinion: Opinion;
   @Input() worry: Worry;
   @Output() removeReply = new EventEmitter<string>();
   @Output() editReply = new EventEmitter<string>();
   public userProfile: Profile;
   public userProfileImage: string = "";
-  public Reply?: Reply;
+  public userReply?: Reply;
 
   constructor(public userService: UserService, 
-    private worryService: WorryService, 
-    private _snackBar: MatSnackBar,
-    private socket: Socket,
     public dialog: MatDialog, 
     public authService: AuthService,
-    private router: Router) { }
+    private worryService: WorryService) { }
 
   ngOnInit() {
     this.userProfile = this.userService.getProfile(this.reply.user);
@@ -41,25 +41,26 @@ export class ReplyComponent implements OnInit {
   }
 
   replyAdded(reply){
-    this.Reply = null;
+    this.userReply = null;
   }
 
   replyClosed(){
-    this.Reply = null;
+    this.userReply = null;
   }
 
   addReply(){
-    this.Reply = new Reply({ 
+    this.userReply = new Reply({ 
       text: "", 
       type: 1,
       replyId: this.reply.id, 
-      userId: this.authService.user.id })
+      opinionId: this.opinion.id,
+      userId: this.authService.user.id });
   }
 
 
   editReplyClicked(reply)
   {
-    this.editReply.emit(reply.id);
+    this.editReply.emit(reply);
   }
 
   removeReplyClicked(reply: Reply)
@@ -77,7 +78,11 @@ export class ReplyComponent implements OnInit {
 
       if(result)
       {
-        this.removeReply.emit(reply.id);
+
+        this.worryService.deleteReply(reply.id).subscribe(() => {
+          this.removeReply.emit(reply.id);
+        });
+
       }
     });
   }

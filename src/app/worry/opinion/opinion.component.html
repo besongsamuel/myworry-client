@@ -46,13 +46,20 @@
 </div>
 
 <div class="pl-5">
-  <app-add-edit-reply (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" *ngIf="reply" [reply]="reply" [opinion]="opinion" ></app-add-edit-reply>
+  <app-add-edit-reply (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" *ngIf="reply && !editingReply" [reply]="reply" [opinion]="opinion" ></app-add-edit-reply>
 </div>
 
-<div class="pl-5" *ngFor="let reply of opinion.replies">
-  <app-reply (removeReply)="onReplyRemoved" (editReply)="onReplyEdit" [worry]="worry" [reply]="reply"></app-reply>
+<div class="pl-5" *ngFor="let opinionReply of helperService.getOpnionReplies(opinion)">
+  <app-reply *ngIf="!editingReply || editingReply.id != opinionReply.id" [opinion]="opinion" (removeReply)="onReplyRemoved($event)" (editReply)="onReplyEdit($event)" [worry]="worry" [reply]="opinionReply"></app-reply>
+  <app-add-edit-reply *ngIf='editingReply && editingReply.id == opinionReply.id' (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" [reply]="opinionReply" [opinion]="opinion" ></app-add-edit-reply>
+
   <!-- Add replies to this reply as well -->
-  <app-reply (removeReply)="onReplyRemoved" (editReply)="onReplyEdit" [worry]="worry" [reply]="r" *ngFor="let r of reply.replies" ></app-reply>
+  <div *ngFor="let r of helperService.getUserReplies(opinion, opinionReply)">
+    <app-reply *ngIf="!editingReply || editingReply.id != r.id" [opinion]="opinion" (removeReply)="onReplyRemoved($event)" (editReply)="onReplyEdit($event)" [worry]="worry" [reply]="r" [parent]="opinionReply" ></app-reply>
+    <app-add-edit-reply *ngIf='editingReply && editingReply.id == r.id'  (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" [reply]="r" [opinion]="opinion" ></app-add-edit-reply>
+  </div>
+  
+
 
 </div>
 
