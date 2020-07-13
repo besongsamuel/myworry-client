@@ -1,6 +1,7 @@
 import { User } from './user';
 import { OpinionLike } from './opinion-like';
-
+import { Reply } from './reply'
+ 
 export class Opinion {
   public type: number;
   public user: User;
@@ -9,5 +10,6 @@ export class Opinion {
   public id: string;
   public text: string;
   public userId: string;
+  public replies: Reply[] = [];
   public opinionLikes: OpinionLike[] = [];
 }

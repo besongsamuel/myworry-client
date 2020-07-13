@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Opinion } from '../models/opinion';
+import { Reply } from '../models/reply';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +33,24 @@ export class HelperService {
       }
     }
   }
+
+  getOpnionReplies(opinion: Opinion): Reply[]{
+
+
+    if(!opinion.replies){
+      return [];
+    }
+
+    return opinion.replies.filter(x => !x.replyId);
+  }
+
+  getUserReplies(opinion: Opinion, reply: Reply): Reply[]{
+
+    if(!opinion.replies){
+      return [];
+    }
+    
+    return opinion.replies.filter(x => x.replyId == reply.id);
+  }
+  
 }

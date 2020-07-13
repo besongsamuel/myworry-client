@@ -38,10 +38,32 @@
     </div>
   </div>
 
-  <div class="d-flex justify-content-end w-100">
-    <a routerLink="" mat-button (click)="reply()">Reply</a>
+  <div class="d-flex justify-content-end w-100" >
+    <a [routerLink]="" mat-button (click)="addReply()" *ngIf="authService.loggedIn && authService.user.id != opinion.user.id && !reply">Reply</a>
+    <a [routerLink]="" mat-button (click)="addReply()" *ngIf="opinion.replies && opinion.replies.length > 0">Replies ({{opinion.replies.length}})</a>
   </div>
 
 </div>
+
+<div class="pl-5">
+  <app-add-edit-reply (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" *ngIf="reply && !editingReply" [reply]="reply" [opinion]="opinion" ></app-add-edit-reply>
+</div>
+
+<div class="pl-5" *ngFor="let opinionReply of helperService.getOpnionReplies(opinion)">
+  <app-reply *ngIf="!editingReply || editingReply.id != opinionReply.id" [opinion]="opinion" (removeReply)="onReplyRemoved($event)" (editReply)="onReplyEdit($event)" [worry]="worry" [reply]="opinionReply"></app-reply>
+  <app-add-edit-reply *ngIf='editingReply && editingReply.id == opinionReply.id' (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" [reply]="opinionReply" [opinion]="opinion" ></app-add-edit-reply>
+
+  <!-- Add replies to this reply as well -->
+  <div *ngFor="let r of helperService.getUserReplies(opinion, opinionReply)">
+    <app-reply *ngIf="!editingReply || editingReply.id != r.id" [opinion]="opinion" (removeReply)="onReplyRemoved($event)" (editReply)="onReplyEdit($event)" [worry]="worry" [reply]="r" [parent]="opinionReply" ></app-reply>
+    <app-add-edit-reply *ngIf='editingReply && editingReply.id == r.id'  (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" [reply]="r" [opinion]="opinion" ></app-add-edit-reply>
+  </div>
+  
+
+
+</div>
+
+
+
 
 

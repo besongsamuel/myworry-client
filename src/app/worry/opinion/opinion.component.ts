@@ -13,6 +13,8 @@ import { WorryService } from '../services/worry.service';
 import { Profile } from 'src/app/models/profile';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Reply } from 'src/app/models/reply';
+import { HelperService } from 'src/app/services/helper.service';
 
 
 @Component({
@@ -31,10 +33,13 @@ export class OpinionComponent implements OnInit {
   public userProfile: Profile;
   opinionBorder : string = '';
   public userProfileImage: string = "";
+  public reply?: Reply;
+  public editingReply?: Reply;
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
     private socket: Socket,
     public dialog: MatDialog, 
+    public helperService: HelperService,
     public authService: AuthService,
     private router: Router) { }
 
@@ -45,7 +50,24 @@ export class OpinionComponent implements OnInit {
     this.userProfileImage = this.opinion.user.userIdentity.profile.profileImage;
   }
 
-  reply(){}
+  replyAdded(reply){
+    this.reply = null;
+    this.editingReply = null;
+  }
+
+  replyClosed(){
+    this.reply = null;
+    this.editingReply = null;
+  }
+
+  addReply(){
+    this.reply = new Reply({ 
+      text: "", 
+      opinionId: this.opinion.id,
+      type: 0,
+      userId: this.authService.user.id
+     })
+  }
 
   toggleLike()
   {
@@ -90,6 +112,14 @@ export class OpinionComponent implements OnInit {
   editOpinionClicked(opinion)
   {
     this.editOpinion.emit(opinion.id);
+  }
+
+  onReplyRemoved(id){
+    this.opinion.replies = this.opinion.replies.filter(x => x.id != id);
+  }
+
+  onReplyEdit(reply){
+    this.editingReply = reply;
   }
 
   removeOpinionClicked(opinion: Opinion)

@@ -1,0 +1,54 @@
+<div class="d-flex flex-column mb-2">
+
+
+    <div class="d-flex">
+      <img class="mr-2" mat-card-avatar *ngIf="userProfileImage" [src]="userProfileImage">
+      <div class="card d-flex flex-column flex-grow-1">
+        <div class="d-flex p-1 align-items-center">
+          <div class="user-name d-flex" *ngIf="reply.user">
+            {{reply.user.displayName}}
+            <div *ngIf="parent" class="ml-1 d-flex">
+              <span i18n="@@REPLIED_TO" class="mr-1 font-weight-normal">Replied to</span>
+              <span>{{parent.user.displayName}}</span>
+            </div>
+          </div>
+          <div class="creation-date text-muted">{{reply.date_created | date}}</div>
+          <div class="ml-auto">
+            
+            <button *ngIf="userService.user && reply.user.id == userService.user.id" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Reply Menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            
+            <mat-menu #menu="matMenu">
+              <button [disabled]="worry.locked" (click)="editReplyClicked(reply)" mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span i18n="EDIT|Edit">Edit</span>
+              </button>
+              <button (click)="removeReplyClicked(reply)" mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span i18n="REMOVE|Remove">Remove</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="reply-text p-2">
+          {{reply.text}}
+        </div>
+      </div>
+    </div>
+  
+    <div class="d-flex justify-content-end w-100" >
+      <a [routerLink]="" mat-button (click)="addReply()" *ngIf="authService.loggedIn && authService.user.id != reply.user.id && !userReply">Reply</a>
+    </div>
+  
+  </div>
+  
+  <div class="pl-5">
+    <app-add-edit-reply [opinion]="opinion" [parentReply]="reply" (onClose)="replyClosed()" (onReplyAdded)="replyAdded(reply)" *ngIf="userReply" [reply]="userReply" ></app-add-edit-reply>
+  </div>
+  
+  
+  
+  
+  

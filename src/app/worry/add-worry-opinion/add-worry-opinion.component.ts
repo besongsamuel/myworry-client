@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Worry } from 'src/app/models/worry';
 import { AuthService } from 'src/app/services/auth.service';
 import { WorryService } from '../services/worry.service';
@@ -7,7 +7,6 @@ import { Crud } from 'src/app/models/crud.enum';
 import { Socket } from 'ngx-socket-io';
 import { Entity } from 'src/app/models/entity.enum';
 import { Opinion } from 'src/app/models/opinion';
-import { EmojiDialogComponent } from 'src/app/worry-widgets/emoji-dialog/emoji-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -23,13 +22,11 @@ export class AddWorryOpinionComponent implements OnInit {
   @Input() selectedOpinion: any;
   @Input() opinion?: Opinion;
   opinionBorder : string;
-  userOpinion: string = "";
   addOpinionError: string;
-  selectEmoticon : boolean = false;
   
   @Output() onOpinionAdded  = new EventEmitter();
   @Output() onClose = new EventEmitter();
-  @ViewChild('comment') commentElement : ElementRef;
+  commentElement : any;
 
   constructor(public authService: AuthService, 
     private worryService: WorryService, 
@@ -37,6 +34,12 @@ export class AddWorryOpinionComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
+
+    this.commentElement = (<any>$(".opinion-reply-area")).emojioneArea();
+
+    if(this.opinion){
+      this.commentElement.data("emojioneArea").setText(this.opinion.text);
+    }
 
     this.opinionBorder = `opinion${this.selectedOpinion}-border`;
 
@@ -53,58 +56,10 @@ export class AddWorryOpinionComponent implements OnInit {
       
     }
 
-    if(this.opinion){
-      this.userOpinion = this.opinion.text;
-    }
-
     this.opinionSelectionChanged({
       value: this.selectedOpinion
     });
-  }
-
-  opinionTextChanged(event){
-    event.target.style.height = "40px";
-    event.target.style.height = (event.target.scrollHeight)+"px";
-  }
-
-  selectEmoji(){
-
-    const dialogRef = this.dialog.open(EmojiDialogComponent, {
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe((emoji) => {
-      if(emoji){
-        if(!this.userOpinion){
-          this.userOpinion = "";
-        }
-
-        this.insertAtCursor(this.commentElement.nativeElement, emoji);
-            
-        this.commentElement.nativeElement.focus();
-      }
-    });
-    
-
-    this.selectEmoticon = !this.selectEmoticon;
-  }
-
-  insertAtCursor(myField, myValue) {
-
-    if (myField.selectionStart || myField.selectionStart == '0') {
-        var startPos = myField.selectionStart;
-        var endPos = myField.selectionEnd;
-        myField.value = myField.value.substring(0, startPos)
-            + myValue
-            + myField.value.substring(endPos, myField.value.length);
-        myField.selectionStart = startPos + myValue.length;
-        myField.selectionEnd = startPos + myValue.length;
-    } else {
-        myField.value += myValue;
-    }
-}
-
- 
+  } 
 
   opinionSelectionChanged(event){
 
@@ -127,7 +82,7 @@ export class AddWorryOpinionComponent implements OnInit {
   submitOpinion(){
 
     let opinion : any = {
-      text: this.userOpinion,
+      text: this.commentElement.data("emojioneArea").getText(),
       type: this.selectedOpinion,
       worryId: this.worry.id,
       userId: this.authService.user.id

@@ -11,6 +11,7 @@ import { WorryTag } from '../worry-tag';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { WorrySubscription } from 'src/app/worry-subscription';
+import { Reply } from 'src/app/models/reply';
 
 @Injectable()
 export class WorryService {
@@ -50,6 +51,23 @@ export class WorryService {
             },
             {
               "relation": "opinionLikes"
+            },
+            {
+              "relation": "replies",
+              "scope": {
+                "include": [
+                  {
+                    "relation": "user",
+                    "scope":{
+                      "include": [
+                        {
+                          "relation": "userIdentity",
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
@@ -194,6 +212,9 @@ export class WorryService {
           },
           {
             "relation": "opinionLikes"
+          },
+          {
+            "relation": "replies"
           }
         ],
         "where": { "userId": userId }
@@ -209,6 +230,11 @@ export class WorryService {
   deleteOpinion(id: string) : Observable<void>
   {
     return this.http.delete<any>(`${environment.ApiUrl}opinions/${id}`, this.httpOptions);
+  }
+
+  deleteReply(id: string) : Observable<void>
+  {
+    return this.http.delete<any>(`${environment.ApiUrl}replies/${id}`, this.httpOptions);
   }
 
   deleteWorry(id: string) : Observable<void>
@@ -265,6 +291,22 @@ export class WorryService {
       return this.http.post<Opinion>(`${environment.ApiUrl}opinions`, opinion, this.httpOptions);
     }
 
+  }
+
+  createOrEditReply(reply: Partial<Reply>) : Observable<Reply>
+  {
+    reply.date_created = new Date();
+
+    reply.date_modified = new Date();
+
+    if(reply.id)
+    {
+      return this.http.put<Reply>(`${environment.ApiUrl}replies/${reply.id}`, reply, this.httpOptions);
+    }
+    else
+    {
+      return this.http.post<Reply>(`${environment.ApiUrl}replies`, reply, this.httpOptions);
+    }
   }
 
   getCategories() : Observable<Category[]>

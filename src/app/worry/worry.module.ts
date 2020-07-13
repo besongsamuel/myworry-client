@@ -44,11 +44,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { AddWorryOpinionComponent } from './add-worry-opinion/add-worry-opinion.component';
 import {MatDividerModule} from '@angular/material/divider';
+import { AddEditReplyComponent } from './add-edit-reply/add-edit-reply.component';
+import { ReplyComponent } from './reply/reply.component';
 
 
 
 @NgModule({
-  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent, AddWorryOpinionComponent],
+  declarations: [EditWorryComponent, AddWorryComponent, WorryComponent, WorryItemComponent, OpinionComponent, WorryShareComponent, WorryStatsDialogComponent, SearchResultsComponent, AddWorryOpinionComponent, AddEditReplyComponent, ReplyComponent],
   exports: [
     EditWorryComponent,
     AddWorryComponent,
