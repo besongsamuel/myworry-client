@@ -90,7 +90,8 @@ export class WorryStatsDialogComponent implements OnInit {
       labels : labels,
       colors : OPINION_COLORS,
       chart : {
-        type: "donut"
+        type: "donut",
+        width: 400
       },
       title : {
         text: title,

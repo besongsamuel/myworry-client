@@ -302,6 +302,8 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   viewStats(){
     const dialogRef = this.dialog.open(WorryStatsDialogComponent, {
+      width: '90%',
+      height: '80%',
       data: this.worry
     });
   }
