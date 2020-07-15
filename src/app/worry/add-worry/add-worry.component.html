@@ -112,11 +112,11 @@
                       </div>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="tagSettings">
                       <label for="tags" i18n="TAGS|Tags">Tags</label>
-                      <tag-input modelAsStrings="true" (onAdd)="onTagAdded($event)" id="tags" maxItems="5"  [(ngModel)]='tags' [ngModelOptions]="{standalone: true}">
-                        <tag-input-dropdown [autocompleteObservable]='requestAutocompleteItems'></tag-input-dropdown>
-                      </tag-input>
+                      <tagify [settings]="tagSettings"
+                      (add)="onTagAdded($event)"
+                      (remove)="onTagRemoved($event)"></tagify>
                   </div>
 
                   <div class="form-group">

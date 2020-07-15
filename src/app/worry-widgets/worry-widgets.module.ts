@@ -4,20 +4,21 @@ import { ImageSelectButtonComponent } from './image-select-button/image-select-b
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { TagifyComponent } from './tagify/angular-tagify.component';
+import { TagifyService } from './tagify/angular-tagify.service';
 
 
 
 
 @NgModule({
-  declarations: [ImageSelectButtonComponent],
+  declarations: [ImageSelectButtonComponent, TagifyComponent],
   imports: [
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    PickerModule,
     MatDialogModule
   ],
-  exports: [ImageSelectButtonComponent]
+  providers: [TagifyService],
+  exports: [ImageSelectButtonComponent, TagifyComponent]
 })
 export class WorryWidgetsModule { }

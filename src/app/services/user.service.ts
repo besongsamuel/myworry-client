@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User, SignupUser } from '../models/user';
@@ -8,6 +8,7 @@ import { AuditTrail } from '../models/audit-trail';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwPush } from '@angular/service-worker';
+import { isPlatformBrowser } from '@angular/common';
 
 export const VAPID_PUBLIC_KEY = "BCDCOsmD9KXtPbw7k_fwJ41yX7lDWCDJ51cYXLX4vEff_MwhfVayozaXR5Xj7oLaGEwvNYxeAv01udAW3K_KpX0";
 
@@ -29,7 +30,8 @@ export class UserService {
 
   constructor(private http: HttpClient, 
     public authService: AuthService, 
-    private swPush: SwPush)
+    private swPush: SwPush,
+    @Inject(PLATFORM_ID) private platformId: any)
   {
 
     this.authService.login$.subscribe((user: User) => {
@@ -50,7 +52,10 @@ export class UserService {
           'Notification data.url: ' + notpayload.notification.data.url+
           'Notification data.body: ' + notpayload.notification.body
         );
-        window.open(notpayload.notification.data.url, "_blank");
+        if (isPlatformBrowser(this.platformId)) {
+          window.open(notpayload.notification.data.url, "_blank");
+        }
+        
       }
     });
   }

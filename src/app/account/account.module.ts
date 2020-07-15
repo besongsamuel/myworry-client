@@ -11,7 +11,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { TagInputModule } from 'ngx-chips';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
@@ -49,7 +48,6 @@ import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
     MatTableModule,
     MatIconModule,
     MatPaginatorModule,
-    TagInputModule,
     MatButtonModule,
   ]
 })

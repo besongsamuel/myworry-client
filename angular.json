@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/myworry-client",
+            "outputPath": "dist/myworry-client/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "ngswConfigPath": "ngsw-config.json",
@@ -40,6 +40,7 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/emojionearea/dist/emojionearea.min.css",
+              "./node_modules/@yaireo/tagify/dist/tagify.css",
               "src/styles.scss",
               "src/myworry-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
@@ -47,8 +48,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "./node_modules/emojionearea/dist/emojionearea.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/apexcharts/dist/apexcharts.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
@@ -135,7 +135,8 @@
             "tsConfig": [
               "tsconfig.app.json",
               "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "e2e/tsconfig.json",
+              "tsconfig.server.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -161,6 +162,53 @@
             "bucket": "",
             "secretAccessKey": "",
             "accessKeyId": ""
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/myworry-client/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "myworry-client:build",
+            "serverTarget": "myworry-client:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "myworry-client:build:production",
+              "serverTarget": "myworry-client:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "myworry-client:build:production",
+            "serverTarget": "myworry-client:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { LoginCredentials } from '../login-credentials';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/user';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable({
@@ -34,7 +35,8 @@ export class AuthService {
 
   public login$ = new ReplaySubject();
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute, private router: Router)
+  constructor(private http: HttpClient, public dialog: MatDialog, private route: ActivatedRoute, private router: Router,
+    @Inject(PLATFORM_ID) private platformId: any)
   {
     
   }
@@ -90,7 +92,10 @@ export class AuthService {
       catchError(this.handleError),
       tap((x: any) =>
       {
-        sessionStorage.setItem('token', x.token);
+        if (isPlatformBrowser(this.platformId)){
+          window.sessionStorage.setItem('token', x.token);
+        }
+        
         this.token = x.token;
         this.loggedIn = true;
       })
@@ -100,12 +105,19 @@ export class AuthService {
   logout()
   {
     this.loggedIn = false;
-    sessionStorage.removeItem('token');
+    if (isPlatformBrowser(this.platformId)){
+      window.sessionStorage.removeItem('token');
+    }
+    
 
   }
 
   getToken(): string {
-    return sessionStorage.getItem('token');
+    if (isPlatformBrowser(this.platformId)){
+      return window.sessionStorage.getItem('token');
+    }
+    else
+    return '';
   }
 
   setProvider(provider: string){
@@ -113,7 +125,9 @@ export class AuthService {
   }
 
   setToken(token: string): void {
-    sessionStorage.setItem('token', token);
+    if (isPlatformBrowser(this.platformId)){
+      window.sessionStorage.setItem('token', token);
+    }
 
     if(!this.isTokenExpired())
     {

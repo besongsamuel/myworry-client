@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { PLATFORM_ID, Component, OnInit, ComponentFactoryResolver, Inject } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
@@ -7,6 +7,7 @@ import {  GoogleLoginProvider } from "angularx-social-login";
 import { environment } from 'src/environments/environment';
 import { SNACKBAR_DURATION, SnackBarComponent } from './dialogs/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isPlatformBrowser } from '@angular/common';
 
 export const HEADER_OFFSET = 60;
 
@@ -25,30 +26,41 @@ export class AppComponent implements OnInit {
 
   fromUrl: string;
 
-  constructor(private socialAuthService : SocialAuthService, public authService: AuthService, public userService: UserService, private router: Router, private route: ActivatedRoute, private _snackBar: MatSnackBar){
+  constructor(private socialAuthService : SocialAuthService, 
+    public authService: AuthService, 
+    public userService: UserService, 
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private _snackBar: MatSnackBar,
+    @Inject(PLATFORM_ID) private platformId: any){
 
     this.environment = environment;
 
-    this.locale = window.sessionStorage.getItem('locale');
+    if (isPlatformBrowser(this.platformId)) {
 
-    if(!this.locale){
+      this.locale = window.sessionStorage.getItem('locale');
 
-      let browserLang = navigator.language;
+      if(!this.locale){
 
-      if(browserLang.startsWith('fr')){
+        let browserLang = navigator.language;
 
-        this.locale = 'fr';
-      }
-      else{
+        if(browserLang.startsWith('fr')){
+
+          this.locale = 'fr';
+        }
+        else{
+          this.locale = 'en-US';
+        }
+
+        window.sessionStorage.setItem('locale', this.locale);
+
+        /** TODO: RESOLVE LANGUAGE CHANGE */
         this.locale = 'en-US';
+
       }
-
-      window.sessionStorage.setItem('locale', this.locale);
-
-      /** TODO: RESOLVE LANGUAGE CHANGE */
-      this.locale = 'en-US';
-
     }
+
+    
 
   }
   ngOnInit(): void {
@@ -57,23 +69,32 @@ export class AppComponent implements OnInit {
 
     this.authService.login$.subscribe(() => {
 
-      let redirectUrl = sessionStorage.getItem('redirectUrl');
+      if (isPlatformBrowser(this.platformId)){
+        let redirectUrl = window.sessionStorage.getItem('redirectUrl');
 
         if(redirectUrl){
-          sessionStorage.removeItem('redirectUrl');
+          window.sessionStorage.removeItem('redirectUrl');
           this.router.navigate([redirectUrl]);
         }
+      }
+
+      
     });
 
     this.route.queryParams.subscribe(params => {
 
       if(params['token']){
         this.authService.setToken(params['token']);
-        let fromUrl = sessionStorage.getItem('lastKnownLocation');
-        if(fromUrl){
-          sessionStorage.removeItem('lastKnownLocation');
-          sessionStorage.setItem('redirectUrl', fromUrl);
+
+        if (isPlatformBrowser(this.platformId)){
+          let fromUrl = window.sessionStorage.getItem('lastKnownLocation');
+          if(fromUrl){
+            window.sessionStorage.removeItem('lastKnownLocation');
+            window.sessionStorage.setItem('redirectUrl', fromUrl);
+          }
         }
+
+        
         this.authService.attemptLogin();
       }
     });
@@ -87,13 +108,13 @@ export class AppComponent implements OnInit {
 
       if(e instanceof NavigationEnd){
 
-        if(e.url == '/login' && this.fromUrl){
-          sessionStorage.setItem('redirectUrl', this.fromUrl);
+        if (isPlatformBrowser(this.platformId)){
+          if(e.url == '/login' && this.fromUrl){
+            window.sessionStorage.setItem('redirectUrl', this.fromUrl);
+          }
+          
+          window.sessionStorage.setItem('lastKnownLocation', e.url );
         }
-        
-        sessionStorage.setItem('lastKnownLocation', e.url );
-
-
       }
 
     });
@@ -113,16 +134,15 @@ export class AppComponent implements OnInit {
   }
 
   setLocale(locale: string){
-    window.sessionStorage.setItem('locale', locale);
+
+    if (isPlatformBrowser(this.platformId)){
+      window.sessionStorage.setItem('locale', locale);
+    }
+    
 
     this.router.url;
     
-    //if(locale == 'fr'){
-    //  window.location.href = `${environment.domain.replace('www', 'fr')}${this.router.url}`;
-    //}
-    //else{
-    //  window.location.href = `${environment.domain}${this.router.url}`;
-    //}
+    
 
     this.locale = locale;
   }

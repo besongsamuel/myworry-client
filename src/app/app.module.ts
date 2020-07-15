@@ -46,12 +46,6 @@ export function provideConfig() {
   return socialLoginConfig;
 }
 
-let localID = window.sessionStorage.getItem('locale');
-
-if(!localID){
-  localID = 'en-US';
-}
-
 const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, options: {} };
 
 @NgModule({
@@ -67,7 +61,7 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     FooterComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,

@@ -27,7 +27,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { TagInputModule } from 'ngx-chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -37,16 +36,14 @@ import { WorryShareComponent } from './worry-share/worry-share.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { WorryStatsDialogComponent } from './worry-stats-dialog/worry-stats-dialog.component';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { SearchResultsComponent } from './search-results/search-results.component'
 import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { AddWorryOpinionComponent } from './add-worry-opinion/add-worry-opinion.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { AddEditReplyComponent } from './add-edit-reply/add-edit-reply.component';
 import { ReplyComponent } from './reply/reply.component';
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -62,9 +59,9 @@ import { ReplyComponent } from './reply/reply.component';
     RouterModule,
     NgxFileDropModule,
     WorryWidgetsModule,
-    TagInputModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxChartsModule,
     HttpClientModule,
     MatProgressSpinnerModule,
     MatInputModule,
@@ -76,7 +73,6 @@ import { ReplyComponent } from './reply/reply.component';
     MatTooltipModule,
     MatTabsModule,
     MatDatepickerModule,
-    PickerModule,
     MatMomentDateModule,
     MatMenuModule,
     MatSnackBarModule,
@@ -92,9 +88,7 @@ import { ReplyComponent } from './reply/reply.component';
     MatChipsModule,
     MatIconModule,
     MatToolbarModule,
-    MatSlideToggleModule,
-    NgApexchartsModule
-
+    MatSlideToggleModule
   ],
   providers: [WorryService]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login-dialog',
@@ -28,9 +29,14 @@ export class LoginDialogComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: any,
     public dialogRef: MatDialogRef<LoginDialogComponent>, 
     @Inject(MAT_DIALOG_DATA) public redirectUrl: string) { 
-      window.sessionStorage.setItem('redirectUrl', redirectUrl);
+
+      if (isPlatformBrowser(this.platformId)) {
+        window.sessionStorage.setItem('redirectUrl', redirectUrl);
+      }
+      
     }
 
   ngOnInit(): void {

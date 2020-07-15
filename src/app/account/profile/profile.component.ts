@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
@@ -23,6 +23,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { ValidateDisplayNameNotTaken } from 'src/app/validators/async-displayname-not-taken.validator';
+import { isPlatformBrowser } from '@angular/common';
 
 export const MY_FORMATS = {
   parse: {
@@ -58,6 +59,8 @@ export class ProfileComponent implements OnInit {
   profileImagePath: string;
   public fileDroped: NgxFileDropEntry;
   profileForm: FormGroup;
+  tagSettings: any;
+  tags: any[] = [];
   user: User;
   worries: Worry[] = [];
   sharedWorries: Worry[] = [];
@@ -81,7 +84,11 @@ export class ProfileComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) trailPaginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) trailSort: MatSort;
 
-  constructor(public authService: AuthService, public userService: UserService, private fb: FormBuilder, private worryService: WorryService) { }
+  constructor(public authService: AuthService, 
+    public userService: UserService, 
+    private fb: FormBuilder, 
+    private worryService: WorryService,
+    @Inject(PLATFORM_ID) private platformId: any) { }
 
   ngOnInit() {
 
@@ -104,9 +111,13 @@ export class ProfileComponent implements OnInit {
 
       this.profile = this.userService.getProfile(user);
 
+      this.tagSettings = {
+        tags: this.profile.interests
+      };
+
       this.profileForm = this.fb.group(
       {
-        id: [user.id],
+        id: [user.userIdentity.id],
         password: [''],
         oldPassword: [''],
         displayName: [user.displayName, Validators.min(3)],
@@ -195,18 +206,26 @@ export class ProfileComponent implements OnInit {
         value.profile.gender = Gender.UNKNOWN;
       }
 
+      value.profile.interests = this.tags;
+
       this.userService.patchUserIdentity(value).subscribe(() =>
       {
         this.success = true;
         this.error = false;
         this.userService.refreshUser().subscribe((u:User )=> this.user = u);
-        window.scroll(0,0);
+        if (isPlatformBrowser(this.platformId)) {
+          window.scroll(0,0);
+        }
+        
       },
       (err) =>
       {
         this.success = false;
         this.error = true;
-        window.scroll(0,0);
+        if (isPlatformBrowser(this.platformId)) {
+          window.scroll(0,0);
+        }
+        
       });
 
     }
@@ -230,6 +249,15 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
+  onTagAdded = (t) =>
+  {
+    this.tags = t.tags.map(x => x.value);
+  }
+
+  onTagRemoved = (e) => {
+    this.tags = e.tags.map(x => x.value);
+  };
 
   auditTrailPageChanged(event: PageEvent)
   {

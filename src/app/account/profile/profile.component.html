@@ -88,11 +88,12 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-    
-                        <div class="form-group">
+     
+                        <div class="form-group" *ngIf="tagSettings">
                             <label for="tags" i18n="INTERESTS|Interests">Interests</label>
-                            <tag-input id="interests" maxItems="10" modelAsStrings="true" formControlName="interests">
-                            </tag-input>
+                            <tagify [settings]="tagSettings"
+                                (add)="onTagAdded($event)"
+                                (remove)="onTagRemoved($event)"></tagify>
                         </div>
     
                     </div>

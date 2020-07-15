@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
 import { WorryTag } from '../worry-tag';
+import { TagifyService } from 'src/app/worry-widgets/tagify/angular-tagify.service';
 
 const moment =  _moment;
 
@@ -49,6 +50,7 @@ export class AddWorryComponent implements OnInit {
   newWorryForm : FormGroup;
   error: boolean = false;
   success: boolean = false;
+  tagSettings: any;
   tags = [];
   imagePath: string;
   public fileDroped: NgxFileDropEntry;
@@ -58,10 +60,17 @@ export class AddWorryComponent implements OnInit {
     private router: Router,
     private worryService: WorryService)
   {
-
   }
 
   ngOnInit() {
+
+    this.worryService.getTags().subscribe(tags => {
+      this.tagSettings = {
+        whitelist: tags,
+        placeholder: 'Tag worry',
+        maxTags: 5
+      }
+    });
 
       this.newWorryForm = this.fb.group({
         name: ["", [Validators.required, Validators.minLength(6)]],
@@ -84,9 +93,14 @@ export class AddWorryComponent implements OnInit {
 
   onTagAdded = (t) =>
   {
-    let tag: WorryTag = { approved: false, name: t.value };
+    let tag: WorryTag = { approved: false, name: t.added.value };
     this.worryService.createTag(tag).subscribe();
+    this.tags = t.tags.map(x => x.value);
   }
+
+  onTagRemoved = (e) => {
+    this.tags = e.tags.map(x => x.value);
+  };
 
   requestAutocompleteItems = () =>
   {
@@ -102,7 +116,7 @@ export class AddWorryComponent implements OnInit {
     worry.startDate = worry.startDate.format(MY_FORMATS.parse.dateInput);
     worry.endDate = worry.endDate.format(MY_FORMATS.parse.dateInput);
 
-    worry.tags = this.tags.map((x) => {return x.value ? x.value : x; });
+    worry.tags = this.tags;
 
     this.worryService.createWorry(worry).subscribe((newWorry: Worry) =>
     {

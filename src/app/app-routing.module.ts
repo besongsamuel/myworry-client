@@ -54,7 +54,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), AccountModule, WorryModule],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabled'
+}), AccountModule, WorryModule],
   exports: [RouterModule, AccountModule, WorryModule]
 })
 export class AppRoutingModule { }

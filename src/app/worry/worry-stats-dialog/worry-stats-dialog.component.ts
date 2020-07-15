@@ -1,11 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { Worry } from 'src/app/models/worry';
 
-import {
-  ChartComponent,
-  ApexChart,
-  ApexTitleSubtitle,
-} from "ng-apexcharts";
 import { Opinion } from 'src/app/models/opinion';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Gender } from 'src/app/models/profile';
@@ -14,11 +9,15 @@ import { UserService } from 'src/app/services/user.service';
 export const OPINION_COLORS = ['#338bcc', '#de4a1f', '#00bfa5', '#ffab00'];
 
 export type ChartOptions = {
-  series: number[];
-  chart: ApexChart;
-  colors: string[];
-  title: ApexTitleSubtitle;
-  labels: string[]
+  view: number[];
+  scheme: any;
+  results: any[];
+  gradient: boolean;
+  legend: boolean;
+  legendPosition: string;
+  labels: boolean;
+  doughnut: boolean;
+  legendTitle: string;
 };
 
 @Component({
@@ -27,8 +26,6 @@ export type ChartOptions = {
   styleUrls: ['./worry-stats-dialog.component.scss']
 })
 export class WorryStatsDialogComponent implements OnInit {
-
-  @ViewChild("general-stats-chart") generalStatsChart: ChartComponent;
 
   public generalStatsOptions: ChartOptions;
   public maleStatsOptions: ChartOptions;
@@ -60,43 +57,47 @@ export class WorryStatsDialogComponent implements OnInit {
 
   generateChartOptions(opinions : Opinion[], title : string) : ChartOptions {
 
-    let labels = [];
-    let series = [];
+    let results : object[] = [];
 
-    series = [
-      this.getSeries(opinions, 1),
-      this.getSeries(opinions, 2),
-    ];
+    results.push({
+      name: this.worry.opinion1Label,
+      value: this.getSeries(opinions, 1)
+    });
 
-    labels = [
-      this.worry.opinion1Label,
-      this.worry.opinion2Label
-    ];
+    results.push({
+      name: this.worry.opinion2Label,
+      value: this.getSeries(opinions, 2)
+    });
 
     if(this.worry.opinion3Label){
 
-      series.push(this.getSeries(opinions, 3));
-      labels.push(this.worry.opinion3Label);
+      results.push({
+        name: this.worry.opinion3Label,
+        value: this.getSeries(opinions, 3)
+      });
 
     }
     if(this.worry.opinion4Label){
-      series.push(this.getSeries(opinions, 4));
-      labels.push(this.worry.opinion4Label);
+
+      results.push({
+        name: this.worry.opinion4Label,
+        value: this.getSeries(opinions, 4)
+      });
     }
 
     return  {
 
-      series : series,
-      labels : labels,
-      colors : OPINION_COLORS,
-      chart : {
-        type: "donut",
-        width: 400
+      view: [400, 250],
+      results : results,
+      scheme : {
+        domain: OPINION_COLORS
       },
-      title : {
-        text: title,
-        align: "left",
-      }
+      legendPosition: 'below',
+      doughnut: false,
+      legend: true,
+      labels: false,
+      gradient: true,
+      legendTitle: title
     };
 
   }

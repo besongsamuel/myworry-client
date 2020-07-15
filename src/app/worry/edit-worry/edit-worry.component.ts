@@ -18,6 +18,7 @@ import { WorryService } from '../services/worry.service';
 import { WorryTag } from '../worry-tag';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { TagifyService } from 'src/app/worry-widgets/tagify/angular-tagify.service';
 
 const moment =  _moment;
 
@@ -25,7 +26,7 @@ const moment =  _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'YYYY-MM-DD hh:mm:ss',
+    dateInput: 'YYYY-MM-DD hh:mm:ss', 
   },
   display: {
     dateInput: 'LL',
@@ -53,8 +54,9 @@ export class EditWorryComponent implements OnInit {
   error: boolean = false;
   deleteError?: string;
   deleteSuccess?: string;
+  tagSettings: any;
   success: boolean = false;
-  tags = [];
+  tags : any[] = [];
   worry: Worry = new Worry();
   imagePath: string;
   public fileDroped: NgxFileDropEntry;
@@ -66,6 +68,7 @@ export class EditWorryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private worryService: WorryService,
+    private tagsService: TagifyService,
     public dialog: MatDialog)
   {
 
@@ -99,7 +102,16 @@ export class EditWorryComponent implements OnInit {
       this.newWorryForm.get('opinion4Label').disable();
     }
 
-    this.tags = worry.tags;
+    this.tags = worry.tags.map((x : any) => x.value ? x.value : x);
+
+    this.worryService.getTags().subscribe(tags => {
+      this.tagSettings = {
+        whitelist: tags,
+        placeholder: 'Tag worry',
+        maxTags: 5,
+        tags: this.tags
+      }
+    });
   }
 
   ngOnInit() {
@@ -129,9 +141,14 @@ export class EditWorryComponent implements OnInit {
 
   onTagAdded = (t) =>
   {
-    let tag: WorryTag = { approved: false, name: t.value };
+    let tag: WorryTag = { approved: false, name: t.added.value };
     this.worryService.createTag(tag).subscribe();
+    this.tags = t.tags.map(x => x.value);
   }
+
+  onTagRemoved = (e) => {
+    this.tags = e.tags.map(x => x.value);
+  };
 
   requestAutocompleteItems = () =>
   {
