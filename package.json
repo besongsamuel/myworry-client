@@ -32,6 +32,7 @@
     "@angular/platform-server": "~10.0.3",
     "@angular/router": "~10.0.3",
     "@angular/service-worker": "~10.0.3",
+    "@babel/helpers": "^7.10.4",
     "@jefiozie/ngx-aws-deploy": "^1.2.1",
     "@nguniversal/express-engine": "^10.0.1",
     "@swimlane/ngx-charts": "^14.0.0",
