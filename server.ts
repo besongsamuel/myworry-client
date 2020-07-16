@@ -12,6 +12,7 @@ const lang = process.env.MWLANG || 'browser';
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');
+console.log(`CWD is ${process.cwd()}`);
 const templateA = fs.readFileSync(path.join(process.cwd(), `dist/myworry-client/browser/${lang}`, 'index.html')).toString();
 const win = domino.createWindow(templateA);
 win.Object = Object;
@@ -57,7 +58,7 @@ function run(): void {
   // Start up the Node server
   const server = app();
   server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on http://localhost:${port} for ${lang}`);
   });
 }
 
