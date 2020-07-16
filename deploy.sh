@@ -9,18 +9,15 @@ rm -rf myworry-client
 echo "Cloning client from Git.."
 git clone git@github.com:besongsamuel/myworry-client.git
 
-cd myworry-server
+cd myworry-client
 pwd
 echo "Installing Dependencies"
 npm install
-echo "Fixing Broken Dependencies..."
-cp -f deploy\ files/index.js node_modules/@loopback/authentication-passport/dist/index.js
-cp -f deploy\ files/index.ts node_modules/@loopback/authentication-passport/src/index.ts
+echo "Building Angular Application..."
+ng build --prod --localize
+echo "Building SSR..."
+ng run myworry-client:server:production
 echo "Applying prod settings..."
-cp -f src/keys.prod.ts src/keys.ts
-cp -f oauth2-providers.prod.json oauth2-providers.json
-echo "Building Server"
-npm run build
 
 pm2 stop all
 

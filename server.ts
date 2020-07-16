@@ -12,7 +12,7 @@ const lang = process.env.MWLANG || 'browser';
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');
-const templateA = fs.readFileSync(path.join(process.cwd(), `dist/myworry-client/${lang}`, 'index.html')).toString();
+const templateA = fs.readFileSync(path.join(process.cwd(), `dist/myworry-client/browser/${lang}`, 'index.html')).toString();
 const win = domino.createWindow(templateA);
 win.Object = Object;
 win.Math = Math;
@@ -25,7 +25,7 @@ global['object'] = win.object;
 export function app(): express.Express {
 
   const server = express();
-  const distFolder = join(process.cwd(), `dist/myworry-client/${lang}`);
+  const distFolder = join(process.cwd(), `dist/myworry-client/browser/${lang}`);
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)

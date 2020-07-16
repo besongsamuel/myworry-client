@@ -1,0 +1,30 @@
+{
+    "apps" : [{
+        "name"        : "ssr_en",
+        "script"      : "./dist/myworry-client/server/main.js",
+        "env": {
+            "NODE_ENV": "development",
+            "PORT": 4000,
+            "MWLANG": "en"
+        },
+        "env_production" : {
+            "NODE_ENV": "production",
+            "PORT": 4000,
+            "MWLANG": "en"
+        }
+    },{
+        "name"        : "ssr_fr",
+        "script"      : "./dist/myworry-client/server/main.js",
+        "watch"       : true,
+        "env": {
+            "NODE_ENV": "development",
+            "PORT": 4001,
+            "MWLANG": "fr"
+        },
+        "env_production" : {
+            "NODE_ENV": "production",
+            "PORT": 4001,
+            "MWLANG": "fr"
+        }
+    }]
+}
