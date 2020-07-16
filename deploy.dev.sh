@@ -1,9 +1,6 @@
 #!/bin/bash
 echo  "Setting NPM Bin Path"
-PATH="/home/ec2-user/.nvm/versions/node/v14.4.0/bin:$PATH"
-pwd
-cd /home/ec2-user/
-pwd
+PATH="/usr/local/bin/:$PATH"
 echo "Removing Myworry Server"
 rm -rf myworry-client
 echo "Cloning client from Git.."
@@ -14,13 +11,16 @@ pwd
 echo "Installing Dependencies"
 npm install
 echo "Building Angular Application..."
-ng build --prod --localize
-echo "Building SSR..."
+ng build --localize
+echo "Building SSR Server..."
 ng run myworry-client:server:production
-echo "Applying prod settings..."
-
+echo "Applying start Server..."
 pm2 stop all
+pm2 start ./ssr-pm2.json
+echo "Stop nginx"
+nginx -s stop
+echo 'Copy config file'
+cp nginx.dev.conf /usr/local/etc/nginx.conf
+echo 'Start nginx'
+nginx
 
-echo "Starting Server"
-
-pm2 start index.js

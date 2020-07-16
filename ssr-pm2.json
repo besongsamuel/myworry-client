@@ -2,6 +2,7 @@
     "apps" : [{
         "name"        : "ssr_en",
         "script"      : "./dist/myworry-client/server/main.js",
+        "watch"       : true,
         "env": {
             "NODE_ENV": "development",
             "PORT": 4000,
