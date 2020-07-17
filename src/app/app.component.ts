@@ -69,6 +69,11 @@ export class AppComponent implements OnInit {
 
       let locale = sessionStorage.getItem('locale');
 
+      if(locale && locale.includes('en')){
+        locale == 'en';
+        sessionStorage.setItem(`locale`, locale);
+      }
+
       if(!locale){
 
         locale = `en`;
@@ -86,7 +91,7 @@ export class AppComponent implements OnInit {
       if(!location.href.includes(`/${locale}/`)){
 
         console.log(`${environment.domain}/${locale}/${this.router.url}`);
-        //window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
+        window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
       }
 
     }
