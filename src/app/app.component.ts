@@ -65,9 +65,10 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    let locale = 'en';
     if (isPlatformBrowser(this.platformId)){
 
-      let locale = sessionStorage.getItem('locale');
+       locale = sessionStorage.getItem('locale');
 
       if(locale && locale.includes('en')){
         locale == 'en';
@@ -93,6 +94,8 @@ export class AppComponent implements OnInit {
         console.log(`${environment.domain}/${locale}/${this.router.url}`);
         window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
       }
+
+      this.locale = locale;
 
     }
 
