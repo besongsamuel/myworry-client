@@ -178,9 +178,10 @@ export class AppComponent implements OnInit {
         }
         window.sessionStorage.setItem('locale', locale);
 
-        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
-
         this.locale = locale;
+
+        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
+        
       }
 
     }
