@@ -84,7 +84,9 @@ export class AppComponent implements OnInit {
       }
 
       if(!location.href.includes(`/${locale}/`)){
-        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
+
+        console.log(`${environment.domain}/${locale}/${this.router.url}`);
+        //window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
       }
 
     }
@@ -165,7 +167,7 @@ export class AppComponent implements OnInit {
 
       if(this.locale != locale){
 
-        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
+        window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
 
         this.locale = locale;
       }
