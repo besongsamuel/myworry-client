@@ -171,9 +171,12 @@ export class AppComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)){
 
-      window.sessionStorage.setItem('locale', locale);
-
       if(this.locale != locale){
+
+        if(locale.includes('en')){
+          locale = `en`;
+        }
+        window.sessionStorage.setItem('locale', locale);
 
         window.location.replace(`${environment.domain}/${locale}/${this.router.url}`);
 
