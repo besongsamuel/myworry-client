@@ -49,13 +49,13 @@ export class AppComponent implements OnInit {
           this.locale = 'fr';
         }
         else{
-          this.locale = 'en-US';
+          this.locale = 'en';
         }
 
         window.sessionStorage.setItem('locale', this.locale);
 
         /** TODO: RESOLVE LANGUAGE CHANGE */
-        this.locale = 'en-US';
+        this.locale = 'en';
 
       }
     }
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
        locale = sessionStorage.getItem('locale');
 
       if(locale && locale.includes('en')){
-        locale == 'en';
+        locale = 'en';
         sessionStorage.setItem(`locale`, locale);
       }
 

@@ -25,7 +25,7 @@
             
                 <div class="d-flex justify-content-center mt-2 mb-5">
                     <div class="d-flex flex-column align-items-center" *ngIf="authService.loggedIn">
-                        <p class="text-center" style="font-size: 26px;" i18n="@@WORRY_MEMO">Worried about something?</p>
+                        <h1 class="text-center" style="font-size: 26px;" i18n="@@WORRY_MEMO">Worried about something?</h1>
                         <button (click)="createNewWorry()" color="accent" mat-raised-button i18n="@@VOICE_IT">Voice It</button>
                     </div>
                     <div class="d-flex flex-column align-items-center mt-3" *ngIf="!authService.loggedIn">
