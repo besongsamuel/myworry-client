@@ -31,7 +31,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "localize": true,
             "serviceWorker": true,
             "assets": [
               "src/favicon.ico",

@@ -4,7 +4,7 @@
     
             <div class="search-section py-3">
     
-                <div i18n="TRENDING_TAGS|trending tags" class="text-white font-weight-bold my-2 text-center">Trending</div>
+                <div i18n="@@TRENDING_TAGS" class="text-white font-weight-bold my-2 text-center">Trending</div>
                 <div class="d-flex justify-content-center flex-wrap my-3">
                     
                     <mat-chip-list aria-label="Tags" class="mt-auto">
@@ -25,17 +25,16 @@
             
                 <div class="d-flex justify-content-center mt-2 mb-5">
                     <div class="d-flex flex-column align-items-center" *ngIf="authService.loggedIn">
-                        <p class="text-center" style="font-size: 26px;" i18n="WORRY_MEMO|Worry memo">Worried about something?</p>
+                        <p class="text-center" style="font-size: 26px;" i18n="@@WORRY_MEMO">Worried about something?</p>
                         <button (click)="createNewWorry()" color="accent" mat-raised-button i18n="@@VOICE_IT">Voice It</button>
                     </div>
                     <div class="d-flex flex-column align-items-center mt-3" *ngIf="!authService.loggedIn">
                         <div class="d-flex justify-content-center align-items-center">
-                            <button routerLink="/login" class="mr-2" color="accent" mat-raised-button i18n="@@LOGIN">Login</button> or 
+                            <button routerLink="/login" class="mr-2" color="accent" mat-raised-button i18n="@@LOGIN">Login</button> <span i18n="@@OR">or</span> 
                             <button routerLink="/signup" type="button" class="btn btn-outline-light ml-2" i18n="@@SIGNUP">Sign Up</button>                        </div>
-                        <div class="d-flex mt-2 justify-content-center">
+                        <div i18n="@@TO_BEGIN_POSTING_WORRIES" class="d-flex mt-2 justify-content-center">
                             to begin posting your worries
                         </div>
-                        
                     </div>
                 </div>
 
@@ -48,7 +47,7 @@
         </div>
 
         <div id="how-it-works" class="how-it-works my-5">
-            <div class="text-center my-3" style="font-size: 24px;">How it works</div>
+            <div i18n="@@HOW_IT_WORKS" class="text-center my-3" style="font-size: 24px;">How it works</div>
             <div class="d-flex flex-wrap justify-content-center my-5">
                 <app-mission-item i18n-title="@@MISSION_CREATEWORRY_TITLE" 
                 i18n-statement="@@MISSION_CREATEWORRY_STATEMENT" color="#ffab00" icon='post_add' title='Create Worry' statement='Are you worried about something? Create a worry and enter between 2-4 opinions that interest you. ' ></app-mission-item>
@@ -59,7 +58,7 @@
             </div>
         </div>
 
-        <div class="text-center my-3" style="font-size: 24px;">Some use cases</div>
+        <div i18n="@@SOME_USE_CASES" class="text-center my-3" style="font-size: 24px;">Some use cases</div>
 
         <div class="d-flex w-100 use-cases">
             <div class="left">
@@ -68,9 +67,9 @@
                 </div>
                 <div class="d-flex flex-grow-1 h-100 justify-content-center align-items-center">
                     <div class="use-case-content d-flex flex-column text-white p-4 p-4 align-items-start">
-                        <div class="use-case-title font-weight-bold mb-3">Worried about which streaming service to use?</div>
-                        <div>Am torn between Netfix, Amazone Prime Video, Disney +, Cradle and much more. I need help! It's time to post your worry. </div>
-                        <button mat-raised-button class="mt-3">Read More</button>
+                        <div i18n="@@USE_CASE_1_TITLE" class="use-case-title font-weight-bold mb-3">Worried about which streaming service to use?</div>
+                        <div i18n="@@USE_CASE_1_DESCRIPTION">Am torn between Netflix, Amazon Prime Video, Disney +, Cradle and much more. I need help! It's time to post your worry. </div>
+                        <button mat-raised-button class="mt-3" i18n="@@READ_MORE">Read More</button>
                     </div>
 
                 </div>
@@ -79,9 +78,9 @@
             <div class="right">
                 <div class="d-flex flex-grow-1 h-100 justify-content-center align-items-center">
                     <div class="use-case-content d-flex flex-column text-white p-4 align-items-start">
-                        <div class="use-case-title font-weight-bold mb-3">Worried about something in your relationship?</div>
-                        <div>You think you're right, he thinks he's right, you both think you're right; well let's post it and see what the masses think.</div>
-                        <button mat-raised-button class="mt-3">Read More</button>
+                        <div i18n="@@USE_CASE_2_TITLE" class="use-case-title font-weight-bold mb-3">Worried about something in your relationship?</div>
+                        <div i18n="@@USE_CASE_2_DESCRIPTION">You think you're right, he thinks he's right, you both think you're right; well let's post it and see what the masses think.</div>
+                        <button mat-raised-button class="mt-3" i18n="@@READ_MORE">Read More</button>
                     </div>
 
                 </div>
@@ -93,7 +92,7 @@
         </div>
     
         <div class="container mt-5">
-            <div class="text-center my-3" style="font-size: 24px;">Trending worries</div>
+            <div class="text-center my-3" style="font-size: 24px;" i18n="@@TRENDING_WORRIES">Trending worries</div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3" *ngFor='let worry of worries'>
                     <app-worry-item [worry]="worry"></app-worry-item>
@@ -104,7 +103,6 @@
                 <mat-spinner diameter="50" class="mb-2" *ngIf="loading"></mat-spinner>
                 <button mat-raised-button (click)="loadMore()" [disabled]="disableLoadMore" color="accent" i18n="@@LOAD_MORE">Load More</button>
             </div>
-    
         </div>
     </div>
 

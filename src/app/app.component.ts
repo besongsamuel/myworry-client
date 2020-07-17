@@ -65,6 +65,30 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    if (isPlatformBrowser(this.platformId)){
+
+      let locale = sessionStorage.getItem('locale');
+
+      if(!locale){
+
+        locale = `en`;
+
+        var userLang = navigator.language;
+        
+        if(userLang != locale && userLang.toLowerCase().includes('fr')){
+          locale = `fr`;
+        }
+
+        sessionStorage.setItem(`locale`, locale);
+
+      }
+
+      if(!location.href.includes(`/${locale}/`)){
+        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
+      }
+
+    }
+
     this.authService.attemptLogin();
 
     this.authService.login$.subscribe(() => {
@@ -136,15 +160,23 @@ export class AppComponent implements OnInit {
   setLocale(locale: string){
 
     if (isPlatformBrowser(this.platformId)){
+
       window.sessionStorage.setItem('locale', locale);
+
+      if(this.locale != locale){
+
+        window.location.replace(`${environment.domain}/${locale}${this.router.url}`);
+
+        this.locale = locale;
+      }
+
     }
-    
 
-    this.router.url;
-    
-    
+    if(this.locale != locale){
+      this.locale = locale;
+    }
 
-    this.locale = locale;
+    
   }
 
   logout()

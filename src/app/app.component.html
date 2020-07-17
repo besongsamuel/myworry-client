@@ -21,16 +21,16 @@
 
           
           <li class="nav-item" *ngIf="!authService.loggedIn">
-            <a color="primary" mat-flat-button routerLink="/login" i18n="SIGN_IN|Sign In">Login</a>
+            <a color="primary" mat-flat-button routerLink="/login" i18n="@@SIGN_IN">Login</a>
           </li>
           <li class="nav-item" *ngIf="!authService.loggedIn">
-            <a color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook" i18n="FACEBOOK_LOGIN|Facebook Login">Facebook Login</a>
+            <a color="primary" mat-flat-button href="{{environment.ApiUrl}}auth/thirdparty/facebook" i18n="@@FACEBOOK_LOGIN">Facebook Login</a>
           </li>
           <li class="nav-item" *ngIf="!authService.loggedIn">
-            <a color="primary" mat-flat-button routerLink="/signup" i18n="SIGN_UP|Sign up text">Sign Up</a>
+            <a color="primary" mat-flat-button routerLink="/signup" i18n="@@SIGN_UP">Sign Up</a>
           </li>
           <li class="nav-item" *ngIf="authService.loggedIn">
-            <a color="primary" mat-flat-button [routerLink]="" i18n="LOGOUT|Logout text" (click)='logout()'>Logout</a>
+            <a color="primary" mat-flat-button [routerLink]="" i18n="@@LOGOUT" (click)='logout()'>Logout</a>
           </li>
           <li class="nav-item" *ngIf="authService.loggedIn">
             <a color="primary" mat-flat-button routerLink="/account/profile">{{authService.user.email}}</a>
