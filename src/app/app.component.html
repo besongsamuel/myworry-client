@@ -35,14 +35,14 @@
           <li class="nav-item" *ngIf="authService.loggedIn">
             <a color="primary" mat-flat-button routerLink="/account/profile">{{authService.user.email}}</a>
           </li>
-          <li class="nav-item mr-1">
+          <li class="nav-item">
             <a [routerLink]="" (click)='setLocale("en")'>
-              <img width="22" alt="English language" [ngClass]="{'black-white': locale != 'en'}" src="assets/usa.png" > 
+              <img class="mx-1" width="22" alt="English language" [ngClass]="{'black-white': locale != 'en'}" src="assets/usa.png" > 
             </a>
           </li>
           <li class="nav-item">
             <a [routerLink]="" (click)='setLocale("fr")'>
-              <img width="22" alt="French Language" [ngClass]="{'black-white': locale != 'fr'}" src="assets/fr.png" > 
+              <img class="mx-1" width="22" alt="French Language" [ngClass]="{'black-white': locale != 'fr'}" src="assets/fr.png" > 
             </a>
           </li>
       </ul>
