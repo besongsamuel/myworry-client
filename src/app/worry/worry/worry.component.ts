@@ -146,11 +146,11 @@ export class WorryComponent implements OnInit, OnDestroy {
             }
           });
 
-          this.meta.updateTag({ name: 'og:title', content: worry.name });
-          this.meta.updateTag({ name: 'og:description', content: worry.description });
-          this.meta.updateTag({ name: 'og:url', content: `https://www.myworry.ca/en/worry/${worry.id}` });
-          this.meta.updateTag({ name: 'og:type', content: `website` });
-          this.meta.updateTag({ name: 'og:image', content: worry.image });
+          this.meta.updateTag({ property: 'og:title', content: worry.name });
+          this.meta.updateTag({ property: 'og:description', content: worry.description });
+          this.meta.updateTag({ property: 'og:url', content: `https://www.myworry.ca/en/worry/${worry.id}` });
+          this.meta.updateTag({ property: 'og:type', content: `website` });
+          this.meta.updateTag({ property: 'og:image', content: worry.image });
 
           this.title.setTitle(worry.name);
 

@@ -41,11 +41,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.meta.updateTag({ name: 'og:title', content: 'MyWorry' });
-    this.meta.updateTag({ name: 'og:description', content: 'MyWorry lets you express the things you are worried about and let people share their valuable opinions. You can later view statistics by gender or age group.' });
-    this.meta.updateTag({ name: 'og:url', content: `https://www.myworry.ca/en/` });
-    this.meta.updateTag({ name: 'og:type', content: `website` });
-    this.meta.updateTag({ name: 'og:image', content: 'https://www.myworry.ca/en/assets/home-background.png' });
+    this.meta.updateTag({ property: 'og:title', content: 'MyWorry' });
+    this.meta.updateTag({ property: 'og:description', content: 'MyWorry lets you express the things you are worried about and let people share their valuable opinions. You can later view statistics by gender or age group.' });
+    this.meta.updateTag({ property: 'og:url', content: `https://www.myworry.ca/en/` });
+    this.meta.updateTag({ property: 'og:type', content: `website` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://www.myworry.ca/en/assets/home-background.png' });
 
     this.title.setTitle("MyWorry | Express your worry and get valued opinions. ");
 
