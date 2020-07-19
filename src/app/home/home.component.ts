@@ -7,6 +7,7 @@ import { WorryService } from '../worry/services/worry.service';
 import { Router } from '@angular/router';
 export const DEFAULT_IMAGE = 'assets/images/worry.png';
 import * as _ from "lodash";
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -34,9 +35,19 @@ export class HomeComponent implements OnInit {
 
   disableLoadMore: boolean = false;
 
-  constructor(private worryService: WorryService, public authService: AuthService, private router: Router,) { }
+  constructor(private worryService: WorryService, public authService: AuthService, private router: Router,
+    private title: Title, 
+    private meta: Meta) { }
 
   ngOnInit() {
+
+    this.meta.updateTag({ name: 'og:title', content: 'MyWorry' });
+    this.meta.updateTag({ name: 'og:description', content: 'MyWorry lets you express the things you are worried about and let people share their valuable opinions. You can later view statistics by gender or age group.' });
+    this.meta.updateTag({ name: 'og:url', content: `https://www.myworry.ca/en/` });
+    this.meta.updateTag({ name: 'og:type', content: `website` });
+    this.meta.updateTag({ name: 'og:image', content: 'assets/home-background.png' });
+
+    this.title.setTitle("MyWorry | Express your worry and get valued opinions. ");
 
     this.pageEvent.pageSize = 6;
     this.pageEvent.pageIndex = 0;

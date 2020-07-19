@@ -25,6 +25,7 @@ import { SwPush } from '@angular/service-worker';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { WorrySubscription } from 'src/app/worry-subscription';
 import { HEADER_OFFSET } from 'src/app/app.component';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-worry',
@@ -61,7 +62,9 @@ export class WorryComponent implements OnInit, OnDestroy {
     private zone:NgZone, 
     private _snackBar: MatSnackBar,
     public authService: AuthService,
-    private swPush: SwPush)
+    private swPush: SwPush,
+    private title: Title, 
+    private meta: Meta)
   {
 
   }
@@ -128,6 +131,9 @@ export class WorryComponent implements OnInit, OnDestroy {
           }),
           tap(async (worry : Worry) =>
         {
+
+
+
           this.swPush.subscription.subscribe((sub) => {
 
             if(sub){
@@ -139,6 +145,14 @@ export class WorryComponent implements OnInit, OnDestroy {
               this.subscribedTo = false;
             }
           });
+
+          this.meta.updateTag({ name: 'og:title', content: worry.name });
+          this.meta.updateTag({ name: 'og:description', content: worry.description });
+          this.meta.updateTag({ name: 'og:url', content: `https://www.myworry.ca/en/worry/${worry.id}` });
+          this.meta.updateTag({ name: 'og:type', content: `website` });
+          this.meta.updateTag({ name: 'og:image', content: worry.image });
+
+          this.title.setTitle(worry.name);
 
           this.imagePath = `${environment.ApiUrl}${worry.image}`;
           this.userProfileImage = worry.user.userIdentity.profile.profileImage;
