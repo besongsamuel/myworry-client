@@ -183,6 +183,11 @@
               ],
               "sourceMap": false,
               "optimization": true
+            },
+            "dev": {
+              "outputHashing": "media",
+              "sourceMap": true,
+              "optimization": true
             }
           }
         },

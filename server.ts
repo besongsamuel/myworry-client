@@ -8,7 +8,7 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
-const lang = process.env.MWLANG || 'browser';
+const lang = process.env.MWLANG || '';
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');
@@ -45,8 +45,8 @@ export function app(): express.Express {
   }));
 
   // All regular routes use the Universal engine
-  server.get('*', (req, res) => {
-    console.log(`BaseUrl: ${req.baseUrl}, Dest Folder: ${distFolder}`);
+  server.get(`*`, (req, res) => {
+    console.log(`URL: ${req.url}, Dest Folder: ${distFolder}`);
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: `/${lang}/` }] });
   });
 

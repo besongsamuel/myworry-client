@@ -12,6 +12,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "env": { "MWLANG": "fr", "PORT" : "4001" },
             "program": "${workspaceFolder}/dist/myworry-client/server/main.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
