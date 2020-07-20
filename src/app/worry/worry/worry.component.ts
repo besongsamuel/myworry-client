@@ -122,18 +122,8 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     let id = this.route.snapshot.paramMap.get('id');
     
-    this.worryService.getWorry(id).pipe(
-      catchError((httpErrorResponse: HttpErrorResponse) => { 
-
-        this.unauthorized = 'UNAUTHORIZED_ACCESS';
-        console.error(httpErrorResponse.error.error.message);
-        throw httpErrorResponse;
-      }),
-      tap(async (worry : Worry) =>
+    this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
-
-
-
       this.swPush.subscription.subscribe((sub) => {
 
         if(sub){
@@ -166,10 +156,12 @@ export class WorryComponent implements OnInit, OnDestroy {
       this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss'));
       this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
       this.generateStatistics(worry);
-      })
-    );
+      }, (httpErrorResponse: HttpErrorResponse) => { 
 
-    
+        this.unauthorized = 'UNAUTHORIZED_ACCESS';
+        console.error(httpErrorResponse.error.error.message);
+        throw httpErrorResponse;
+      });
 
     this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
 

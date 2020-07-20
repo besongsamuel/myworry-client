@@ -13,6 +13,7 @@
     "dev:ssr": "ng run myworry-client:serve-ssr",
     "serve:ssr": "node dist/myworry-client/server/main.js",
     "build:ssr": "ng build --prod && ng run myworry-client:server:production",
+    "build-dev:ssr": "ng build && ng run myworry-client:server:dev",
     "build-localized:ssr": "ng build --prod --localize && ng run myworry-client:server:production",
     "prerender": "ng run myworry-client:prerender"
   },
