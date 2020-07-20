@@ -3,6 +3,7 @@
         "name"        : "ssr_en",
         "script"      : "./dist/myworry-client/server/main.js",
         "watch"       : true,
+        "time"        : true,
         "env": {
             "NODE_ENV": "development",
             "PORT": 4000,
@@ -17,6 +18,7 @@
         "name"        : "ssr_fr",
         "script"      : "./dist/myworry-client/server/main.js",
         "watch"       : true,
+        "time"        : true,
         "env": {
             "NODE_ENV": "development",
             "PORT": 4001,
