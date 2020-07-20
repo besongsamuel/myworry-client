@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
@@ -20,6 +20,7 @@ import { SNACKBAR_DURATION, SnackBarComponent } from 'src/app/dialogs/snack-bar/
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
 import { SwPush } from '@angular/service-worker';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { WorrySubscription } from 'src/app/worry-subscription';
@@ -58,7 +59,7 @@ export class WorryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
     private socket: Socket,
-    //private zone:NgZone, 
+    private zone:NgZone, 
     private _snackBar: MatSnackBar,
     public authService: AuthService,
     private swPush: SwPush,
@@ -296,7 +297,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   handleWorryEvent(event: SocketEvent)
   {
-    /* if(event.Id)
+    if(event.Id)
     {
       if(event.Action == Crud.UPDATE)
       {
@@ -310,7 +311,7 @@ export class WorryComponent implements OnInit, OnDestroy {
           }));
         });
       }
-    } */
+    }
   }
 
   viewStats(){
