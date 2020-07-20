@@ -120,54 +120,53 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.worry$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.worryService.getWorry(params.get('id')).pipe(
-          catchError((httpErrorResponse: HttpErrorResponse) => { 
+    let id = this.route.snapshot.paramMap.get('id');
+    
+    this.worryService.getWorry(id).pipe(
+      catchError((httpErrorResponse: HttpErrorResponse) => { 
 
-            this.unauthorized = 'UNAUTHORIZED_ACCESS';
-            console.error(httpErrorResponse.error.error.message);
-            throw httpErrorResponse;
-          }),
-          tap(async (worry : Worry) =>
-        {
+        this.unauthorized = 'UNAUTHORIZED_ACCESS';
+        console.error(httpErrorResponse.error.error.message);
+        throw httpErrorResponse;
+      }),
+      tap(async (worry : Worry) =>
+    {
 
 
 
-          this.swPush.subscription.subscribe((sub) => {
+      this.swPush.subscription.subscribe((sub) => {
 
-            if(sub){
-              if(worry.subscriptions && worry.subscriptions.find((s: WorrySubscription) => s.subscription.endpoint == sub.endpoint)){
-                this.subscribedTo = true;
-              }
-            }
-            else{
-              this.subscribedTo = false;
-            }
-          });
-
-          this.meta.updateTag({ property: 'og:title', content: worry.name });
-          this.meta.updateTag({ property: 'og:description', content: worry.description });
-          this.meta.updateTag({ property: 'og:url', content: `https://www.myworry.ca/en/worry/${worry.id}` });
-          this.meta.updateTag({ property: 'og:type', content: `website` });
-          this.meta.updateTag({ property: 'og:image', content: worry.image });
-
-          this.title.setTitle(worry.name);
-
-          this.imagePath = `${environment.ApiUrl}${worry.image}`;
-          this.userProfileImage = worry.user.userIdentity.profile.profileImage;
-          this.worry = worry;
-          if(!worry.image){
-            worry.image = DEFAULT_IMAGE;
+        if(sub){
+          if(worry.subscriptions && worry.subscriptions.find((s: WorrySubscription) => s.subscription.endpoint == sub.endpoint)){
+            this.subscribedTo = true;
           }
-          this.startDate = moment(this.worry.startDate, 'YYYY-MM-DD hh:mm:ss').format();
-          this.endDate = moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss').format();
-          this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
-          this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss'));
-          this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
-          this.generateStatistics(worry);
-        })))
+        }
+        else{
+          this.subscribedTo = false;
+        }
+      });
 
+      this.meta.updateTag({ property: 'og:title', content: worry.name });
+      this.meta.updateTag({ property: 'og:description', content: worry.description });
+      this.meta.updateTag({ property: 'og:url', content: `https://www.myworry.ca/en/worry/${worry.id}` });
+      this.meta.updateTag({ property: 'og:type', content: `website` });
+      this.meta.updateTag({ property: 'og:image', content: worry.image });
+
+      this.title.setTitle(worry.name);
+
+      this.imagePath = `${environment.ApiUrl}${worry.image}`;
+      this.userProfileImage = worry.user.userIdentity.profile.profileImage;
+      this.worry = worry;
+      if(!worry.image){
+        worry.image = DEFAULT_IMAGE;
+      }
+      this.startDate = moment(this.worry.startDate, 'YYYY-MM-DD hh:mm:ss').format();
+      this.endDate = moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss').format();
+      this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
+      this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss'));
+      this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
+      this.generateStatistics(worry);
+      })
     );
 
     
