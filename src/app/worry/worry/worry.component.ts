@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
 import { switchMap, tap, catchError } from 'rxjs/operators';
 import { WorryService } from 'src/app/worry/services/worry.service';
@@ -122,9 +122,11 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     let id = this.route.snapshot.paramMap.get('id');
     
-    
+
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
+      this.worry$ = of(worry);
+      
       this.swPush.subscription.subscribe((sub) => {
 
         if(sub){
