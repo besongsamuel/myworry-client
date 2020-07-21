@@ -122,6 +122,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
     let id = this.route.snapshot.paramMap.get('id');
     
+    
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
       this.swPush.subscription.subscribe((sub) => {
