@@ -162,12 +162,7 @@ export class WorryComponent implements OnInit, OnDestroy {
       }, (httpErrorResponse: HttpErrorResponse) => { 
 
         this.unauthorized = 'UNAUTHORIZED_ACCESS';
-        try{
-          console.error(httpErrorResponse.error.error.message);
-        }
-        catch{
-
-        }
+       
         throw httpErrorResponse;
       });
 
