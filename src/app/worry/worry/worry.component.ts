@@ -126,7 +126,7 @@ export class WorryComponent implements OnInit, OnDestroy {
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
       this.worry$ = of(worry);
-      
+
       this.swPush.subscription.subscribe((sub) => {
 
         if(sub){
@@ -162,7 +162,12 @@ export class WorryComponent implements OnInit, OnDestroy {
       }, (httpErrorResponse: HttpErrorResponse) => { 
 
         this.unauthorized = 'UNAUTHORIZED_ACCESS';
-        console.error(httpErrorResponse.error.error.message);
+        try{
+          console.error(httpErrorResponse.error.error.message);
+        }
+        catch{
+
+        }
         throw httpErrorResponse;
       });
 
