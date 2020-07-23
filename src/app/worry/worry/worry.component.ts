@@ -121,8 +121,6 @@ export class WorryComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     let id = this.route.snapshot.paramMap.get('id');
-    
-
 
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
