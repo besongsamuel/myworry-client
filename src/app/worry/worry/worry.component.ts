@@ -120,8 +120,9 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    let id = this.route.snapshot.paramMap.get('id');
+    /* let id = this.route.snapshot.paramMap.get('id');
     
+
 
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
@@ -164,9 +165,9 @@ export class WorryComponent implements OnInit, OnDestroy {
         this.unauthorized = 'UNAUTHORIZED_ACCESS';
        
         throw httpErrorResponse;
-      });
+      }); */
 
-    this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
+    /* this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
 
       var event : SocketEvent = JSON.parse(jsonEvent);
 
@@ -184,7 +185,7 @@ export class WorryComponent implements OnInit, OnDestroy {
       {
         this.handleWorryEvent(event);
       }
-    });
+    }); */
   }
 
   toggleLock()
