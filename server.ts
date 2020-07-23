@@ -23,7 +23,7 @@ global['document'] = win.document;
 global['branch'] = null;
 global['object'] = win.object;
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {

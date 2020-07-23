@@ -120,7 +120,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    /* let id = this.route.snapshot.paramMap.get('id');
+    let id = this.route.snapshot.paramMap.get('id');
     
 
 
@@ -165,7 +165,7 @@ export class WorryComponent implements OnInit, OnDestroy {
         this.unauthorized = 'UNAUTHORIZED_ACCESS';
        
         throw httpErrorResponse;
-      }); */
+      });
 
     /* this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
 
