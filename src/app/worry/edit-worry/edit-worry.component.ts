@@ -19,6 +19,7 @@ import { WorryTag } from '../worry-tag';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { TagifyService } from 'src/app/worry-widgets/tagify/angular-tagify.service';
+import { Title, Meta } from '@angular/platform-browser';
  
 const moment =  _moment;
 
@@ -69,8 +70,11 @@ export class EditWorryComponent implements OnInit {
     private router: Router,
     private worryService: WorryService,
     private tagsService: TagifyService,
-    public dialog: MatDialog)
+    public dialog: MatDialog,
+    private title: Title, meta: Meta)
   {
+    this.title.setTitle('Edit existing new worry');
+    meta.updateTag({ name: 'description', content: 'Edit your worry at anytime to make changes to it. Edition on a worry with opinions is limited. ' })
 
   }
 

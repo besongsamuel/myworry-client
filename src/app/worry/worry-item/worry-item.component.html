@@ -4,7 +4,7 @@
         <mat-icon style="font-size: 40px; width: 40px; height: 40px;" mat-card-avatar color="primary" *ngIf="!userProfileImage" aria-hidden="false" aria-label="Profile Image">face</mat-icon>
 
         <div class="worry-title">
-            <div class="text-truncate font-weight-bold">{{worry.name}}</div>
+            <h3 class="text-truncate font-weight-bold" style="font-size: 16px;">{{worry.name}}</h3>
             <div class="d-flex text-muted worry-subtitle" >
                 <span class="mr-auto">{{worry.user.displayName}}</span> 
                 <span class="ml-auto">{{worry.date_created | date:'mediumDate'}}</span>
@@ -15,9 +15,9 @@
     <div class="worry-image mb-2">
         <img class="w-auto h-100 mw-100" [src]="worry.image" alt="Worry Image">
     </div>
-    <mat-card-content style="height: 80px; margin-bottom: 10px;">
+    <mat-card-content style="height: 80px; margin-bottom: 20px;">
         <p class="worry-description">{{worry.description}}</p>
-        <p class="card-subtitle mb-2 text-muted d-flex">
+        <p class="card-subtitle mb-2 text-muted d-flex" style="font-size: 14px;">
             <span class="mr-auto" i18n="OPEN_FROM|Open from">Open from</span> <span class="worry-duration ml-auto"><b class="mx-1"> {{startDate | date:'mediumDate'}}</b> to <b class="mx-1"> {{endDate | date:'mediumDate'}}</b></span>
         </p>
     </mat-card-content>

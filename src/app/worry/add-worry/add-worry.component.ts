@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { WorryService } from '../services/worry.service';
 import { WorryTag } from '../worry-tag';
-import { TagifyService } from 'src/app/worry-widgets/tagify/angular-tagify.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 const moment =  _moment;
 
@@ -58,8 +58,11 @@ export class AddWorryComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private worryService: WorryService)
+    private worryService: WorryService,
+    private title: Title, meta: Meta)
   {
+    this.title.setTitle('Create new worry');
+    meta.updateTag({ name: 'description', content: 'Start using our platform by creating your worries and specifying the opinions that matter to you. ' })
   }
 
   ngOnInit() {

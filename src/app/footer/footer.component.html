@@ -3,14 +3,14 @@
 
         <div class="container justify-content-center d-flex flex-wrap">
             <div class="footer-column d-flex flex-column">
-                <div class="footer-title" i18n="@@ABOUT_US">ABOUT US</div>
+                <h2 class="footer-title" i18n="@@ABOUT_US">ABOUT US</h2>
                 <div class="footer-text d-flex flex-column">
-                    <div i18n="@@MISSION_STATEMENT_LONG">
+                    <p style="font-size: 14px;" i18n="@@MISSION_STATEMENT_LONG">
                         At MyWorry, our goal and mission is to create an 
                         easy to use platform where you can post your worries 
                         and get private or public valuable opinions which 
                         can help you solve a problem. 
-                    </div>
+                    </p>
                     <div class="d-flex mt-2 align-items-center">
                         <mat-icon color="accent" class="mr-2">email</mat-icon>
                         <div i18n="@@EMAIL_US_AT">Email us at info@myworry.ca</div>
@@ -19,7 +19,7 @@
             </div>
     
             <div class="footer-column d-flex flex-column">
-                <div class="footer-title" i18n="@@USEFUL_LINKS_HEADER">USEFUL LINKS</div>
+                <h2 class="footer-title" i18n="@@USEFUL_LINKS_HEADER">USEFUL LINKS</h2>
                 <div class="footer-text d-flex flex-column">
                     <div class="d-flex mb-2 align-items-center">
                         <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
@@ -37,7 +37,7 @@
             </div>
             
             <div class="footer-column d-flex flex-column">
-                <div class="footer-title" i18n="@@PAGES_HEADER">PAGES</div>
+                <h2 class="footer-title" i18n="@@PAGES_HEADER">PAGES</h2>
                 <div class="footer-text d-flex flex-column">
                     <div *ngIf="!authService.loggedIn" class="d-flex mb-2 align-items-center">
                         <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>
@@ -59,7 +59,7 @@
             </div>
     
             <div class="footer-column d-flex flex-column">
-                <div class="footer-title" i18n="@@TRENDING_TAGS_HEADER">TRENDING TAGS</div>
+                <h2 class="footer-title" i18n="@@TRENDING_TAGS_HEADER">TRENDING TAGS</h2>
                 <div class="footer-text d-flex flex-column">
                     <div class="d-flex mb-2 align-items-center" *ngFor="let tag of trendingTags">
                         <mat-icon class=" mr-3" color="accent">arrow_right</mat-icon>

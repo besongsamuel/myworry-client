@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit {
     this.meta.updateTag({ property: 'og:type', content: `website` });
     this.meta.updateTag({ property: 'og:image', content: 'https://www.myworry.ca/en/assets/home-background.png' });
 
-    this.title.setTitle("MyWorry | Express your worry and get valued opinions. ");
-
+    this.title.setTitle("MyWorry | Express your worries and get valued opinions. ");
+    this.meta.updateTag({ name: 'description', content: 'MyWorry is an application platform that lets you express your worries and have peole submit their valued opinions. You can later view statistics based on age, gener and much more. ' });
     this.pageEvent.pageSize = 6;
     this.pageEvent.pageIndex = 0;
 

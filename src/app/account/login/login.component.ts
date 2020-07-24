@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +25,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private title: Title, meta: Meta) { 
 
       this.environment = environment;
+
+      this.title.setTitle('Sign In to view, edit and manage your worries and opinions.');
+      meta.updateTag({ name: 'description', content: 'Signing into MyWorry opens the way for you to create and interact with worries created by other users. You can also access and manage your content. ' })
 
     }
 

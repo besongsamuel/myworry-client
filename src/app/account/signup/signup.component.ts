@@ -11,6 +11,7 @@ import { Profile } from 'src/app/models/profile';
 import { HelperService } from 'src/app/services/helper.service';
 import { WorryService } from 'src/app/worry/services/worry.service';
 import { ValidateDisplayNameNotTaken } from 'src/app/validators/async-displayname-not-taken.validator';
+import { Title, Meta } from '@angular/platform-browser';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class SignupComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private worryService: WorryService,
-    private helperService: HelperService)
+    private title: Title, meta: Meta)
   {
     this.environment = environment;
     this.signupForm = fb.group(
@@ -48,7 +49,8 @@ export class SignupComponent implements OnInit {
 
     this.signupForm.controls['email'].setAsyncValidators(ValidateEmailNotTaken.createValidator(this.userService));
     this.signupForm.controls['displayName'].setAsyncValidators(ValidateDisplayNameNotTaken.createValidator(this.userService));
-
+    this.title.setTitle('Sign up to create and manage your worries and opinions.');
+    meta.updateTag({ name: 'description', content: 'Sign up to MyWorry and start creating worries and opinions and interacting with other users. ' });
   }
 
 

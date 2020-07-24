@@ -23,6 +23,7 @@
 .worry-description {
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;

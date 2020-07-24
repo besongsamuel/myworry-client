@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search-results',
@@ -40,7 +41,11 @@ export class SearchResultsComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private worryService: WorryService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private worryService: WorryService, private route: ActivatedRoute, private router: Router, private title: Title, meta: Meta) {
+    this.title.setTitle('Search existing worries');
+    meta.updateTag({ name: 'description', content: 'Are you worried about something? Search our existing database of worries and see which opinions matter the most. ' })
+
+  }
 
   ngOnInit(): void {
 

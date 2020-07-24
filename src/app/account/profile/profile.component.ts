@@ -24,6 +24,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { ValidateDisplayNameNotTaken } from 'src/app/validators/async-displayname-not-taken.validator';
 import { isPlatformBrowser } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 
 export const MY_FORMATS = {
   parse: {
@@ -88,7 +89,13 @@ export class ProfileComponent implements OnInit {
     public userService: UserService, 
     private fb: FormBuilder, 
     private worryService: WorryService,
-    @Inject(PLATFORM_ID) private platformId: any) { }
+    @Inject(PLATFORM_ID) private platformId: any,
+    private title: Title, meta: Meta) { 
+
+      this.title.setTitle('Worry user profile page allows you to manage your content and profile.');
+      meta.updateTag({ name: 'description', content: 'Your worry profile page allows you to manage your profile, change your passowrd and manage your worry and opinion content.' });
+
+    }
 
   ngOnInit() {
 
