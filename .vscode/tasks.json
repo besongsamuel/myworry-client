@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build-dev:ssr",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build-dev:ssr",
+			"detail": "ng build --configuration=en && ng run myworry-client:server:dev"
+		}
+	]
+}

@@ -2,11 +2,10 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { LoginCredentials } from '../login-credentials';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { throwError, Observable, Subject, ReplaySubject } from 'rxjs';
-import { catchError, tap, switchMap } from 'rxjs/operators';
+import { throwError, Observable, ReplaySubject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/user';
 import { isPlatformBrowser } from '@angular/common';
@@ -78,13 +77,6 @@ export class AuthService {
     );
   }
 
-  requestLogin(redirectUrl: string){
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      data: redirectUrl
-    });
-  
-    dialogRef.afterClosed().subscribe();
-  }
 
   facebookLogin(redirectUrl?: string)
   {

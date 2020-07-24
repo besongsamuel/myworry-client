@@ -3,7 +3,7 @@ import { Opinion } from 'src/app/models/opinion';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent as SnackBarComponent, SNACKBAR_DURATION } from 'src/app/dialogs/snack-bar/snack-bar.component';
-import { Socket } from 'ngx-socket-io';
+//import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
 import { ConfirmationDialogComponent, ConfirmationIconType } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -37,7 +37,7 @@ export class OpinionComponent implements OnInit {
   public editingReply?: Reply;
 
   constructor(public userService: UserService, private worryService: WorryService, private _snackBar: MatSnackBar,
-    private socket: Socket,
+    //private socket: Socket,
     public dialog: MatDialog, 
     public helperService: HelperService,
     public authService: AuthService,
@@ -84,14 +84,14 @@ export class OpinionComponent implements OnInit {
         if(response.Action == Crud.CREATE)
         {
           this.opinion.opinionLikes.unshift(response.Entity);
-          let e: SocketEvent = { Action: Crud.CREATE, Entity: 'OpinionLike', Id: response.Entity.id, roomId: this.opinion.worryId }
-          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+          //let e: SocketEvent = { Action: Crud.CREATE, Entity: 'OpinionLike', Id: response.Entity.id, roomId: this.opinion.worryId }
+          //this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         }
         if(response.Action == Crud.DELETE)
         {
           this.opinion.opinionLikes = this.opinion.opinionLikes.filter(x => x.id != response.Entity.id);
-          let e: SocketEvent = { Action: Crud.DELETE, Entity: 'OpinionLike', Id: response.Entity.id, roomId: this.opinion.worryId}
-          this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+          //let e: SocketEvent = { Action: Crud.DELETE, Entity: 'OpinionLike', Id: response.Entity.id, roomId: this.opinion.worryId}
+          //this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
         }
         this.likedByUser = this.opinion.opinionLikes ? this.opinion.opinionLikes.filter(x => x.userId == this.userService.user.id).length > 0 : false;
   
@@ -100,11 +100,7 @@ export class OpinionComponent implements OnInit {
         this._snackBar.openFromComponent(SnackBarComponent, { duration: SNACKBAR_DURATION, data: { message: err.error.error.message, error: true } })
       });
     }
-    else{
-
-      this.authService.requestLogin(this.router.url)
-
-    }
+    
 
     
   }

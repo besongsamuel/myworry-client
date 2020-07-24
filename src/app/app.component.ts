@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
 
       }
 
-      if(!location.href.includes(`/${locale}/`)){
+      if(!location.href.includes(`/${locale}/`) && environment.production){
 
         console.log(`${environment.domain}/${locale}${this.router.url}`);
         window.location.replace(`${environment.domain}/${locale}${this.router.url}`);

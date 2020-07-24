@@ -22,7 +22,6 @@ import { environment } from 'src/environments/environment';
 import { MatChipsModule } from '@angular/material/chips';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
-import { LoginDialogComponent } from './account/login-dialog/login-dialog.component';
 import { WorryStatsDialogComponent } from './worry/worry-stats-dialog/worry-stats-dialog.component';
 import { MissionItemComponent } from './mission-item/mission-item.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -82,6 +81,6 @@ const config: SocketIoConfig = { url: `${environment.SocketUrl}:3001/worry`, opt
     useFactory: provideConfig
   }],
   bootstrap: [AppComponent],
-  entryComponents: [SnackBarComponent, LoginDialogComponent, WorryStatsDialogComponent, ConfirmationDialogComponent]
+  entryComponents: [SnackBarComponent, WorryStatsDialogComponent, ConfirmationDialogComponent]
 })
 export class AppModule { }

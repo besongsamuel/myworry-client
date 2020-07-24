@@ -21,13 +21,12 @@ import { WorryTableComponent } from './worry-table/worry-table.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { WorryWidgetsModule } from '../worry-widgets/worry-widgets.module';
 
 @NgModule({
-  declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent, ActivateAccountComponent, LoginDialogComponent],
-  exports: [SignupComponent, ProfileComponent, LoginComponent, LoginDialogComponent],
+  declarations: [SignupComponent, ProfileComponent, LoginComponent, WorryTableComponent, ActivateAccountComponent],
+  exports: [SignupComponent, ProfileComponent, LoginComponent],
   imports: [
     CommonModule,
     RouterModule,

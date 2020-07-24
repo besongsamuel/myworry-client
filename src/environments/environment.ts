@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  ApiUrl: 'https://localhost:3000/',
-  SocketUrl: 'https://localhost:3001/',
-  domain: 'https://localhost:4200',
+  ApiUrl: 'http://localhost:3000/',
+  SocketUrl: 'http://localhost:3001/',
+  domain: 'http://localhost:4200',
 };
 
 /*

@@ -86,6 +86,11 @@
               "localize": [
                 "fr"
               ]
+            },
+            "en": {
+              "localize": [
+                "en"
+              ]
             }
           }
         },
@@ -174,6 +179,7 @@
           },
           "configurations": {
             "production": {
+              "main": "server.ts",
               "outputHashing": "media",
               "fileReplacements": [
                 {
@@ -185,6 +191,8 @@
               "optimization": true
             },
             "dev": {
+              "main": "server.dev.ts",
+              "tsConfig": "tsconfig.server.dev.json",
               "outputHashing": "media",
               "sourceMap": true,
               "optimization": true

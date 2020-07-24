@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Worry } from 'src/app/models/worry';
-import { switchMap, tap, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { WorryService } from 'src/app/worry/services/worry.service';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService, VAPID_PUBLIC_KEY } from 'src/app/services/user.service';
-import { Socket } from 'ngx-socket-io';
+//import { Socket } from 'ngx-socket-io';
 import { SocketEvent, SocketEventType } from 'src/app/models/socket-event';
 import { Crud } from 'src/app/models/crud.enum';
 import { Entity } from 'src/app/models/entity.enum';
@@ -20,7 +20,6 @@ import { SNACKBAR_DURATION, SnackBarComponent } from 'src/app/dialogs/snack-bar/
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorryStatsDialogComponent } from '../worry-stats-dialog/worry-stats-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoginDialogComponent } from 'src/app/account/login-dialog/login-dialog.component';
 import { SwPush } from '@angular/service-worker';
 import { DEFAULT_IMAGE } from 'src/app/home/home.component';
 import { WorrySubscription } from 'src/app/worry-subscription';
@@ -58,7 +57,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router, private worryService: WorryService,
     public dialog: MatDialog, public userService: UserService,
-    private socket: Socket,
+    //private socket: Socket,
     private zone:NgZone, 
     private _snackBar: MatSnackBar,
     public authService: AuthService,
@@ -121,6 +120,7 @@ export class WorryComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     let id = this.route.snapshot.paramMap.get('id');
+    
 
     this.worryService.getWorry(id).subscribe(async (worry : Worry) =>
     {
@@ -156,7 +156,7 @@ export class WorryComponent implements OnInit, OnDestroy {
       this.endDate = moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss').format();
       this.canPostOpinion = await this.worryService.canPostOpinion(worry.id).toPromise();
       this.expired = moment().isSameOrAfter(moment(this.worry.endDate, 'YYYY-MM-DD hh:mm:ss'));
-      this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
+      //this.socket.emit(SocketEventType.JOIN_ROOM, worry.id);
       this.generateStatistics(worry);
       }, (httpErrorResponse: HttpErrorResponse) => { 
 
@@ -165,25 +165,25 @@ export class WorryComponent implements OnInit, OnDestroy {
         throw httpErrorResponse;
       });
 
-    /* this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
+      /* this.socket.fromEvent(SocketEventType.WORRY_EVENT).subscribe((jsonEvent: string) => {
 
-      var event : SocketEvent = JSON.parse(jsonEvent);
+        var event : SocketEvent = JSON.parse(jsonEvent);
 
-      if(event.Entity == Entity.OPINION_LIKE)
-      {
-        this.handleLikeEvent(event);
-      }
+        if(event.Entity == Entity.OPINION_LIKE)
+        {
+          this.handleLikeEvent(event);
+        }
 
-      if(event.Entity == Entity.OPINION)
-      {
-        this.handleOpinionEvent(event);
-      }
+        if(event.Entity == Entity.OPINION)
+        {
+          this.handleOpinionEvent(event);
+        }
 
-      if(event.Entity == Entity.WORRY)
-      {
-        this.handleWorryEvent(event);
-      }
-    }); */
+        if(event.Entity == Entity.WORRY)
+        {
+          this.handleWorryEvent(event);
+        }
+      }); */
   }
 
   toggleLock()
@@ -191,8 +191,8 @@ export class WorryComponent implements OnInit, OnDestroy {
     this.worryService.patchWorry({ id: this.worry.id, locked: !this.worry.locked  }).subscribe(() =>
     {
       this.worry.locked = !this.worry.locked;
-      let e: SocketEvent = { Action: Crud.UPDATE, Entity: Entity.WORRY, Id: this.worry.id, roomId: this.worry.id };
-      this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+      // let e: SocketEvent = { Action: Crud.UPDATE, Entity: Entity.WORRY, Id: this.worry.id, roomId: this.worry.id };
+      //this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
 
     });
   }
@@ -220,7 +220,7 @@ export class WorryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if(this.worry){
-      this.socket.emit(SocketEventType.LEAVE_ROOM, this.worry.id);
+      //this.socket.emit(SocketEventType.LEAVE_ROOM, this.worry.id);
     }
     
   }
@@ -390,8 +390,8 @@ export class WorryComponent implements OnInit, OnDestroy {
       this.worry.opinions = [];
     }
 
-    let e: SocketEvent = { Action: Crud.DELETE, Entity: Entity.OPINION, Id: id, roomId: this.worry.id };
-    this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
+    //let e: SocketEvent = { Action: Crud.DELETE, Entity: Entity.OPINION, Id: id, roomId: this.worry.id };
+    //this.socket.emit(SocketEventType.WORRY_EVENT, JSON.stringify(e));
 
     this.worryService.deleteOpinion(id).subscribe(() =>
     {

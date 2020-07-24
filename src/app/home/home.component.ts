@@ -113,9 +113,6 @@ export class HomeComponent implements OnInit {
     if(this.authService.loggedIn){
       this.router.navigate(["/new/worry"]);
     }
-    else{
-      this.authService.requestLogin("/new/worry");
-    }
 
     
   }
