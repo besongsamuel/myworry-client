@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  ApiUrl: 'https://api.myworry.ca:3000/',
-  SocketUrl: 'https://socket.myworry.ca:3001/',
+  ApiUrl: 'https://www.myworry.ca/api/',
+  SocketUrl: 'https://www.myworry.ca/socket/',
   domain: 'https://www.myworry.ca',
 };
