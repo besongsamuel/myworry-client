@@ -46,7 +46,7 @@
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ngx-file-drop": "^9.0.1",
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.4",
