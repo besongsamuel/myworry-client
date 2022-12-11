@@ -41,7 +41,7 @@
     "angularx-social-login": "^2.2.1",
     "bootstrap": "^4.4.1",
     "emojionearea": "^3.4.2",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "http-server": "^0.12.3",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
